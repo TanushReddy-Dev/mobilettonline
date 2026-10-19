@@ -1,6 +1,8 @@
 # 🏓 WTT Arena Pro — Pocket Table Tennis Online
 
-A high-performance 3D table tennis web game with real-time P2P online multiplayer via WebRTC (PeerJS).
+> ### 🎮 **Play Live Now**: [https://tanushreddy-dev.github.io/mobilettonline/](https://tanushreddy-dev.github.io/mobilettonline/)
+
+A high-performance 3D table tennis web game with real-time P2P online multiplayer via WebRTC (PeerJS). Irrespective of where you or your friends are, open the link, generate a 4-character code or share an invite link, and play in real time!
 
 ## 🌐 Live Online Multiplayer Features
 - **Online Play with Match Codes**: Create a room, share your 4-character code or direct link with a friend, and play anywhere in the world.
