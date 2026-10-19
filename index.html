@@ -1065,6 +1065,9 @@
       pointer-events: auto;
     }
     .modal-card {
+      max-height: 92dvh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       transform: translateY(8px) scale(0.97);
       transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -1241,54 +1244,61 @@
     </main>
 
     <!-- START MATCH MODAL OVERLAY -->
-    <div id="start-modal" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/88 backdrop-blur-md flex items-center justify-center p-5">
-      <div class="modal-card glass-panel rounded-2xl max-w-xs w-full p-6 border border-slate-800 shadow-2xl space-y-6 text-center">
-        <div class="space-y-2">
-          <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner mb-1 text-sky-400">
-            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <div id="start-modal" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/88 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-5 border border-slate-800 shadow-2xl space-y-3.5 text-center">
+        <div class="space-y-1">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner mb-0.5 text-sky-400">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="17" cy="7" r="3"></circle>
               <path d="M10.5 4.5a7.5 7.5 0 0 0-6 11.5L2 20l4-2.5a7.5 7.5 0 0 0 11.5-6c0-4.14-3.36-7-7-7z"></path>
             </svg>
           </div>
-          <div class="inline-block px-2.5 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 text-[10px] font-bold uppercase tracking-widest text-sky-400">
+          <div class="inline-block px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 text-[9px] font-bold uppercase tracking-widest text-sky-400">
             WTT Championship Series
           </div>
-          <h1 class="font-arcade text-3xl font-extrabold tracking-wider text-white uppercase">WTT ARENA PRO</h1>
+          <h1 class="font-arcade text-2xl font-extrabold tracking-wider text-white uppercase">WTT ARENA PRO</h1>
         </div>
 
         <!-- Difficulty Selector Inside Start Modal -->
-        <div class="space-y-2 text-left">
+        <div class="space-y-1 text-left">
           <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-0.5">Select Division</label>
           <div class="bg-slate-950/90 border border-slate-800/90 rounded-xl p-1 flex items-center gap-1">
-            <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-2 px-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+            <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
               Relaxed
             </button>
-            <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-2 px-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+            <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
               Casual
             </button>
-            <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-2 px-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+            <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
               Pro
             </button>
           </div>
         </div>
 
+        <!-- Game Mode Selection: Side-by-Side Cards -->
+        <div class="space-y-1 text-left pt-1">
+          <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-0.5">Choose Mode</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="btn-start-match" class="hud-interactive py-3 px-2 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg active:scale-95 transition flex flex-col items-center justify-center gap-1 border-2 border-white">
+              <svg class="w-5 h-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <span>PLAY SOLO</span>
+              <span class="text-[9px] font-semibold text-slate-600 normal-case font-sans">vs AI Robot</span>
+            </button>
 
-        <button type="button" id="btn-start-match" class="hud-interactive w-full py-3.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-lg text-slate-950 tracking-widest uppercase shadow-lg active:scale-95 transition flex items-center justify-center gap-2">
-          <span>ENTER ARENA (SOLO)</span>
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"></line>
-            <polyline points="12 5 19 12 12 19"></polyline>
-          </svg>
-        </button>
-
-        <button type="button" id="btn-open-online" class="hud-interactive w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 font-arcade font-bold text-sm text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/25 active:scale-95 transition flex items-center justify-center gap-2">
-          <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-            <path d="M2 12h20"></path>
-          </svg>
-          <span>PLAY ONLINE WITH CODE</span>
-        </button>
+            <button type="button" id="btn-open-online" class="hud-interactive py-3 px-2 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/30 active:scale-95 transition flex flex-col items-center justify-center gap-1 border-2 border-emerald-400">
+              <svg class="w-5 h-5 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                <path d="M2 12h20"></path>
+              </svg>
+              <span>PLAY ONLINE</span>
+              <span class="text-[9px] font-semibold text-emerald-950 normal-case font-sans">With Match Code</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
