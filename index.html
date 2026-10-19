@@ -1053,6 +1053,14 @@
       font-weight: 800;
       box-shadow: 0 2px 12px rgba(16, 185, 129, 0.35);
     }
+    #top-hud {
+      transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    #top-hud.is-menu {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
     .modal-backdrop {
       opacity: 0;
       visibility: hidden;
@@ -1065,11 +1073,18 @@
       pointer-events: auto;
     }
     .modal-card {
-      max-height: 92dvh;
+      max-height: 94dvh;
       overflow-y: auto;
       overscroll-behavior: contain;
       transform: translateY(8px) scale(0.97);
       transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-card::-webkit-scrollbar {
+      width: 4px;
+    }
+    .modal-card::-webkit-scrollbar-thumb {
+      background: rgba(148, 163, 184, 0.25);
+      border-radius: 4px;
     }
     .modal-backdrop.is-open .modal-card {
       transform: translateY(0) scale(1);
@@ -1189,8 +1204,11 @@
         </div>
       </div>
 
-      <!-- Segmented Difficulty Switcher & Professional SVG Utility Buttons -->
+      <!-- Navigation, Difficulty Switcher & Utility Buttons -->
       <div class="flex items-center justify-between gap-1.5">
+        <button type="button" id="btn-hud-home" aria-label="Main Menu" class="hud-interactive hud-btn" title="Return to Main Menu">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        </button>
         <div class="glass-panel rounded-lg p-1 flex items-center gap-1 flex-1">
           <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1 px-2 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all flex items-center justify-center gap-1">
             <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4l2.5 2.5"></path></svg>
@@ -1206,9 +1224,12 @@
           </button>
         </div>
 
-        <!-- Action Buttons: Audio, Haptics, Motion, Practice, Online & Reset -->
+        <!-- Action Buttons: Pause, Audio, Haptics, Motion, Practice, Online & Reset -->
         <div class="flex items-center gap-1">
-          <button type="button" id="btn-mute" aria-label="Toggle Audio" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Audio">
+          <button type="button" id="btn-hud-pause" aria-label="Pause Match" class="hud-interactive hud-btn" title="Pause Match (Esc / P)">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="4" x2="10" y2="20"></line><line x1="14" y1="4" x2="14" y2="20"></line></svg>
+          </button>
+          <button type="button" id="btn-mute" aria-label="Toggle Audio" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Audio (M)">
             <svg id="icon-sound-on" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
             <svg id="icon-sound-off" class="hidden w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
           </button>
@@ -1243,70 +1264,102 @@
       </div>
     </main>
 
-    <!-- START MATCH MODAL OVERLAY -->
-    <div id="start-modal" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/88 backdrop-blur-md flex items-center justify-center p-4">
-      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-5 border border-slate-800 shadow-2xl space-y-3.5 text-center">
+    <!-- START MATCH / MAIN MENU SCREEN OVERLAY -->
+    <div id="start-modal" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3.5 sm:p-5">
+      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl space-y-3.5 text-center">
+        <!-- Top Menu Quick Bar -->
+        <div class="flex items-center justify-between pb-0.5">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900 border border-amber-500/30 text-[9px] font-bold uppercase tracking-widest text-amber-400 shadow-sm">
+            <svg class="w-3 h-3 text-amber-400" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>WTT Championship Pro</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <button type="button" id="menu-btn-sound" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Sound">
+              <svg class="w-3.5 h-3.5 menu-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+              <svg class="w-3.5 h-3.5 menu-sound-off hidden text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line></svg>
+            </button>
+            <button type="button" id="menu-btn-fullscreen" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Fullscreen">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Title Brand -->
         <div class="space-y-1">
-          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner mb-0.5 text-sky-400">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <div class="inline-flex items-center justify-center w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-600/30 to-blue-500/20 border border-sky-400/40 shadow-inner mb-0.5 text-sky-400">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="17" cy="7" r="3"></circle>
               <path d="M10.5 4.5a7.5 7.5 0 0 0-6 11.5L2 20l4-2.5a7.5 7.5 0 0 0 11.5-6c0-4.14-3.36-7-7-7z"></path>
             </svg>
           </div>
-          <div class="inline-block px-2 py-0.5 rounded bg-sky-500/10 border border-sky-500/20 text-[9px] font-bold uppercase tracking-widest text-sky-400">
-            WTT Championship Series
-          </div>
-          <h1 class="font-arcade text-2xl font-extrabold tracking-wider text-white uppercase">WTT ARENA PRO</h1>
+          <h1 class="font-arcade text-2xl sm:text-3xl font-extrabold tracking-wider text-white uppercase drop-shadow-md">WTT ARENA PRO</h1>
+          <p class="text-[11px] text-sky-400 font-medium">3D Table Tennis Championship</p>
         </div>
 
-        <!-- Difficulty Selector Inside Start Modal -->
-        <div class="space-y-1 text-left">
-          <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-0.5">Select Division</label>
-          <div class="bg-slate-950/90 border border-slate-800/90 rounded-xl p-1 flex items-center gap-1">
-            <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
-              Relaxed
+        <!-- Mode Selection Cards -->
+        <div class="space-y-2 text-left">
+          <!-- SOLO MATCH CARD -->
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Solo Match (vs AI)</span>
+              <span class="text-[9px] font-semibold text-sky-400">11 Points</span>
+            </div>
+            <!-- Division Selector Inside Solo Card -->
+            <div class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex items-center gap-1">
+              <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+                Relaxed
+              </button>
+              <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+                Casual
+              </button>
+              <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+                Pro
+              </button>
+            </div>
+            <button type="button" id="btn-start-match" class="hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-md active:scale-95 transition flex items-center justify-center gap-1.5 border border-white">
+              <svg class="w-4 h-4 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              <span>PLAY SOLO MATCH</span>
             </button>
-            <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
-              Casual
-            </button>
-            <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-1.5 px-2 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
-              Pro
+          </div>
+
+          <!-- ONLINE MULTIPLAYER CARD -->
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Online Multiplayer</span>
+              <span class="text-[9px] font-semibold text-emerald-300">P2P Low Ping</span>
+            </div>
+            <button type="button" id="btn-open-online" class="hud-interactive w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/25 active:scale-95 transition flex items-center justify-center gap-1.5 border border-emerald-400">
+              <svg class="w-4 h-4 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
+              <span>PLAY ONLINE WITH CODE</span>
             </button>
           </div>
         </div>
 
-        <!-- Game Mode Selection: Side-by-Side Cards -->
-        <div class="space-y-1 text-left pt-1">
-          <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-0.5">Choose Mode</label>
-          <div class="grid grid-cols-2 gap-2">
-            <button type="button" id="btn-start-match" class="hud-interactive py-3 px-2 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg active:scale-95 transition flex flex-col items-center justify-center gap-1 border-2 border-white">
-              <svg class="w-5 h-5 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              <span>PLAY SOLO</span>
-              <span class="text-[9px] font-semibold text-slate-600 normal-case font-sans">vs AI Robot</span>
-            </button>
-
-            <button type="button" id="btn-open-online" class="hud-interactive py-3 px-2 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/30 active:scale-95 transition flex flex-col items-center justify-center gap-1 border-2 border-emerald-400">
-              <svg class="w-5 h-5 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                <path d="M2 12h20"></path>
-              </svg>
-              <span>PLAY ONLINE</span>
-              <span class="text-[9px] font-semibold text-emerald-950 normal-case font-sans">With Match Code</span>
-            </button>
-          </div>
+        <!-- Secondary Navigation Grid: Practice, How to Play, Settings -->
+        <div class="grid grid-cols-3 gap-1.5 pt-0.5">
+          <button type="button" id="menu-btn-practice" class="hud-interactive py-2 px-1 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white flex flex-col items-center justify-center gap-0.5 transition">
+            <svg class="w-3.5 h-3.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z"></path><polyline points="16 12 12 16 8 12"></polyline></svg>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Practice</span>
+          </button>
+          <button type="button" id="menu-btn-how-to-play" class="hud-interactive py-2 px-1 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white flex flex-col items-center justify-center gap-0.5 transition">
+            <svg class="w-3.5 h-3.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Controls</span>
+          </button>
+          <button type="button" id="menu-btn-settings" class="hud-interactive py-2 px-1 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white flex flex-col items-center justify-center gap-0.5 transition">
+            <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span class="text-[9px] font-bold uppercase tracking-wider">Settings</span>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- POST-MATCH SUMMARY MODAL -->
     <div id="match-modal" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-5">
-      <div class="modal-card glass-panel rounded-2xl max-w-xs w-full p-6 border border-slate-800 shadow-2xl text-center space-y-5">
+      <div class="modal-card glass-panel rounded-2xl max-w-xs w-full p-5 border border-slate-800 shadow-2xl text-center space-y-4">
         <div class="space-y-1.5">
-          <div id="match-trophy" class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 mb-1">
+          <div id="match-trophy" class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 mb-0.5">
             <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
               <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
@@ -1316,92 +1369,256 @@
               <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
             </svg>
           </div>
-          <h2 id="match-result-title" class="font-arcade text-3xl font-extrabold tracking-wider text-white uppercase">VICTORY</h2>
+          <h2 id="match-result-title" class="font-arcade text-2xl font-extrabold tracking-wider text-white uppercase">VICTORY</h2>
           <p id="match-result-subtitle" class="text-xs text-slate-400">Official Match Result</p>
         </div>
 
         <!-- Final Score Display -->
-        <div class="flex items-center justify-center gap-6 py-3 px-4 rounded-xl bg-slate-950/90 border border-slate-800/90">
+        <div class="flex items-center justify-center gap-6 py-2.5 px-4 rounded-xl bg-slate-950/90 border border-slate-800/90">
           <div class="flex flex-col items-center">
             <span class="text-[10px] font-bold uppercase tracking-widest text-rose-400">PLAYER</span>
-            <span id="final-player-score" class="font-arcade text-4xl font-bold text-white">11</span>
+            <span id="final-player-score" class="font-arcade text-3xl font-bold text-white">11</span>
           </div>
-          <span class="font-arcade text-sm font-bold tracking-widest text-slate-600">FINAL</span>
+          <span class="font-arcade text-xs font-bold tracking-widest text-slate-600">FINAL</span>
           <div class="flex flex-col items-center">
             <span id="final-ai-label" class="text-[10px] font-bold uppercase tracking-widest text-sky-400">RELAXED</span>
-            <span id="final-ai-score" class="font-arcade text-4xl font-bold text-white">8</span>
+            <span id="final-ai-score" class="font-arcade text-3xl font-bold text-white">8</span>
           </div>
         </div>
 
-        <!-- Match Statistics Grid (#28 icons, #16 aces/faults) -->
+        <!-- Match Statistics Grid -->
         <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+          <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80">
             <svg class="w-3 h-3 mx-auto mb-0.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
             <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Top Speed</div>
-            <div id="stat-max-speed" class="font-arcade text-base font-bold text-slate-200 mt-0.5">0 km/h</div>
+            <div id="stat-max-speed" class="font-arcade text-sm font-bold text-slate-200 mt-0.5">0 km/h</div>
           </div>
-          <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+          <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80">
             <svg class="w-3 h-3 mx-auto mb-0.5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
             <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Winners</div>
-            <div id="stat-smashes" class="font-arcade text-base font-bold text-slate-200 mt-0.5">0</div>
+            <div id="stat-smashes" class="font-arcade text-sm font-bold text-slate-200 mt-0.5">0</div>
           </div>
-          <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+          <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80">
             <svg class="w-3 h-3 mx-auto mb-0.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Max Rally</div>
-            <div id="stat-longest-rally" class="font-arcade text-base font-bold text-slate-200 mt-0.5">0</div>
+            <div id="stat-longest-rally" class="font-arcade text-sm font-bold text-slate-200 mt-0.5">0</div>
           </div>
-          <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+          <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80">
             <svg class="w-3 h-3 mx-auto mb-0.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
             <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Aces</div>
-            <div id="stat-aces" class="font-arcade text-base font-bold text-slate-200 mt-0.5">0</div>
+            <div id="stat-aces" class="font-arcade text-sm font-bold text-slate-200 mt-0.5">0</div>
           </div>
-          <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+          <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80">
             <svg class="w-3 h-3 mx-auto mb-0.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
             <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Faults</div>
-            <div id="stat-faults" class="font-arcade text-base font-bold text-slate-200 mt-0.5">0</div>
+            <div id="stat-faults" class="font-arcade text-sm font-bold text-slate-200 mt-0.5">0</div>
           </div>
-          <div class="p-2.5 rounded-xl bg-slate-900/70 border border-slate-800/80">
+          <div class="p-2 rounded-xl bg-slate-900/70 border border-slate-800/80">
             <svg class="w-3 h-3 mx-auto mb-0.5 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <div class="text-[9px] font-bold uppercase tracking-wider text-slate-500">Sets</div>
-            <div id="stat-sets" class="font-arcade text-base font-bold text-slate-200 mt-0.5">—</div>
+            <div id="stat-sets" class="font-arcade text-sm font-bold text-slate-200 mt-0.5">—</div>
           </div>
         </div>
 
-        <!-- Difficulty Selector for Next Match -->
-        <div class="space-y-1.5 text-left">
-          <label class="text-[10px] font-bold uppercase tracking-widest text-slate-400 px-0.5">Division</label>
-          <div class="bg-slate-950/90 border border-slate-800/90 rounded-xl p-1 flex items-center gap-1">
-            <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1.5 px-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
-              Relaxed
-            </button>
-            <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-1.5 px-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
-              Casual
-            </button>
-            <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-1.5 px-2 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
-              Pro
-            </button>
+        <!-- Post-Match Actions: Rematch + Main Menu -->
+        <div class="space-y-2 pt-1">
+          <button type="button" id="btn-play-again" class="hud-interactive w-full py-3 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-base text-slate-950 tracking-widest uppercase shadow-lg active:scale-95 transition">
+            REMATCH
+          </button>
+          <button type="button" id="btn-match-menu" class="hud-interactive w-full py-2.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/80 font-arcade font-bold text-xs tracking-wider uppercase transition flex items-center justify-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>MAIN MENU</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- IN-GAME PAUSE MODAL -->
+    <div id="modal-pause" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="modal-card glass-panel rounded-2xl max-w-xs w-full p-5 border border-slate-800 shadow-2xl text-center space-y-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-900 border border-slate-700/80 shadow-inner mb-0.5 text-amber-400">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="10" y1="4" x2="10" y2="20"></line><line x1="14" y1="4" x2="14" y2="20"></line></svg>
+          </div>
+          <h2 class="font-arcade text-2xl font-extrabold tracking-wider text-white uppercase">MATCH PAUSED</h2>
+        </div>
+
+        <!-- Live Score Summary in Pause -->
+        <div class="flex items-center justify-center gap-5 py-2.5 px-3 rounded-xl bg-slate-950/90 border border-slate-800/90">
+          <div class="flex flex-col items-center">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-rose-400">PLAYER</span>
+            <span id="pause-player-score" class="font-arcade text-3xl font-bold text-white">0</span>
+          </div>
+          <span class="font-arcade text-xs font-bold tracking-widest text-slate-600">VS</span>
+          <div class="flex flex-col items-center">
+            <span id="pause-ai-label" class="text-[9px] font-bold uppercase tracking-widest text-sky-400">OPPONENT</span>
+            <span id="pause-ai-score" class="font-arcade text-3xl font-bold text-white">0</span>
           </div>
         </div>
 
+        <div class="space-y-2">
+          <button type="button" id="pause-btn-resume" class="hud-interactive w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/20 active:scale-95 transition flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            <span>RESUME MATCH</span>
+          </button>
 
-        <button type="button" id="btn-play-again" class="hud-interactive w-full py-3.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-lg text-slate-950 tracking-widest uppercase shadow-lg active:scale-95 transition">
-          REMATCH
+          <button type="button" id="pause-btn-restart" class="hud-interactive w-full py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 font-arcade font-bold text-xs tracking-wider uppercase transition flex items-center justify-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+            <span>RESTART SET</span>
+          </button>
+
+          <div class="grid grid-cols-2 gap-2">
+            <button type="button" id="pause-btn-how-to-play" class="hud-interactive py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-800 text-[11px] font-bold uppercase tracking-wider transition">Controls</button>
+            <button type="button" id="pause-btn-settings" class="hud-interactive py-2 rounded-xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 border border-slate-800 text-[11px] font-bold uppercase tracking-wider transition">Settings</button>
+          </div>
+
+          <button type="button" id="pause-btn-main-menu" class="hud-interactive w-full py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-1.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            <span>EXIT TO MAIN MENU</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOW TO PLAY / CONTROLS MODAL -->
+    <div id="modal-how-to-play" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl text-left space-y-3.5">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-sky-500/15 border border-sky-500/30 flex items-center justify-center text-sky-400">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div>
+              <h2 class="font-arcade text-base font-bold text-white tracking-wider uppercase">HOW TO PLAY</h2>
+              <p class="text-[10px] text-slate-400 font-medium">Controls & Championship Rules</p>
+            </div>
+          </div>
+          <button type="button" class="btn-close-how-to-play p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="space-y-2 max-h-[58dvh] overflow-y-auto pr-1">
+          <!-- Guide 1: Serving -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
+            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">👆</div>
+            <div class="space-y-0.5">
+              <h4 class="text-xs font-bold text-sky-400 uppercase tracking-wide">1. Serving</h4>
+              <p class="text-[11px] text-slate-300 leading-snug">When it's your turn to serve, pull paddle down and swipe upward across the ball to launch across the net.</p>
+            </div>
+          </div>
+
+          <!-- Guide 2: Aiming & Timing -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
+            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🏓</div>
+            <div class="space-y-0.5">
+              <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wide">2. Aiming & Returning</h4>
+              <p class="text-[11px] text-slate-300 leading-snug">Glide your paddle to intercept the ball after it bounces on your court. Swipe angle and speed direct ball placement.</p>
+            </div>
+          </div>
+
+          <!-- Guide 3: Spin & Smashes -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
+            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🌪️</div>
+            <div class="space-y-0.5">
+              <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wide">3. Topspin & Smashes</h4>
+              <p class="text-[11px] text-slate-300 leading-snug">Fast upward strokes generate heavy topspin with a sharp table dip. High-speed swings unleash Smash Winners!</p>
+            </div>
+          </div>
+
+          <!-- Guide 4: Rules -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
+            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🏆</div>
+            <div class="space-y-0.5">
+              <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wide">4. Rules & Scoring</h4>
+              <p class="text-[11px] text-slate-300 leading-snug">First to 11 points wins (must win by 2). Service alternates every 2 points. At 10-10 Deuce, serve alternates every point.</p>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="btn-close-how-to-play hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg active:scale-95 transition">
+          GOT IT, LET'S PLAY
+        </button>
+      </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="modal-settings" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl text-left space-y-3.5">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-lg bg-slate-800 border border-slate-700/80 flex items-center justify-center text-slate-300">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            </div>
+            <div>
+              <h2 class="font-arcade text-base font-bold text-white tracking-wider uppercase">SETTINGS</h2>
+              <p class="text-[10px] text-slate-400 font-medium">Audio, Vibration & Gameplay</p>
+            </div>
+          </div>
+          <button type="button" class="btn-close-settings p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <div class="space-y-2">
+          <!-- Setting: Sound FX -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-white block">Sound Effects</span>
+              <span class="text-[10px] text-slate-400">Paddle hits and crowd ambience</span>
+            </div>
+            <button type="button" id="setting-toggle-sound" class="hud-interactive px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold uppercase transition">ON</button>
+          </div>
+
+          <!-- Setting: Haptics -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-white block">Haptic Feedback</span>
+              <span class="text-[10px] text-slate-400">Vibrate mobile phone on hits</span>
+            </div>
+            <button type="button" id="setting-toggle-haptics" class="hud-interactive px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 text-xs font-bold uppercase transition">ON</button>
+          </div>
+
+          <!-- Setting: Speed Unit -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-white block">Speed Unit</span>
+              <span class="text-[10px] text-slate-400">Speedometer unit display</span>
+            </div>
+            <button type="button" id="setting-toggle-speed-unit" class="hud-interactive px-3 py-1 rounded-lg bg-slate-800 text-slate-200 border border-slate-700 text-xs font-bold uppercase transition">KM/H</button>
+          </div>
+
+          <!-- Setting: Reduced Motion -->
+          <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold text-white block">Reduced Motion</span>
+              <span class="text-[10px] text-slate-400">Reduce screen shake and tilt</span>
+            </div>
+            <button type="button" id="setting-toggle-motion" class="hud-interactive px-3 py-1 rounded-lg bg-slate-800 text-slate-400 border border-slate-700 text-xs font-bold uppercase transition">OFF</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-close-settings hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg active:scale-95 transition">
+          DONE
         </button>
       </div>
     </div>
 
     <!-- ONLINE MULTIPLAYER MODAL -->
-    <div id="online-modal" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-5">
-      <div class="modal-card glass-panel rounded-2xl max-w-xs w-full p-6 border border-slate-800 shadow-2xl text-center space-y-4">
-        <!-- Modal Header -->
+    <div id="online-modal" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+      <div class="modal-card glass-panel rounded-2xl max-w-xs w-full p-5 border border-slate-800 shadow-2xl text-center space-y-3.5">
+        <!-- Modal Header with Back to Menu button -->
         <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
           <div class="flex items-center gap-2 text-left">
-            <div class="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+            <button type="button" id="btn-back-online" class="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition" title="Back to Main Menu">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+            <div class="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shrink-0">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
             </div>
             <div>
-              <h2 class="font-arcade text-base font-bold text-white tracking-wider uppercase">ONLINE ARENA</h2>
-              <p id="online-status-badge" class="text-[10px] text-emerald-400 font-medium">P2P Low Latency</p>
+              <h2 class="font-arcade text-sm font-bold text-white tracking-wider uppercase">ONLINE ARENA</h2>
+              <p id="online-status-badge" class="text-[9px] text-emerald-400 font-medium">P2P Low Latency</p>
             </div>
           </div>
           <button type="button" id="btn-close-online" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
@@ -1411,46 +1628,46 @@
 
         <!-- Mode Selector Tabs: HOST / JOIN -->
         <div class="bg-slate-950/90 border border-slate-800/90 rounded-xl p-1 flex items-center gap-1">
-          <button type="button" id="tab-host" class="online-tab-btn hud-interactive active flex-1 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">Host Match</button>
-          <button type="button" id="tab-join" class="online-tab-btn hud-interactive flex-1 py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">Join Match</button>
+          <button type="button" id="tab-host" class="online-tab-btn hud-interactive active flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">Host Match</button>
+          <button type="button" id="tab-join" class="online-tab-btn hud-interactive flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">Join Match</button>
         </div>
 
         <!-- Host Panel -->
-        <div id="panel-host" class="space-y-3">
-          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/90 space-y-1.5">
-            <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block">Your Match Code</span>
-            <div id="host-code-display" class="font-arcade text-3xl font-extrabold tracking-[0.2em] text-emerald-400 py-1 select-all cursor-pointer">....</div>
-            <p class="text-[10px] text-slate-400">Share this code with your friend to play.</p>
+        <div id="panel-host" class="space-y-2.5">
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800/90 space-y-1">
+            <span class="text-[9px] font-bold uppercase tracking-widest text-slate-400 block">Your Match Code</span>
+            <div id="host-code-display" class="font-arcade text-2xl font-extrabold tracking-[0.2em] text-emerald-400 py-0.5 select-all cursor-pointer">....</div>
+            <p class="text-[10px] text-slate-400">Share this 4-digit code with your friend.</p>
             <div class="flex gap-1.5 pt-1">
-              <button type="button" id="btn-copy-code" class="hud-interactive flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-slate-200 flex items-center justify-center gap-1 transition">
+              <button type="button" id="btn-copy-code" class="hud-interactive flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-bold text-slate-200 flex items-center justify-center gap-1 transition">
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                 <span id="copy-code-text">Copy</span>
               </button>
-              <button type="button" id="btn-copy-link" class="hud-interactive flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] font-bold text-slate-200 flex items-center justify-center gap-1 transition">
+              <button type="button" id="btn-copy-link" class="hud-interactive flex-1 py-1.5 px-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-[10px] font-bold text-slate-200 flex items-center justify-center gap-1 transition">
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                 <span id="copy-link-text">Invite Link</span>
               </button>
             </div>
           </div>
-          <button type="button" id="btn-create-room" class="hud-interactive w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-arcade font-bold text-sm text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/20 active:scale-95 transition flex items-center justify-center gap-1.5">
+          <button type="button" id="btn-create-room" class="hud-interactive w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/20 active:scale-95 transition flex items-center justify-center gap-1.5">
             <span>GENERATE NEW CODE</span>
           </button>
         </div>
 
         <!-- Join Panel -->
-        <div id="panel-join" class="space-y-3 hidden">
-          <div class="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800/90 space-y-2">
-            <label for="input-room-code" class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block text-left">Enter Match Code</label>
-            <input type="text" id="input-room-code" maxlength="6" placeholder="CODE" class="w-full text-center font-arcade text-2xl font-extrabold tracking-[0.2em] text-emerald-400 uppercase bg-slate-950 border border-slate-700/80 rounded-xl py-2 px-3 focus:outline-none focus:border-emerald-500 transition" autocomplete="off" autocorrect="off" spellcheck="false" />
-            <p class="text-[10px] text-slate-400">Ask the host for their 4-digit code and enter it above.</p>
+        <div id="panel-join" class="space-y-2.5 hidden">
+          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800/90 space-y-1.5">
+            <label for="input-room-code" class="text-[9px] font-bold uppercase tracking-widest text-slate-400 block text-left">Enter Match Code</label>
+            <input type="text" id="input-room-code" maxlength="6" placeholder="CODE" class="w-full text-center font-arcade text-xl font-extrabold tracking-[0.2em] text-emerald-400 uppercase bg-slate-950 border border-slate-700/80 rounded-xl py-1.5 px-3 focus:outline-none focus:border-emerald-500 transition" autocomplete="off" autocorrect="off" spellcheck="false" />
+            <p class="text-[10px] text-slate-400">Ask the host for their 4-digit code.</p>
           </div>
-          <button type="button" id="btn-join-room" class="hud-interactive w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-arcade font-bold text-sm text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/20 active:scale-95 transition flex items-center justify-center gap-1.5">
+          <button type="button" id="btn-join-room" class="hud-interactive w-full py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/20 active:scale-95 transition flex items-center justify-center gap-1.5">
             <span>CONNECT & PLAY</span>
           </button>
         </div>
 
         <!-- Live Status Bar -->
-        <div id="online-status-bar" class="p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] text-slate-400 flex items-center justify-center gap-2">
+        <div id="online-status-bar" class="p-2 rounded-xl bg-slate-900/60 border border-slate-800 text-[10px] text-slate-400 flex items-center justify-center gap-2">
           <span id="online-status-dot" class="w-2 h-2 rounded-full bg-slate-500"></span>
           <span id="online-status-text">Select Host or Join to start</span>
         </div>
@@ -1889,8 +2106,37 @@
       const elSetsStrip = document.getElementById('sets-strip');         // #12
       const elOnboardOverlay = document.getElementById('onboard-overlay'); // #19
 
+      const elTopHud = document.getElementById('top-hud');
+      const elBtnHudHome = document.getElementById('btn-hud-home');
+      const elBtnHudPause = document.getElementById('btn-hud-pause');
       const elStartModal = document.getElementById('start-modal');
       const elMatchModal = document.getElementById('match-modal');
+      const elModalPause = document.getElementById('modal-pause');
+      const elPausePlayerScore = document.getElementById('pause-player-score');
+      const elPauseAiScore = document.getElementById('pause-ai-score');
+      const elPauseAiLabel = document.getElementById('pause-ai-label');
+      const elPauseBtnResume = document.getElementById('pause-btn-resume');
+      const elPauseBtnRestart = document.getElementById('pause-btn-restart');
+      const elPauseBtnHowToPlay = document.getElementById('pause-btn-how-to-play');
+      const elPauseBtnSettings = document.getElementById('pause-btn-settings');
+      const elPauseBtnMainMenu = document.getElementById('pause-btn-main-menu');
+
+      const elModalHowToPlay = document.getElementById('modal-how-to-play');
+      const elModalSettings = document.getElementById('modal-settings');
+      const elMenuBtnPractice = document.getElementById('menu-btn-practice');
+      const elMenuBtnHowToPlay = document.getElementById('menu-btn-how-to-play');
+      const elMenuBtnSettings = document.getElementById('menu-btn-settings');
+      const elMenuBtnSound = document.getElementById('menu-btn-sound');
+      const elMenuBtnFullscreen = document.getElementById('menu-btn-fullscreen');
+      const elBtnMatchMenu = document.getElementById('btn-match-menu');
+      const elBtnBackOnline = document.getElementById('btn-back-online');
+
+      const elSettingToggleSound = document.getElementById('setting-toggle-sound');
+      const elSettingToggleHaptics = document.getElementById('setting-toggle-haptics');
+      const elSettingToggleSpeedUnit = document.getElementById('setting-toggle-speed-unit');
+      const elSettingToggleMotion = document.getElementById('setting-toggle-motion');
+
+      let isGamePaused = false;
 
       // Online Multiplayer State & Elements
       let isOnline = false;
@@ -2819,6 +3065,11 @@
 
         elStartModal.classList.remove('is-open');
         elMatchModal.classList.remove('is-open');
+        if (elModalPause) elModalPause.classList.remove('is-open');
+        if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
+        if (elModalSettings) elModalSettings.classList.remove('is-open');
+        if (elTopHud) elTopHud.classList.remove('is-menu');
+        isGamePaused = false;
         enterServeState();
       }
 
@@ -4262,6 +4513,27 @@
       function gameLoop(now) {
         const dt = Math.min(50, Math.max(0, now - lastFrameTime));
         lastFrameTime = now;
+
+        if (isGamePaused) {
+          if (!bgOffscreenCanvas) rebuildStaticSceneCache();
+          ctx.drawImage(bgOffscreenCanvas, 0, 0);
+          ctx.save();
+          ctx.translate(offsetX, offsetY);
+          ctx.scale(renderScale, renderScale);
+          drawPerspectiveBounceRings();
+          rqAI.y = ai.y + (ai.swingAnim || 0) * 10;
+          rqNet.y = TABLE.netY;
+          rqBall.y = ball.y;
+          rqPlayer.y = player.y - (player.swingAnim || 0) * 12;
+          renderQueue.sort((a, b) => a.y - b.y);
+          for (let i = 0; i < 4; i++) {
+            executeRenderItem(renderQueue[i].id);
+          }
+          ctx.restore();
+          requestAnimationFrame(gameLoop);
+          return;
+        }
+
         accumulator += dt;
 
         let steps = 0;
@@ -4877,6 +5149,299 @@
         });
       }
 
+      function returnToMainMenu() {
+        isGamePaused = false;
+        gameState = 'MENU';
+        if (elModalPause) elModalPause.classList.remove('is-open');
+        if (elMatchModal) elMatchModal.classList.remove('is-open');
+        if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
+        if (elModalSettings) elModalSettings.classList.remove('is-open');
+        if (elOnlineModal) elOnlineModal.classList.remove('is-open');
+        if (elStartModal) elStartModal.classList.add('is-open');
+        if (elTopHud) elTopHud.classList.add('is-menu');
+        hideBanner();
+
+        if (isOnline) {
+          if (netConn) { try { netConn.close(); } catch(_) {} netConn = null; }
+          if (netPeer) { try { netPeer.destroy(); } catch(_) {} netPeer = null; }
+          isOnline = false;
+        }
+
+        player.x = TABLE.centerX;
+        player.y = TABLE.bottom - 18;
+        player.prevX = player.x;
+        player.prevY = player.y;
+        player.targetX = player.x;
+        player.targetY = player.y;
+
+        ai.x = TABLE.centerX;
+        ai.y = TABLE.y + 18;
+        ai.targetX = ai.x;
+        ai.targetY = ai.y;
+
+        ball.x = player.x;
+        ball.y = player.y - 18;
+        ball.vx = 0;
+        ball.vy = 0;
+        ball.vz = 0;
+        ball.z = 24;
+
+        updateHUD();
+      }
+
+      function togglePause(forceState) {
+        if (gameState === 'MENU' || gameState === 'GAME_OVER') return;
+        const target = (typeof forceState === 'boolean') ? forceState : !isGamePaused;
+        isGamePaused = target;
+        if (isGamePaused) {
+          if (elPausePlayerScore) elPausePlayerScore.textContent = matchStats.playerScore;
+          if (elPauseAiScore) elPauseAiScore.textContent = matchStats.aiScore;
+          if (elPauseAiLabel) elPauseAiLabel.textContent = isOnline ? 'OPPONENT' : aiConfig.name;
+          if (elModalPause) elModalPause.classList.add('is-open');
+        } else {
+          if (elModalPause) elModalPause.classList.remove('is-open');
+        }
+      }
+
+      function openHowToPlay() {
+        if (elModalHowToPlay) elModalHowToPlay.classList.add('is-open');
+      }
+      function closeHowToPlay() {
+        if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
+      }
+
+      function syncSettingsUI() {
+        if (elSettingToggleSound) {
+          elSettingToggleSound.textContent = audioMuted ? 'OFF' : 'ON';
+          elSettingToggleSound.className = `hud-interactive px-3 py-1 rounded-lg text-xs font-bold uppercase transition ${audioMuted ? 'bg-slate-800 text-slate-400 border border-slate-700' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'}`;
+        }
+        if (elSettingToggleHaptics) {
+          elSettingToggleHaptics.textContent = hapticsEnabled ? 'ON' : 'OFF';
+          elSettingToggleHaptics.className = `hud-interactive px-3 py-1 rounded-lg text-xs font-bold uppercase transition ${!hapticsEnabled ? 'bg-slate-800 text-slate-400 border border-slate-700' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'}`;
+        }
+        if (elSettingToggleSpeedUnit) {
+          elSettingToggleSpeedUnit.textContent = speedUnitKmh ? 'KM/H' : 'MPH';
+        }
+        if (elSettingToggleMotion) {
+          elSettingToggleMotion.textContent = reducedMotion ? 'ON' : 'OFF';
+          elSettingToggleMotion.className = `hud-interactive px-3 py-1 rounded-lg text-xs font-bold uppercase transition ${!reducedMotion ? 'bg-slate-800 text-slate-400 border border-slate-700' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'}`;
+        }
+      }
+
+      function openSettings() {
+        syncSettingsUI();
+        if (elModalSettings) elModalSettings.classList.add('is-open');
+      }
+      function closeSettings() {
+        if (elModalSettings) elModalSettings.classList.remove('is-open');
+      }
+
+      function toggleAudioMute() {
+        audioMuted = !audioMuted;
+        document.querySelectorAll('.menu-sound-on').forEach(el => el.classList.toggle('hidden', audioMuted));
+        document.querySelectorAll('.menu-sound-off').forEach(el => el.classList.toggle('hidden', !audioMuted));
+        const iconOn = document.getElementById('icon-sound-on');
+        const iconOff = document.getElementById('icon-sound-off');
+        if (iconOn) iconOn.classList.toggle('hidden', audioMuted);
+        if (iconOff) iconOff.classList.toggle('hidden', !audioMuted);
+        const btnMute = document.getElementById('btn-mute');
+        if (btnMute) {
+          btnMute.setAttribute('aria-pressed', String(audioMuted));
+          btnMute.setAttribute('aria-label', audioMuted ? 'Unmute audio' : 'Mute audio');
+        }
+        sound.setAmbienceVolume(audioMuted ? 0 : 0.08);
+        syncSettingsUI();
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
+        }
+      }
+
+      // HUD Navigation Listeners
+      if (elBtnHudHome) {
+        elBtnHudHome.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          returnToMainMenu();
+        });
+      }
+
+      if (elBtnHudPause) {
+        elBtnHudPause.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          togglePause();
+        });
+      }
+
+      // Pause Modal Listeners
+      if (elPauseBtnResume) {
+        elPauseBtnResume.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          togglePause(false);
+        });
+      }
+
+      if (elPauseBtnRestart) {
+        elPauseBtnRestart.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          startNewMatch();
+        });
+      }
+
+      if (elPauseBtnHowToPlay) {
+        elPauseBtnHowToPlay.addEventListener('click', e => {
+          e.stopPropagation();
+          openHowToPlay();
+        });
+      }
+
+      if (elPauseBtnSettings) {
+        elPauseBtnSettings.addEventListener('click', e => {
+          e.stopPropagation();
+          openSettings();
+        });
+      }
+
+      if (elPauseBtnMainMenu) {
+        elPauseBtnMainMenu.addEventListener('click', e => {
+          e.stopPropagation();
+          returnToMainMenu();
+        });
+      }
+
+      // Start Screen Menu Listeners
+      if (elMenuBtnPractice) {
+        elMenuBtnPractice.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          practiceMode = true;
+          try { localStorage.setItem('wtt-practice', '1'); } catch (_) {}
+          const practiceBtn = document.getElementById('btn-practice');
+          if (practiceBtn) {
+            practiceBtn.setAttribute('aria-pressed', 'true');
+            practiceBtn.classList.add('active');
+          }
+          startNewMatch();
+          showBanner('PRACTICE COURT ACTIVE — INFINITE RALLY', 'rgba(56, 189, 248, 0.5)', '#38bdf8');
+        });
+      }
+
+      if (elMenuBtnHowToPlay) {
+        elMenuBtnHowToPlay.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          openHowToPlay();
+        });
+      }
+
+      if (elMenuBtnSettings) {
+        elMenuBtnSettings.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          openSettings();
+        });
+      }
+
+      if (elMenuBtnSound) {
+        elMenuBtnSound.addEventListener('click', e => {
+          e.stopPropagation();
+          toggleAudioMute();
+        });
+      }
+
+      if (elMenuBtnFullscreen) {
+        elMenuBtnFullscreen.addEventListener('click', e => {
+          e.stopPropagation();
+          toggleFullscreen();
+        });
+      }
+
+      if (elBtnMatchMenu) {
+        elBtnMatchMenu.addEventListener('click', e => {
+          e.stopPropagation();
+          sound.init();
+          returnToMainMenu();
+        });
+      }
+
+      if (elBtnBackOnline) {
+        elBtnBackOnline.addEventListener('click', e => {
+          e.stopPropagation();
+          hideOnlineModal();
+          if (gameState === 'MENU' && elStartModal) {
+            elStartModal.classList.add('is-open');
+          }
+        });
+      }
+
+      document.querySelectorAll('.btn-close-how-to-play').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          closeHowToPlay();
+        });
+      });
+
+      document.querySelectorAll('.btn-close-settings').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          closeSettings();
+        });
+      });
+
+      // Settings Modal Toggles
+      if (elSettingToggleSound) {
+        elSettingToggleSound.addEventListener('click', e => {
+          e.stopPropagation();
+          toggleAudioMute();
+        });
+      }
+
+      if (elSettingToggleHaptics) {
+        elSettingToggleHaptics.addEventListener('click', e => {
+          e.stopPropagation();
+          hapticsEnabled = !hapticsEnabled;
+          const hapticsBtn = document.getElementById('btn-haptics');
+          if (hapticsBtn) {
+            hapticsBtn.setAttribute('aria-pressed', String(hapticsEnabled));
+            document.getElementById('icon-haptics-on').classList.toggle('hidden', !hapticsEnabled);
+            document.getElementById('icon-haptics-off').classList.toggle('hidden', hapticsEnabled);
+          }
+          syncSettingsUI();
+        });
+      }
+
+      if (elSettingToggleSpeedUnit) {
+        elSettingToggleSpeedUnit.addEventListener('click', e => {
+          e.stopPropagation();
+          speedUnitKmh = !speedUnitKmh;
+          syncSettingsUI();
+          updateHUD();
+        });
+      }
+
+      if (elSettingToggleMotion) {
+        elSettingToggleMotion.addEventListener('click', e => {
+          e.stopPropagation();
+          reducedMotion = !reducedMotion;
+          try { localStorage.setItem('wtt-arena-reduced-motion', String(reducedMotion)); } catch (_) {}
+          const motionBtn = document.getElementById('btn-motion');
+          if (motionBtn) {
+            motionBtn.setAttribute('aria-pressed', String(reducedMotion));
+            motionBtn.classList.toggle('active', reducedMotion);
+          }
+          syncSettingsUI();
+        });
+      }
+
       document.getElementById('btn-play-again').addEventListener('click', (e) => {
         e.stopPropagation();
         sound.init();
@@ -4913,8 +5478,9 @@
           }
         } catch (_) {}
 
-
         gameState = 'MENU';
+        if (elTopHud) elTopHud.classList.add('is-menu');
+        if (elStartModal) elStartModal.classList.add('is-open');
         updateHUD();
         lastFrameTime = performance.now();
         requestAnimationFrame(gameLoop);
@@ -4927,17 +5493,40 @@
         } catch (_) {}
       };
 
-
       // #21 Speed unit toggle on readout click
       elSpeedReadout.addEventListener('click', e => {
         e.stopPropagation();
         speedUnitKmh = !speedUnitKmh;
+        syncSettingsUI();
         updateHUD();
       });
 
-      // #20 Keyboard support for desktop
+      // Keyboard & navigation support for desktop
       window.addEventListener('keydown', e => {
-        if (gameState === 'MENU' || gameState === 'GAME_OVER') return;
+        if (e.key === 'Escape' || e.key === 'p' || e.key === 'P') {
+          if (elModalHowToPlay && elModalHowToPlay.classList.contains('is-open')) {
+            closeHowToPlay();
+            return;
+          }
+          if (elModalSettings && elModalSettings.classList.contains('is-open')) {
+            closeSettings();
+            return;
+          }
+          if (elOnlineModal && elOnlineModal.classList.contains('is-open') && gameState === 'MENU') {
+            hideOnlineModal();
+            return;
+          }
+          if (gameState !== 'MENU' && gameState !== 'GAME_OVER') {
+            togglePause();
+            return;
+          }
+        }
+        if (e.key === 'm' || e.key === 'M') {
+          toggleAudioMute();
+          return;
+        }
+
+        if (gameState === 'MENU' || gameState === 'GAME_OVER' || isGamePaused) return;
         const step = 14;
         switch (e.key) {
           case 'ArrowLeft':  player.targetX = Math.max(TABLE.x + 12, player.targetX - step); break;
