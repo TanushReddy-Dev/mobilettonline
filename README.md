@@ -1,6 +1,6 @@
 # 🏓 WTT Arena Pro — Pocket Table Tennis Online
 
-> ### 🎮 **Play Live Now**: [https://tanushreddy-dev.github.io/mobilettonline/](https://tanushreddy-dev.github.io/mobilettonline/)
+> ### 🎮 **Play Live Now**: [https://TanushReddy-Dev.github.io/mobilettonline/](https://TanushReddy-Dev.github.io/mobilettonline/)
 
 A fast, mobile-first 3D table tennis game. Play solo against the AI or challenge a friend to a private peer-to-peer match over WebRTC. No account and no game server: the entire game is a static site.
 
