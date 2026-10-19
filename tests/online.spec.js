@@ -33,6 +33,15 @@ test('host and guest connect, serve, pause, restart and handle a disconnect', as
   await expect(host.locator('#online-badge')).not.toHaveClass(/hidden/);
   await expect(guest.locator('#online-badge')).not.toHaveClass(/hidden/);
 
+  // The old in-HUD difficulty switcher could restart an online match locally
+  // and desync the score. Destructive actions must stay inside the pause hub.
+  for (const page of [host, guest]) {
+    expect(await page.locator('#top-hud .difficulty-btn').count()).toBe(0);
+    expect(await page.locator('#top-hud #btn-restart').count()).toBe(0);
+    expect(await page.locator('#top-hud #btn-practice').count()).toBe(0);
+    expect(await page.locator('#top-hud #btn-online').count()).toBe(0);
+  }
+
   // Tap the host canvas to serve. The host is the first server.
   const box = await host.locator('#table-canvas').boundingBox();
   await host.mouse.move(box.x + box.width / 2, box.y + box.height * 0.7);
@@ -49,16 +58,27 @@ test('host and guest connect, serve, pause, restart and handle a disconnect', as
   await host.locator('#pause-btn-resume').click();
   await expect(guest.locator('#modal-pause')).not.toHaveClass(/is-open/, { timeout: 10_000 });
 
-  // A host restart must reset the guest's match too.
-  await host.locator('#btn-restart').click();
+  // A host restart must reset the guest's match too. Restart now lives inside
+  // the pause hub so an accidental HUD tap cannot interrupt a match.
+  await host.locator('#btn-hud-pause').click();
+  await expect(guest.locator('#modal-pause')).toHaveClass(/is-open/, { timeout: 10_000 });
+  await host.locator('#pause-btn-restart').click();
   await expect(host.locator('#rally-count')).toHaveText('0');
   await expect(guest.locator('#rally-count')).toHaveText('0', { timeout: 10_000 });
   await expect(guest.locator('#top-hud')).not.toHaveClass(/is-menu/);
+  await expect(guest.locator('#modal-pause')).not.toHaveClass(/is-open/, { timeout: 10_000 });
 
   // A guest restart is a request; the host must remain authoritative.
-  await guest.locator('#btn-restart').click();
+  await guest.locator('#btn-hud-pause').click();
+  await expect(guest.locator('#modal-pause')).toHaveClass(/is-open/, { timeout: 10_000 });
+  await guest.locator('#pause-btn-restart').click();
   await expect(host.locator('#point-banner-text')).toContainText('OPPONENT REQUESTED A RESTART');
-  await host.locator('#btn-restart').click();
+  // The request resumes both clients first, so the host re-opens pause to confirm.
+  await host.locator('#btn-hud-pause').click();
+  await expect(guest.locator('#modal-pause')).toHaveClass(/is-open/, { timeout: 10_000 });
+  await host.locator('#pause-btn-restart').click();
+  await expect(host.locator('#rally-count')).toHaveText('0');
+  await expect(guest.locator('#rally-count')).toHaveText('0', { timeout: 10_000 });
   await expect(guest.locator('#top-hud')).not.toHaveClass(/is-menu/);
 
   // Closing the guest must end the match instead of silently falling back to AI.

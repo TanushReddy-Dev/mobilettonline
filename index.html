@@ -28,6 +28,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-amber-300: oklch(87.9% 0.169 91.605);
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-500: oklch(76.9% 0.188 70.08);
     --color-emerald-300: oklch(84.5% 0.143 164.978);
@@ -73,6 +74,7 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
+    --font-weight-black: 900;
     --tracking-wide: 0.025em;
     --tracking-wider: 0.05em;
     --tracking-widest: 0.1em;
@@ -241,6 +243,9 @@
   .pointer-events-none {
     pointer-events: none;
   }
+  .visible {
+    visibility: visible;
+  }
   .absolute {
     position: absolute;
   }
@@ -259,9 +264,6 @@
   .-top-0 {
     top: calc(var(--spacing) * -0);
   }
-  .-top-0\.5 {
-    top: calc(var(--spacing) * -0.5);
-  }
   .-top-1 {
     top: calc(var(--spacing) * -1);
   }
@@ -273,9 +275,6 @@
   }
   .-right-0 {
     right: calc(var(--spacing) * -0);
-  }
-  .-right-0\.5 {
-    right: calc(var(--spacing) * -0.5);
   }
   .-right-1 {
     right: calc(var(--spacing) * -1);
@@ -373,6 +372,9 @@
   .h-9 {
     height: calc(var(--spacing) * 9);
   }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
+  }
   .h-11 {
     height: calc(var(--spacing) * 11);
   }
@@ -412,6 +414,9 @@
   .w-9 {
     width: calc(var(--spacing) * 9);
   }
+  .w-10 {
+    width: calc(var(--spacing) * 10);
+  }
   .w-11 {
     width: calc(var(--spacing) * 11);
   }
@@ -421,8 +426,8 @@
   .w-full {
     width: 100%;
   }
-  .max-w-\[76px\] {
-    max-width: 76px;
+  .max-w-\[92px\] {
+    max-width: 92px;
   }
   .max-w-sm {
     max-width: var(--container-sm);
@@ -618,6 +623,12 @@
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
   }
+  .border-amber-400\/50 {
+    border-color: color-mix(in srgb, oklch(82.8% 0.189 84.429) 50%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-amber-400) 50%, transparent);
+    }
+  }
   .border-amber-500 {
     border-color: var(--color-amber-500);
   }
@@ -711,6 +722,12 @@
   .bg-amber-400 {
     background-color: var(--color-amber-400);
   }
+  .bg-amber-400\/15 {
+    background-color: color-mix(in srgb, oklch(82.8% 0.189 84.429) 15%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-amber-400) 15%, transparent);
+    }
+  }
   .bg-amber-500 {
     background-color: var(--color-amber-500);
   }
@@ -740,12 +757,6 @@
   }
   .bg-slate-800 {
     background-color: var(--color-slate-800);
-  }
-  .bg-slate-800\/80 {
-    background-color: color-mix(in srgb, oklch(27.9% 0.041 260.031) 80%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent);
-    }
   }
   .bg-slate-900 {
     background-color: var(--color-slate-900);
@@ -896,6 +907,9 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
+  .py-\[1px\] {
+    padding-block: 1px;
+  }
   .pt-0 {
     padding-top: calc(var(--spacing) * 0);
   }
@@ -978,6 +992,9 @@
   .text-\[11px\] {
     font-size: 11px;
   }
+  .text-\[26px\] {
+    font-size: 26px;
+  }
   .leading-none {
     --tw-leading: 1;
     line-height: 1;
@@ -989,6 +1006,10 @@
   .leading-snug {
     --tw-leading: var(--leading-snug);
     line-height: var(--leading-snug);
+  }
+  .font-black {
+    --tw-font-weight: var(--font-weight-black);
+    font-weight: var(--font-weight-black);
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
@@ -1006,10 +1027,6 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
-  .tracking-\[0\.25em\] {
-    --tw-tracking: 0.25em;
-    letter-spacing: 0.25em;
-  }
   .tracking-wide {
     --tw-tracking: var(--tracking-wide);
     letter-spacing: var(--tracking-wide);
@@ -1024,6 +1041,9 @@
   }
   .whitespace-nowrap {
     white-space: nowrap;
+  }
+  .text-amber-300 {
+    color: var(--color-amber-300);
   }
   .text-amber-400 {
     color: var(--color-amber-400);
@@ -1069,6 +1089,10 @@
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .tabular-nums {
+    --tw-numeric-spacing: tabular-nums;
+    font-variant-numeric: var(--tw-ordinal,) var(--tw-slashed-zero,) var(--tw-numeric-figure,) var(--tw-numeric-spacing,) var(--tw-numeric-fraction,);
   }
   .underline {
     text-decoration-line: underline;
@@ -1342,6 +1366,26 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-ordinal {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-slashed-zero {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-numeric-figure {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-numeric-spacing {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-numeric-fraction {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-shadow {
   syntax: "*";
   inherits: false;
@@ -1547,6 +1591,11 @@
       --tw-leading: initial;
       --tw-font-weight: initial;
       --tw-tracking: initial;
+      --tw-ordinal: initial;
+      --tw-slashed-zero: initial;
+      --tw-numeric-figure: initial;
+      --tw-numeric-spacing: initial;
+      --tw-numeric-fraction: initial;
       --tw-shadow: 0 0 #0000;
       --tw-shadow-color: initial;
       --tw-shadow-alpha: 100%;
@@ -1628,6 +1677,26 @@
       font-family: Impact, "Arial Narrow", sans-serif;
       letter-spacing: 0.03em;
     }
+    /* Legible, cross-platform numerals for scores and room codes. Impact is
+       missing on most phones, so scores must not depend on it. */
+    .score-digits {
+      font-family: ui-rounded, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums lining-nums;
+      letter-spacing: 0.01em;
+    }
+    .code-digits {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+    }
+    /* Always show a visible focus ring for keyboard users. */
+    button:focus-visible,
+    input:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid rgba(52, 211, 153, 0.9);
+      outline-offset: 2px;
+    }
 
     /* ── Layout Shell ── */
     #game-wrapper {
@@ -1639,6 +1708,17 @@
       background: radial-gradient(circle at 50% 18%, #111827 0%, #060913 65%, #020408 100%);
       box-shadow: 0 0 90px rgba(0,0,0,0.98);
       overflow: hidden;
+    }
+    /* Ambient desktop backdrop so the fixed-width play column does not look
+       like a broken page on large screens. */
+    @media (min-width: 900px) {
+      body::before {
+        content: "";
+        position: fixed; inset: 0; pointer-events: none;
+        background:
+          radial-gradient(560px 380px at 50% 14%, rgba(56, 189, 248, 0.07), transparent 70%),
+          radial-gradient(680px 460px at 50% 96%, rgba(16, 185, 129, 0.05), transparent 72%);
+      }
     }
     canvas {
       display: block; width: 100%; height: 100%;
@@ -1663,8 +1743,9 @@
     .hud-btn {
       position: relative;
       display: inline-flex; align-items: center; justify-content: center;
-      width: 34px; height: 32px;
-      border-radius: 0.5rem;
+      width: 44px; height: 44px;
+      flex-shrink: 0;
+      border-radius: 0.75rem;
       color: #94a3b8;
       background: rgba(15,23,42,0.78);
       border: 1px solid rgba(255,255,255,0.08);
@@ -1759,11 +1840,21 @@
     .btn-danger:hover { background: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.4); }
     .btn-danger:active { transform: scale(0.95); }
 
+    /* Buttons use a cross-platform UI font instead of Impact so labels stay
+       readable when Impact is missing, and keep a 46px touch height. */
+    .btn-primary, .btn-accent, .btn-secondary, .btn-danger {
+      font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+      font-weight: 800;
+      min-height: 46px;
+    }
+    .btn-primary, .btn-accent { font-size: 0.8rem; }
+    .btn-secondary, .btn-danger { font-size: 0.75rem; }
+
     /* ── Close / Icon Button ── */
     .btn-icon {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 36px; height: 36px;
-      border-radius: 0.5rem;
+      width: 44px; height: 44px;
+      border-radius: 0.75rem;
       color: #94a3b8;
       background: rgba(15,23,42,0.5);
       border: 1px solid rgba(255,255,255,0.08);
@@ -1778,6 +1869,8 @@
     .modal-backdrop {
       opacity: 0; visibility: hidden; pointer-events: none;
       transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), visibility 0.22s cubic-bezier(0.16,1,0.3,1);
+      padding-top: max(0.875rem, env(safe-area-inset-top, 0px));
+      padding-bottom: max(0.875rem, env(safe-area-inset-bottom, 0px));
     }
     .modal-backdrop.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
     .modal-card {
@@ -1804,22 +1897,22 @@
       flex-shrink: 0;
     }
     .modal-title { font-family: Impact,"Arial Narrow",sans-serif; font-size: 0.9rem; font-weight: 700; color: #f1f5f9; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; }
-    .modal-subtitle { font-size: 0.65rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.04em; margin-top: 1px; }
+    .modal-subtitle { font-size: 0.7rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.04em; margin-top: 1px; }
 
     /* ── Settings Row ── */
     .setting-row {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0.75rem 0.875rem;
+      padding: 0.65rem 0.875rem;
       border-radius: 0.75rem;
       background: rgba(15,23,42,0.7);
       border: 1px solid rgba(255,255,255,0.07);
     }
-    .setting-label { font-size: 0.75rem; font-weight: 700; color: #e2e8f0; }
-    .setting-desc { font-size: 0.6rem; color: #94a3b8; margin-top: 1px; }
+    .setting-label { font-size: 0.8rem; font-weight: 700; color: #e2e8f0; }
+    .setting-desc { font-size: 0.7rem; color: #94a3b8; margin-top: 1px; }
     .setting-toggle {
-      min-height: 32px; min-width: 48px;
-      padding: 4px 10px; border-radius: 0.4rem;
-      font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+      min-height: 44px; min-width: 58px;
+      padding: 4px 12px; border-radius: 0.5rem;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
       transition: all 0.15s ease; cursor: pointer;
       border: 1px solid;
     }
@@ -1835,9 +1928,13 @@
       border: 1px solid rgba(255,255,255,0.07);
     }
     .score-side { display: flex; flex-direction: column; align-items: center; gap: 1px; }
-    .score-side-label { font-size: 0.55rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
-    .score-side-value { font-family: Impact,"Arial Narrow",sans-serif; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; }
-    .score-divider { font-family: Impact,"Arial Narrow",sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; color: #334155; }
+    .score-side-label { font-size: 0.6rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    .score-side-value {
+      font-family: ui-rounded, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-size: 2rem; font-weight: 800; color: #fff; line-height: 1;
+    }
+    .score-divider { font-family: "Segoe UI", Roboto, system-ui, sans-serif; font-size: 0.65rem; font-weight: 800; letter-spacing: 0.1em; color: #334155; }
 
     /* ── Controls Guide Row ── */
     .guide-row {
@@ -1847,13 +1944,22 @@
       background: rgba(15,23,42,0.7);
       border: 1px solid rgba(255,255,255,0.07);
     }
-    .guide-icon { font-size: 1.25rem; flex-shrink: 0; line-height: 1; margin-top: 1px; }
-    .guide-title { font-size: 0.65rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
-    .guide-desc { font-size: 0.65rem; color: #94a3b8; line-height: 1.4; margin-top: 2px; }
+    .guide-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px; flex-shrink: 0;
+      border-radius: 0.625rem;
+      background: rgba(30,41,59,0.85);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .guide-title { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+    .guide-desc { font-size: 0.72rem; color: #94a3b8; line-height: 1.45; margin-top: 2px; }
 
     /* ── HUD Top-Bar ── */
-    #top-hud { transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), transform 0.22s cubic-bezier(0.16,1,0.3,1); }
-    #top-hud.is-menu { opacity: 0; pointer-events: none; transform: translateY(-8px); }
+    #top-hud {
+      transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), transform 0.22s cubic-bezier(0.16,1,0.3,1);
+      padding-top: calc(0.625rem + env(safe-area-inset-top, 0px));
+    }
+    #top-hud.is-menu { opacity: 0; pointer-events: none; visibility: hidden; transform: translateY(-8px); }
 
     /* ── HUD Banner ── */
     .hud-banner {
@@ -1892,15 +1998,15 @@
       position:absolute; inset:0; z-index:30;
       display:flex; flex-direction:column;
       align-items:center; justify-content:flex-end;
-      padding-bottom:20%; pointer-events:none;
+      padding-bottom:calc(20% + env(safe-area-inset-bottom, 0px)); pointer-events:none;
       transition:opacity 0.5s ease;
     }
     #onboard-overlay.hidden { opacity:0; visibility:hidden; }
     .onboard-hint { display:flex; flex-direction:column; align-items:center; gap:8px; }
-    .onboard-hand { font-size:2rem; animation:swipe-hint 1.5s ease-in-out infinite; }
+    .onboard-hand { display:flex; color:#7dd3fc; animation:swipe-hint 1.5s ease-in-out infinite; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.7)); }
     @keyframes swipe-hint { 0%,100%{transform:translateY(0);opacity:0.75} 50%{transform:translateY(-26px);opacity:1} }
     .onboard-label {
-      font-size:11px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+      font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
       color:rgba(255,255,255,0.78); text-shadow:0 2px 10px rgba(0,0,0,0.95);
     }
 
@@ -1913,28 +2019,90 @@
       border:1px solid rgba(255,255,255,0.07);
       gap:3px;
     }
-    .stat-label { font-size:0.625rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#94a3b8; }
-    .stat-value { font-family:Impact,"Arial Narrow",sans-serif; font-size:0.875rem; font-weight:700; color:#e2e8f0; }
+    .stat-label { font-size:0.7rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#94a3b8; }
+    .stat-value {
+      font-family: ui-rounded, "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-size:0.95rem; font-weight:800; color:#e2e8f0;
+    }
 
     /* ── Accessibility: readable captions and larger touch targets ── */
-    .text-\[9px\] { font-size: 10px; }
-    .text-\[10px\] { font-size: 11px; }
-    .difficulty-btn { min-height: 30px; }
-    #input-room-code:focus { border-color: rgba(52,211,153,0.5); }
+    .text-\[9px\] { font-size: 11px; }
+    .text-\[10px\] { font-size: 12px; }
+    .difficulty-btn { min-height: 44px; font-size: 0.7rem; }
+    #input-room-code:focus {
+      border-color: rgba(52,211,153,0.6);
+      outline: 2px solid rgba(52,211,153,0.7);
+      outline-offset: 2px;
+    }
+    /* Menu touch targets */
+    #menu-btn-sound, #menu-btn-fullscreen { min-width: 44px; min-height: 44px; }
+    #btn-start-match, #btn-open-online { min-height: 48px; font-size: 0.8125rem; }
+    #menu-btn-practice, #menu-btn-how-to-play, #menu-btn-settings { min-height: 54px; }
+    #tab-host, #tab-join { min-height: 44px; }
+    #btn-copy-code, #btn-copy-link { min-height: 44px; }
+
+    /* Speed readout is tappable even though the scoreboard ignores pointers.
+       Negative margins keep the tiny text visual while the hit area stays 44px. */
+    #speed-readout {
+      pointer-events: auto;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: none; border: 0; min-width: 44px; min-height: 44px;
+      padding: 0 12px; margin: -15px -12px;
+      font-size: 11px; line-height: 1.2;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+
+    /* ── How-to-play "more below" hint ── */
+    .howto-more-btn {
+      display: none;
+      width: 100%;
+      padding: 9px 12px;
+      margin-top: 2px;
+      border-radius: 0.625rem;
+      border: 1px dashed rgba(56, 189, 248, 0.35);
+      background: rgba(56, 189, 248, 0.08);
+      color: #7dd3fc;
+      font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer;
+    }
+    .howto-more-btn.visible { display: block; }
+
+    /* ── Portrait orientation prompt ── */
+    #rotate-overlay {
+      position: fixed; inset: 0; z-index: 90;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; padding: 28px; text-align: center;
+      background: rgba(3, 5, 9, 0.97);
+    }
+    #rotate-overlay .rotate-icon {
+      color: #38bdf8;
+      animation: rotate-nudge 2.4s ease-in-out infinite;
+    }
+    @keyframes rotate-nudge { 0%, 45% { transform: rotate(0deg); } 55%, 100% { transform: rotate(-90deg); } }
+    #rotate-overlay h2 {
+      margin: 0;
+      font-family: Impact, "Arial Narrow", sans-serif;
+      font-size: 1.3rem; letter-spacing: 0.08em; text-transform: uppercase; color: #f1f5f9;
+    }
+    #rotate-overlay p { margin: 0; max-width: 300px; font-size: 0.85rem; line-height: 1.5; color: #94a3b8; }
+    @media (orientation: landscape) and (max-height: 520px) {
+      #rotate-overlay { display: flex; }
+      #rotate-overlay.dismissed { display: none; }
+    }
+
     @media (max-width: 520px) {
-      .hud-nav-row { flex-wrap: wrap; row-gap: 4px; }
-      .hud-difficulty { order: 3; flex: 1 0 100%; }
-      .hud-btn { width: 38px; height: 36px; }
       .hud-scoreboard { padding-left: 0.625rem; padding-right: 0.625rem; }
-      .hud-score-side { flex: 1 1 0; min-width: 0; gap: 0.5rem; }
+      .hud-score-side { flex: 1 1 0; min-width: 84px; gap: 0.5rem; }
       .hud-score-center { min-width: 92px; padding-left: 0.5rem; padding-right: 0.5rem; }
-      .hud-score-status { max-width: 64px; }
+      .hud-score-status { max-width: 72px; }
     }
     @media (max-width: 360px) {
-      .hud-btn { width: 32px; height: 32px; }
       .hud-scoreboard { padding-left: 0.5rem; padding-right: 0.5rem; }
-      .hud-score-center { min-width: 74px; }
-      .hud-score-status { display: none; }
+      .hud-score-center { min-width: 76px; }
+      .hud-score-side { min-width: 82px; }
+      .hud-score-status { max-width: 64px; }
     }
   </style>
 </head>
@@ -1947,16 +2115,16 @@
       <div class="hud-scoreboard glass-panel rounded-xl px-3.5 py-2 flex items-center justify-between shadow-xl pointer-events-none">
         <!-- Player Score -->
         <div class="hud-score-side flex items-center gap-2.5 min-w-[104px]">
-          <div class="relative flex items-center justify-center w-9 h-9 rounded-lg bg-slate-900 border border-rose-500/40 shadow-inner">
-            <span id="player-score" class="font-arcade text-2xl font-bold text-white leading-none">0</span>
-            <span id="player-serve-badge" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-400 ring-2 ring-slate-950 shadow-sm" title="Player Serve"></span>
+          <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-slate-900 border border-rose-500/40 shadow-inner">
+            <span id="player-score" class="score-digits text-[26px] text-white leading-none">0</span>
           </div>
           <div class="flex flex-col">
             <div class="flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-              <span class="text-[10px] font-bold uppercase tracking-widest text-slate-300">PLAYER</span>
+              <span class="text-[10px] font-bold uppercase tracking-widest text-slate-300">YOU</span>
+              <span id="player-serve-badge" class="rounded border border-amber-400/50 bg-amber-400/15 px-1 py-[1px] text-[9px] font-black uppercase tracking-wider text-amber-300" title="Player Serve">Serve</span>
             </div>
-            <span id="player-spin-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[76px]">Ready</span>
+            <span id="player-spin-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[92px]">Ready</span>
           </div>
         </div>
 
@@ -1965,10 +2133,10 @@
           <div id="sets-strip"></div>
           <div class="flex items-center gap-1.5">
             <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold" title="Shots in this rally">SHOTS</span>
-            <span id="rally-count" class="font-arcade text-base font-bold text-slate-200">0</span>
+            <span id="rally-count" class="score-digits text-base text-slate-200">0</span>
           </div>
           <div class="flex items-center gap-1 text-[11px] font-semibold">
-            <span id="speed-readout" class="font-arcade tracking-wider speed-med" title="Tap to toggle KM/H · MPH">0 KM/H</span>
+            <button type="button" id="speed-readout" aria-label="Toggle speed unit between KM/H and MPH" class="score-digits tracking-wider speed-med" title="Tap to toggle KM/H · MPH">0 KM/H</button>
           </div>
           <span id="streak-badge" class="hidden text-[9px] font-bold uppercase text-amber-400"></span>
           <span id="online-badge" class="hidden text-[9px] font-bold uppercase text-emerald-400 flex items-center gap-1">
@@ -1977,69 +2145,31 @@
           </span>
         </div>
 
-        <!-- AI Score -->
+        <!-- Opponent Score -->
         <div class="hud-score-side flex items-center justify-end gap-2.5 min-w-[104px]">
           <div class="flex flex-col items-end">
             <div class="flex items-center gap-1.5">
+              <span id="ai-serve-badge" class="hidden rounded border border-amber-400/50 bg-amber-400/15 px-1 py-[1px] text-[9px] font-black uppercase tracking-wider text-amber-300" title="Opponent Serve">Serve</span>
               <span id="ai-name-label" class="text-[10px] font-bold uppercase tracking-widest text-slate-300">RELAXED</span>
               <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
             </div>
-            <span id="ai-status-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[76px]">Standby</span>
+            <span id="ai-status-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[92px]">Standby</span>
           </div>
-          <div class="relative flex items-center justify-center w-9 h-9 rounded-lg bg-slate-900 border border-sky-500/40 shadow-inner">
-            <span id="ai-score" class="font-arcade text-2xl font-bold text-white leading-none">0</span>
-            <span id="ai-serve-badge" class="hidden absolute -top-1 -left-1 w-3 h-3 rounded-full bg-amber-400 ring-2 ring-slate-950 shadow-sm" title="AI Serve"></span>
+          <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-slate-900 border border-sky-500/40 shadow-inner">
+            <span id="ai-score" class="score-digits text-[26px] text-white leading-none">0</span>
           </div>
         </div>
       </div>
 
-      <!-- Navigation, Difficulty Switcher & Utility Buttons -->
-      <div class="hud-nav-row flex items-center justify-between gap-1.5">
-        <button type="button" id="btn-hud-home" aria-label="Main Menu" class="hud-interactive hud-btn" title="Return to Main Menu">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <!-- Utility Controls: Pause is the hub for restart, exit and difficulty -->
+      <div class="hud-nav-row flex items-center justify-end gap-2">
+        <button type="button" id="btn-mute" aria-label="Toggle Audio" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Audio (M)">
+          <svg id="icon-sound-on" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+          <svg id="icon-sound-off" class="hidden w-5 h-5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
         </button>
-        <div class="hud-difficulty glass-panel rounded-lg p-1 flex items-center gap-1 flex-1">
-          <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1 px-2 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all flex items-center justify-center gap-1">
-            <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4l2.5 2.5"></path></svg>
-            <span>Relaxed</span>
-          </button>
-          <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-1 px-2 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all flex items-center justify-center gap-1">
-            <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-            <span>Casual</span>
-          </button>
-          <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-1 px-2 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all flex items-center justify-center gap-1">
-            <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"></path></svg>
-            <span>Pro</span>
-          </button>
-        </div>
-
-        <!-- Action Buttons: Pause, Audio, Haptics, Motion, Practice, Online & Reset -->
-        <div class="flex items-center gap-1">
-          <button type="button" id="btn-hud-pause" aria-label="Pause Match" class="hud-interactive hud-btn" title="Pause Match (Esc / P)">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="4" x2="10" y2="20"></line><line x1="14" y1="4" x2="14" y2="20"></line></svg>
-          </button>
-          <button type="button" id="btn-mute" aria-label="Toggle Audio" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Audio (M)">
-            <svg id="icon-sound-on" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-            <svg id="icon-sound-off" class="hidden w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
-          </button>
-          <button type="button" id="btn-haptics" aria-label="Toggle Vibration" aria-pressed="true" class="hud-interactive hud-btn" title="Toggle Vibration">
-            <svg id="icon-haptics-on" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"></rect><path d="M4 8v8M20 8v8M10 7h4M10 17h4"></path></svg>
-            <svg id="icon-haptics-off" class="hidden w-4 h-4 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"></rect><path d="m4 8 2 2m-2 4 2-2m14-4-2 2m2 4-2-2"></path></svg>
-          </button>
-          <button type="button" id="btn-motion" aria-label="Toggle Motion" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Reduced Motion">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
-          </button>
-          <button type="button" id="btn-practice" aria-label="Toggle Practice" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Practice Mode">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z"></path><polyline points="16 12 12 16 8 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg>
-          </button>
-          <button type="button" id="btn-online" aria-label="Play Online with Code" class="hud-interactive hud-btn relative" title="Play Online with Code">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
-            <span id="online-ping-dot" class="hidden absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-slate-950"></span>
-          </button>
-          <button type="button" id="btn-restart" aria-label="Reset Match" class="hud-interactive hud-btn" title="Reset Match">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-          </button>
-        </div>
+        <button type="button" id="btn-hud-pause" aria-label="Pause Match" class="hud-interactive hud-btn" title="Pause Match (Esc / P)">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="4" x2="10" y2="20"></line><line x1="14" y1="4" x2="14" y2="20"></line></svg>
+        </button>
       </div>
     </header>
 
@@ -2054,7 +2184,7 @@
     </main>
 
     <!-- START MATCH / MAIN MENU SCREEN OVERLAY -->
-    <div id="start-modal" role="dialog" aria-labelledby="start-modal-title" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3.5 sm:p-5">
+    <div id="start-modal" role="dialog" aria-modal="true" aria-labelledby="start-modal-title" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3.5 sm:p-5">
       <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl space-y-3.5 text-center">
         <!-- Top Menu Quick Bar -->
         <div class="flex items-center justify-between pb-0.5">
@@ -2096,14 +2226,14 @@
               <span class="text-[9px] font-semibold text-sky-400">11 Points</span>
             </div>
             <!-- Division Selector Inside Solo Card -->
-            <div class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex items-center gap-1">
-              <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+            <div role="group" aria-label="AI difficulty" class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex items-center gap-1">
+              <button type="button" data-diff="rookie" aria-pressed="true" class="difficulty-btn hud-interactive active flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
                 Relaxed
               </button>
-              <button type="button" data-diff="pro" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+              <button type="button" data-diff="pro" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
                 Casual
               </button>
-              <button type="button" data-diff="grandmaster" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+              <button type="button" data-diff="grandmaster" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
                 Pro
               </button>
             </div>
@@ -2117,7 +2247,7 @@
           <div class="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30 space-y-2">
             <div class="flex items-center justify-between">
               <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Online Multiplayer</span>
-              <span class="text-[9px] font-semibold text-emerald-300">P2P Low Ping</span>
+              <span class="text-[9px] font-semibold text-emerald-300">Peer-to-peer</span>
             </div>
             <button type="button" id="btn-open-online" class="hud-interactive w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg shadow-emerald-500/25 active:scale-95 transition flex items-center justify-center gap-1.5 border border-emerald-400">
               <svg class="w-4 h-4 text-slate-950" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><path d="M2 12h20"></path></svg>
@@ -2157,7 +2287,7 @@
             </div>
             <div>
               <h2 id="match-result-title" class="modal-title">VICTORY</h2>
-              <p id="match-result-subtitle" class="modal-subtitle">Official Match Result</p>
+              <p id="match-result-subtitle" class="modal-subtitle">Match Summary</p>
             </div>
           </div>
         </div>
@@ -2166,7 +2296,7 @@
           <!-- Final Score -->
           <div class="score-box">
             <div class="score-side">
-              <span class="score-side-label" style="color:#fb7185">PLAYER</span>
+              <span class="score-side-label" style="color:#fb7185">YOU</span>
               <span id="final-player-score" class="score-side-value">11</span>
             </div>
             <span class="score-divider">FINAL</span>
@@ -2205,7 +2335,7 @@
             </div>
             <div class="stat-card">
               <svg class="w-3 h-3" style="color:#f59e0b" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-              <div class="stat-label">Sets</div>
+              <div class="stat-label">Format</div>
               <div id="stat-sets" class="stat-value">—</div>
             </div>
           </div>
@@ -2246,7 +2376,7 @@
           <!-- Live Score -->
           <div class="score-box">
             <div class="score-side">
-              <span class="score-side-label" style="color:#fb7185">PLAYER</span>
+              <span class="score-side-label" style="color:#fb7185">YOU</span>
               <span id="pause-player-score" class="score-side-value">0</span>
             </div>
             <span class="score-divider">VS</span>
@@ -2264,12 +2394,12 @@
 
           <button type="button" id="pause-btn-restart" class="btn-secondary hud-interactive">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            RESTART SET
+            RESTART MATCH
           </button>
 
           <div class="grid grid-cols-2 gap-2">
-            <button type="button" id="pause-btn-how-to-play" class="btn-secondary hud-interactive" style="width:auto;font-size:0.65rem">Controls</button>
-            <button type="button" id="pause-btn-settings" class="btn-secondary hud-interactive" style="width:auto;font-size:0.65rem">Settings</button>
+            <button type="button" id="pause-btn-how-to-play" class="btn-secondary hud-interactive" style="width:auto;font-size:0.7rem">Controls</button>
+            <button type="button" id="pause-btn-settings" class="btn-secondary hud-interactive" style="width:auto;font-size:0.7rem">Settings</button>
           </div>
 
           <button type="button" id="pause-btn-main-menu" class="btn-danger hud-interactive">
@@ -2298,10 +2428,12 @@
           </button>
         </div>
 
-        <div class="space-y-2 max-h-[58dvh] overflow-y-auto pr-1">
+        <div id="howto-scroll" class="space-y-2 max-h-[58dvh] overflow-y-auto pr-1">
           <!-- Guide 1: Serving -->
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
-            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">👆</div>
+            <div class="guide-icon text-sky-400" aria-hidden="true">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+            </div>
             <div class="space-y-0.5">
               <h4 class="text-xs font-bold text-sky-400 uppercase tracking-wide">1. Serving</h4>
               <p class="text-[11px] text-slate-300 leading-snug">When it's your turn to serve, pull paddle down and swipe upward across the ball to launch across the net.</p>
@@ -2310,7 +2442,9 @@
 
           <!-- Guide 2: Aiming & Timing -->
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
-            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🏓</div>
+            <div class="guide-icon text-rose-400" aria-hidden="true">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"></circle><path d="M12 2v3M12 19v3M2 12h3M19 12h3"></path></svg>
+            </div>
             <div class="space-y-0.5">
               <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wide">2. Aiming &amp; Returning</h4>
               <p class="text-[11px] text-slate-300 leading-snug">Glide your paddle to intercept the ball after it bounces on your court. Swipe angle and speed direct ball placement.</p>
@@ -2319,7 +2453,9 @@
 
           <!-- Guide 3: Spin & Smashes -->
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
-            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🌪️</div>
+            <div class="guide-icon text-amber-400" aria-hidden="true">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"></path></svg>
+            </div>
             <div class="space-y-0.5">
               <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wide">3. Topspin &amp; Smashes</h4>
               <p class="text-[11px] text-slate-300 leading-snug">Fast upward strokes generate heavy topspin with a sharp table dip. High-speed swings unleash Smash Winners!</p>
@@ -2328,13 +2464,17 @@
 
           <!-- Guide 4: Rules -->
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
-            <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🏆</div>
+            <div class="guide-icon text-emerald-400" aria-hidden="true">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+            </div>
             <div class="space-y-0.5">
               <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wide">4. Rules &amp; Scoring</h4>
               <p class="text-[11px] text-slate-300 leading-snug">First to 11 points wins (must win by 2). Service alternates every 2 points. At 10-10 Deuce, serve alternates every point.</p>
             </div>
           </div>
         </div>
+
+        <button type="button" id="howto-more-btn" class="howto-more-btn hud-interactive">More below — scroll for rules &amp; scoring</button>
 
         <button type="button" class="btn-close-how-to-play hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg active:scale-95 transition">
           GOT IT, LET'S PLAY
@@ -2391,6 +2531,13 @@
             </div>
             <button type="button" id="setting-toggle-motion" class="setting-toggle off hud-interactive" aria-label="Reduced motion" aria-pressed="false">OFF</button>
           </div>
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">Practice Mode</div>
+              <div class="setting-desc">Rally continues without a match point</div>
+            </div>
+            <button type="button" id="setting-toggle-practice" class="setting-toggle off hud-interactive" aria-label="Practice mode" aria-pressed="false">OFF</button>
+          </div>
 
           <button type="button" class="btn-close-settings btn-primary hud-interactive mt-1">
             DONE
@@ -2432,7 +2579,7 @@
           <div id="panel-host" class="space-y-2.5">
             <div class="card-section space-y-2">
               <span class="text-[9px] font-bold uppercase tracking-widest block" style="color:#94a3b8">Your Match Code</span>
-              <div id="host-code-display" class="font-arcade text-2xl font-extrabold tracking-[0.25em] select-all cursor-pointer" style="color:#34d399">. . . . . .</div>
+              <div id="host-code-display" class="code-digits text-2xl select-all cursor-pointer" style="color:#34d399">. . . . . .</div>
               <p class="text-[10px]" style="color:#94a3b8">Share this code with your friend to invite them.</p>
               <div class="flex gap-1.5">
                 <button type="button" id="btn-copy-code" class="btn-secondary hud-interactive flex-1" style="width:auto;font-size:0.65rem;padding:6px 8px">
@@ -2455,7 +2602,7 @@
           <div id="panel-join" class="space-y-2.5 hidden">
             <div class="card-section space-y-2">
               <label for="input-room-code" class="text-[9px] font-bold uppercase tracking-widest block text-left" style="color:#94a3b8">Enter Match Code</label>
-              <input type="text" id="input-room-code" maxlength="6" placeholder="000000" inputmode="text" class="w-full text-center font-arcade text-2xl font-extrabold tracking-[0.25em] uppercase py-2 px-3 rounded-xl focus:outline-none transition" style="background:rgba(5,8,15,0.8);border:1px solid rgba(255,255,255,0.1);color:#34d399" autocomplete="off" autocorrect="off" spellcheck="false" />
+              <input type="text" id="input-room-code" maxlength="6" placeholder="000000" inputmode="text" class="w-full text-center code-digits text-2xl uppercase py-2 px-3 rounded-xl focus:outline-none transition" style="background:rgba(5,8,15,0.8);border:1px solid rgba(255,255,255,0.1);color:#34d399" autocomplete="off" autocorrect="off" spellcheck="false" />
               <p class="text-[10px]" style="color:#94a3b8">Ask your host for their 6-character code.</p>
             </div>
             <button type="button" id="btn-join-room" class="btn-accent hud-interactive">
@@ -2482,9 +2629,21 @@
     <!-- ONBOARDING GESTURE HINT (#19) -->
     <div id="onboard-overlay" class="hidden">
       <div class="onboard-hint">
-        <div class="onboard-hand">👆</div>
+        <div class="onboard-hand" aria-hidden="true">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        </div>
         <p class="onboard-label">Swipe Up to Serve</p>
       </div>
+    </div>
+
+    <!-- PORTRAIT ORIENTATION PROMPT -->
+    <div id="rotate-overlay" role="dialog" aria-modal="true" aria-labelledby="rotate-title">
+      <div class="rotate-icon" aria-hidden="true">
+        <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+      </div>
+      <h2 id="rotate-title">Rotate to Portrait</h2>
+      <p>Pocket Table Tennis is designed for portrait play. Turn your device upright for the full court.</p>
+      <button type="button" id="btn-rotate-dismiss" class="btn-secondary hud-interactive" style="width:auto;min-height:40px;padding:10px 22px">Continue Anyway</button>
     </div>
   </div>
 
@@ -2944,6 +3103,7 @@
       const elSettingToggleHaptics = document.getElementById('setting-toggle-haptics');
       const elSettingToggleSpeedUnit = document.getElementById('setting-toggle-speed-unit');
       const elSettingToggleMotion = document.getElementById('setting-toggle-motion');
+      const elSettingTogglePractice = document.getElementById('setting-toggle-practice');
 
       let isGamePaused = false;
 
@@ -3015,7 +3175,9 @@
         } catch (_) {}
         return Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
       })();
-      let practiceMode = false;
+      let practiceMode = (() => {
+        try { return localStorage.getItem('wtt-practice') === '1'; } catch (_) { return false; }
+      })();
 
       const matchStats = {
         playerScore: 0,
@@ -3307,10 +3469,10 @@
         bCtx.lineTo(bTR.x, bTR.y);
         bCtx.stroke();
 
-        bCtx.fillStyle = 'rgba(226, 232, 240, 0.42)';
+        bCtx.fillStyle = 'rgba(226, 232, 240, 0.26)';
         bCtx.font = '700 10px system-ui, -apple-system, sans-serif';
         bCtx.textAlign = 'center';
-        bCtx.fillText('WTT CHAMPIONSHIP SERIES   •   OFFICIAL ARENA COURT', VW * 0.5, (bTL.y + bBL.y) * 0.5 + 3);
+        bCtx.fillText('WTT CHAMPIONSHIP SERIES   •   ARENA COURT', VW * 0.5, (bTL.y + bBL.y) * 0.5 + 3);
 
         project3D(TABLE.x, TABLE.y, 0, _tFL);
         project3D(TABLE.right, TABLE.y, 0, _tFR);
@@ -3500,10 +3662,10 @@
         bCtx.lineTo(_tNR.x, _tNR.y + apronH);
         bCtx.stroke();
 
-        bCtx.fillStyle = 'rgba(241, 245, 249, 0.82)';
+        bCtx.fillStyle = 'rgba(241, 245, 249, 0.5)';
         bCtx.font = '700 8.5px system-ui, -apple-system, sans-serif';
         bCtx.textAlign = 'center';
-        bCtx.fillText('WTT ARENA PRO   •   ITTF OFFICIAL 25MM', VW * 0.5, _tNL.y + apronH * 0.74);
+        bCtx.fillText('WTT ARENA PRO   •   MATCH GRADE 25MM', VW * 0.5, _tNL.y + apronH * 0.74);
 
         bCtx.restore();
       }
@@ -3572,7 +3734,7 @@
         const kmh = Math.round(ball.speedKmh);
         const displaySpd = speedUnitKmh ? `${kmh} KM/H` : `${Math.round(kmh * 0.621)} MPH`;
         elSpeedReadout.textContent = displaySpd;
-        elSpeedReadout.className = 'font-arcade tracking-wider ' +
+        elSpeedReadout.className = 'score-digits tracking-wider ' +
           (kmh < 60 ? 'speed-low' : kmh < 100 ? 'speed-med' : kmh < 130 ? 'speed-high' : 'speed-max');
 
         if (!isOnline || isHost) {
@@ -3589,7 +3751,7 @@
         if (isOnline) {
           elAiNameLabel.textContent = isHost ? 'GUEST' : 'HOST';
           elOnlineBadge.classList.remove('hidden');
-          elOnlinePingText.textContent = netPingMs > 0 ? `${netPingMs} MS` : 'ONLINE';
+          elOnlinePingText.textContent = netPingMs > 0 ? `PING ${netPingMs} MS` : 'ONLINE';
         } else {
           elAiNameLabel.textContent = aiConfig.name;
           elOnlineBadge.classList.add('hidden');
@@ -3678,7 +3840,7 @@
           ball.vx = 0;
           ball.vy = 0;
           ball.vz = 0;
-          elPlayerSpinLabel.textContent = 'Hold & Swipe to Serve';
+          elPlayerSpinLabel.textContent = 'Your Serve';
           elAiStatusLabel.textContent = 'Receiving';
           maybeShowOnboarding();
           if (specialStatus) {
@@ -3877,7 +4039,7 @@
         if (totalSets > 1) {
           document.getElementById('stat-sets').textContent = `${setsTracker.player}-${setsTracker.ai}`;
         } else {
-          document.getElementById('stat-sets').textContent = '1 Set';
+          document.getElementById('stat-sets').textContent = 'Single Set';
         }
 
         elMatchModal.classList.add('is-open');
@@ -3885,6 +4047,11 @@
       }
 
       function maybeShowOnboarding() {
+        // Only the player who is about to serve sees the swipe hint. Online
+        // guests also wait for the host's authoritative snapshot so the hint
+        // never says "swipe" while the opponent is serving.
+        if (matchStats.server !== 'player') return;
+        if (isOnline && !isHost && lastGuestSnapshotSeq < 0) return;
         try {
           if (!localStorage.getItem('wtt-onboarded')) {
             elOnboardOverlay.classList.remove('hidden');
@@ -3938,8 +4105,11 @@
         if (elModalPause) elModalPause.classList.remove('is-open');
         if (elMatchModal) elMatchModal.classList.remove('is-open');
 
-        // #7 persist practice mode to localStorage
+        // #7 persist practice mode to localStorage (never during online play:
+        // practice scoring is host-local and would desync the opponent).
+        if (isOnline) practiceMode = false;
         try { localStorage.setItem('wtt-practice', practiceMode ? '1' : '0'); } catch (_) {}
+        syncSettingsUI();
 
         player.x = TABLE.centerX;
         player.y = TABLE.bottom - 18;
@@ -5535,11 +5705,15 @@
         difficultyKey = DIFFICULTIES[newDiffKey] ? newDiffKey : 'rookie';
         try { localStorage.setItem('wtt-arena-difficulty', difficultyKey); } catch (_) {}
         aiConfig = DIFFICULTIES[difficultyKey];
-        elAiNameLabel.textContent = aiConfig.name;
+        if (!isOnline) elAiNameLabel.textContent = aiConfig.name;
         document.querySelectorAll('.difficulty-btn').forEach((b) => {
-          b.classList.toggle('active', b.getAttribute('data-diff') === difficultyKey);
+          const isActive = b.getAttribute('data-diff') === difficultyKey;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-pressed', String(isActive));
         });
-        if (shouldRestartIfActive && gameState !== 'MENU' && gameState !== 'GAME_OVER') {
+        // Difficulty is menu-only now; never restart an in-progress (or online)
+        // match from a difficulty control.
+        if (shouldRestartIfActive && !isOnline && gameState !== 'MENU' && gameState !== 'GAME_OVER') {
           startNewMatch();
         }
       }
@@ -5559,11 +5733,6 @@
         toggleAudioMute();
       });
 
-      document.getElementById('btn-haptics').addEventListener('click', (e) => {
-        e.stopPropagation();
-        setHapticsEnabled(!hapticsEnabled);
-      });
-
       const motionButton = document.getElementById('btn-motion');
       if (motionButton) {
         motionButton.addEventListener('click', (e) => {
@@ -5572,34 +5741,17 @@
         });
         renderMotionState();
       }
-      const practiceButton = document.getElementById('btn-practice');
-      if (practiceButton) {
-        // #7 Restore practice mode from localStorage
-        try {
-          const savedPractice = localStorage.getItem('wtt-practice');
-          if (savedPractice === '1') {
-            practiceMode = true;
-            practiceButton.setAttribute('aria-pressed', 'true');
-            practiceButton.classList.add('active');
-          }
-        } catch (_) {}
-        practiceButton.addEventListener('click', (e) => {
+
+      // The HUD restart button moved into the pause dialog so a match cannot
+      // be reset (or an online opponent interrupted) by an accidental tap.
+      const hudRestartButton = document.getElementById('btn-restart');
+      if (hudRestartButton) {
+        hudRestartButton.addEventListener('click', (e) => {
           e.stopPropagation();
-          practiceMode = !practiceMode;
-          try { localStorage.setItem('wtt-practice', practiceMode ? '1' : '0'); } catch (_) {}
-          practiceButton.setAttribute('aria-pressed', String(practiceMode));
-          practiceButton.setAttribute('aria-label', practiceMode ? 'Disable practice mode' : 'Enable practice mode');
-          practiceButton.classList.toggle('active', practiceMode);
-          practiceButton.title = practiceMode ? 'Practice mode on: rallies continue without match point ending the game' : 'Practice without ending the match';
-          showBanner(practiceMode ? 'PRACTICE MODE ON' : 'PRACTICE MODE OFF', 'rgba(56, 189, 248, 0.45)', '#e2e8f0');
+          sound.init();
+          restartMatch();
         });
       }
-
-      document.getElementById('btn-restart').addEventListener('click', (e) => {
-        e.stopPropagation();
-        sound.init();
-        restartMatch();
-      });
 
       document.getElementById('btn-start-match').addEventListener('click', (e) => {
         e.stopPropagation();
@@ -5679,7 +5831,7 @@
           });
 
           netPeer.on('open', () => {
-            setOnlineStatus(`Waiting for opponent to join (Code: ${code})...`, '#10b981', true);
+            setOnlineStatus('Waiting for opponent to join…', '#10b981', true);
           });
 
           netPeer.on('connection', (conn) => {
@@ -5902,13 +6054,14 @@
               if (data.g === 'SERVE' && (prevGameState !== 'SERVE' || prevServer !== matchStats.server)) {
                 hasSwipedToServe = false;
                 if (matchStats.server === 'player') {
-                  if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Hold & Swipe to Serve';
+                  if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Your Serve';
                   if (elAiStatusLabel) elAiStatusLabel.textContent = 'Receiving';
                   maybeShowOnboarding();
                   showBanner('YOUR SERVE — SWIPE UP TO LAUNCH', 'rgba(56, 189, 248, 0.45)', '#38bdf8');
                 } else {
                   if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Receiving';
                   if (elAiStatusLabel) elAiStatusLabel.textContent = 'Service';
+                  elOnboardOverlay.classList.add('hidden');
                   showBanner('OPPONENT SERVICE', 'rgba(56, 189, 248, 0.45)', '#e2e8f0');
                 }
               }
@@ -6306,6 +6459,7 @@
         if (elModalHowToPlay) {
           elModalHowToPlay.classList.add('is-open');
           focusModal(elModalHowToPlay);
+          setTimeout(refreshHowToMore, 60);
         }
       }
       function closeHowToPlay() {
@@ -6331,6 +6485,11 @@
           elSettingToggleMotion.textContent = reducedMotion ? 'ON' : 'OFF';
           elSettingToggleMotion.className = `setting-toggle hud-interactive ${reducedMotion ? 'on' : 'off'}`;
           elSettingToggleMotion.setAttribute('aria-pressed', String(reducedMotion));
+        }
+        if (elSettingTogglePractice) {
+          elSettingTogglePractice.textContent = practiceMode ? 'ON' : 'OFF';
+          elSettingTogglePractice.className = `setting-toggle hud-interactive ${practiceMode ? 'on' : 'off'}`;
+          elSettingTogglePractice.setAttribute('aria-pressed', String(practiceMode));
         }
       }
 
@@ -6509,11 +6668,7 @@
           sound.init();
           practiceMode = true;
           try { localStorage.setItem('wtt-practice', '1'); } catch (_) {}
-          const practiceBtn = document.getElementById('btn-practice');
-          if (practiceBtn) {
-            practiceBtn.setAttribute('aria-pressed', 'true');
-            practiceBtn.classList.add('active');
-          }
+          syncSettingsUI();
           startNewMatch();
           showBanner('PRACTICE COURT ACTIVE — INFINITE RALLY', 'rgba(56, 189, 248, 0.5)', '#38bdf8');
         });
@@ -6610,6 +6765,16 @@
         });
       }
 
+      if (elSettingTogglePractice) {
+        elSettingTogglePractice.addEventListener('click', e => {
+          e.stopPropagation();
+          practiceMode = !practiceMode;
+          try { localStorage.setItem('wtt-practice', practiceMode ? '1' : '0'); } catch (_) {}
+          syncSettingsUI();
+          showBanner(practiceMode ? 'PRACTICE MODE ON' : 'PRACTICE MODE OFF', 'rgba(56, 189, 248, 0.45)', '#e2e8f0');
+        });
+      }
+
       document.getElementById('btn-play-again').addEventListener('click', (e) => {
         e.stopPropagation();
         sound.init();
@@ -6665,11 +6830,53 @@
         requestAnimationFrame(gameLoop);
       };
 
-      // #21 Speed unit toggle on readout click
+      // #21 Speed unit toggle on readout click / keyboard
       elSpeedReadout.addEventListener('click', e => {
         e.stopPropagation();
         setSpeedUnitKmh(!speedUnitKmh);
       });
+
+      elSpeedReadout.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          e.stopPropagation();
+          setSpeedUnitKmh(!speedUnitKmh);
+        }
+      });
+
+      // ── How-to-play "more below" affordance ──
+      const elHowToScroll = document.getElementById('howto-scroll');
+      const elHowToMoreBtn = document.getElementById('howto-more-btn');
+      function refreshHowToMore() {
+        if (!elHowToScroll || !elHowToMoreBtn) return;
+        const scrollable = elHowToScroll.scrollHeight > elHowToScroll.clientHeight + 4;
+        const atBottom = elHowToScroll.scrollTop + elHowToScroll.clientHeight >= elHowToScroll.scrollHeight - 4;
+        elHowToMoreBtn.classList.toggle('visible', scrollable && !atBottom);
+      }
+      if (elHowToScroll) {
+        elHowToScroll.addEventListener('scroll', refreshHowToMore, { passive: true });
+      }
+      if (elHowToMoreBtn && elHowToScroll) {
+        elHowToMoreBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          elHowToScroll.scrollTo({ top: elHowToScroll.scrollHeight, behavior: 'smooth' });
+        });
+      }
+      window.addEventListener('resize', refreshHowToMore);
+
+      // ── Portrait prompt for short landscape viewports ──
+      const elRotateOverlay = document.getElementById('rotate-overlay');
+      const elBtnRotateDismiss = document.getElementById('btn-rotate-dismiss');
+      if (elBtnRotateDismiss && elRotateOverlay) {
+        elBtnRotateDismiss.addEventListener('click', e => {
+          e.stopPropagation();
+          elRotateOverlay.classList.add('dismissed');
+        });
+      }
+      const portraitQuery = window.matchMedia('(orientation: portrait)');
+      const resetRotatePrompt = () => { if (elRotateOverlay) elRotateOverlay.classList.remove('dismissed'); };
+      if (portraitQuery.addEventListener) portraitQuery.addEventListener('change', resetRotatePrompt);
+      else if (portraitQuery.addListener) portraitQuery.addListener(resetRotatePrompt);
 
       // Keep keyboard focus inside the topmost open dialog.
       window.addEventListener('keydown', e => {

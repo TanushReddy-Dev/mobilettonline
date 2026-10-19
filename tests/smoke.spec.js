@@ -138,3 +138,89 @@ test('keeps keyboard focus inside the open dialog', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(page.locator('#modal-settings')).not.toHaveClass(/is-open/);
 });
+
+test('keeps HUD controls inside the app frame with touch-sized targets', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.goto('/');
+  await page.getByRole('button', { name: /play solo match/i }).click();
+  await expect(page.locator('#top-hud')).not.toHaveClass(/is-menu/);
+
+  const metrics = await page.evaluate(() => {
+    const wrapper = document.getElementById('game-wrapper').getBoundingClientRect();
+    const hud = document.getElementById('top-hud');
+    const buttons = Array.from(hud.querySelectorAll('button')).map(b => {
+      const r = b.getBoundingClientRect();
+      return {
+        id: b.id,
+        width: r.width,
+        height: r.height,
+        inside: r.left >= wrapper.left - 1 && r.right <= wrapper.right + 1 &&
+                r.top >= wrapper.top - 1 && r.bottom <= wrapper.bottom + 1
+      };
+    });
+    return { buttons, clipped: hud.scrollWidth > hud.clientWidth + 1 };
+  });
+
+  expect(metrics.clipped).toBe(false);
+  expect(metrics.buttons.length).toBeGreaterThanOrEqual(3);
+  for (const button of metrics.buttons) {
+    expect(button.inside, button.id).toBe(true);
+    expect(button.width, button.id).toBeGreaterThanOrEqual(43.5);
+    expect(button.height, button.id).toBeGreaterThanOrEqual(43.5);
+  }
+});
+
+test('keeps difficulty and destructive actions out of the HUD', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('#start-modal .difficulty-btn')).toHaveCount(3);
+
+  await page.getByRole('button', { name: /play solo match/i }).click();
+  await expect(page.locator('#top-hud')).not.toHaveClass(/is-menu/);
+
+  await expect(page.locator('#top-hud .difficulty-btn')).toHaveCount(0);
+  await expect(page.locator('#top-hud #btn-restart')).toHaveCount(0);
+  await expect(page.locator('#top-hud #btn-practice')).toHaveCount(0);
+  await expect(page.locator('#player-serve-badge')).toBeVisible();
+
+  // Restart is still available, but only through the pause hub.
+  await page.locator('#btn-hud-pause').click();
+  await expect(page.locator('#modal-pause')).toHaveClass(/is-open/);
+  await expect(page.locator('#pause-btn-restart')).toHaveText(/RESTART MATCH/);
+});
+
+test('prompts portrait play in a short landscape viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.goto('/');
+
+  await expect(page.locator('#rotate-overlay')).toBeVisible();
+  await page.getByRole('button', { name: /continue anyway/i }).click();
+  await expect(page.locator('#rotate-overlay')).toBeHidden();
+  await expect(page.locator('#start-modal')).toHaveClass(/is-open/);
+});
+
+test('hints that how-to-play scrolls on small screens', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto('/');
+  await page.locator('#menu-btn-how-to-play').click();
+
+  const hint = page.locator('#howto-more-btn');
+  await expect(hint).toHaveClass(/visible/);
+  await hint.click();
+  await expect(hint).not.toHaveClass(/visible/);
+  await expect.poll(() => page.evaluate(() => {
+    const scroller = document.getElementById('howto-scroll');
+    return scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 6;
+  })).toBe(true);
+});
+
+test('toggles the speed unit from the HUD readout', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /play solo match/i }).click();
+
+  const speed = page.locator('#speed-readout');
+  await expect(speed).toHaveText(/KM\/H/);
+  await speed.click();
+  await expect(speed).toHaveText(/MPH/);
+  await speed.click();
+  await expect(speed).toHaveText(/KM\/H/);
+});
