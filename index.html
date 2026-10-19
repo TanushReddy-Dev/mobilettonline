@@ -4,10 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>WTT Arena Pro — 3D Championship Table Tennis</title>
-  <!-- PeerJS WebRTC P2P DataChannel Library for Online Play -->
-  <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+  <meta name="description" content="A fast, mobile-first 3D table tennis game. Play solo against AI or challenge a friend with a private P2P match code." />
+  <meta name="theme-color" content="#030509" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta property="og:title" content="WTT Arena Pro — Pocket Table Tennis" />
+  <meta property="og:description" content="Play 3D table tennis solo or online with a friend. No install, no server, just a match code." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="WTT Arena Pro — Pocket Table Tennis" />
+  <meta name="twitter:description" content="Play 3D table tennis solo or online with a friend. No install, no server, just a match code." />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <style id="tailwind-bundle">
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; } }
 /*! tailwindcss v4.1.10 | MIT License | https://tailwindcss.com */
 @layer properties;
 @layer theme, base, components, utilities;
@@ -19,8 +30,15 @@
       "Courier New", monospace;
     --color-amber-400: oklch(82.8% 0.189 84.429);
     --color-amber-500: oklch(76.9% 0.188 70.08);
+    --color-emerald-300: oklch(84.5% 0.143 164.978);
+    --color-emerald-400: oklch(76.5% 0.177 163.223);
+    --color-emerald-500: oklch(69.6% 0.17 162.48);
+    --color-teal-500: oklch(70.4% 0.14 182.503);
+    --color-teal-600: oklch(60% 0.118 184.704);
     --color-sky-400: oklch(74.6% 0.16 232.661);
     --color-sky-500: oklch(68.5% 0.169 237.323);
+    --color-sky-600: oklch(58.8% 0.158 241.966);
+    --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-rose-400: oklch(71.2% 0.194 13.428);
     --color-rose-500: oklch(64.5% 0.246 16.439);
     --color-slate-100: oklch(96.8% 0.007 247.896);
@@ -36,6 +54,7 @@
     --color-white: #fff;
     --spacing: 0.25rem;
     --container-xs: 20rem;
+    --container-sm: 24rem;
     --text-xs: 0.75rem;
     --text-xs--line-height: calc(1 / 0.75);
     --text-sm: 0.875rem;
@@ -54,13 +73,18 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --font-weight-extrabold: 800;
+    --tracking-wide: 0.025em;
     --tracking-wider: 0.05em;
     --tracking-widest: 0.1em;
+    --leading-snug: 1.375;
     --leading-relaxed: 1.625;
     --radius-md: 0.375rem;
     --radius-lg: 0.5rem;
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
+    --drop-shadow-md: 0 3px 3px rgb(0 0 0 / 0.12);
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --blur-md: 12px;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -220,23 +244,47 @@
   .absolute {
     position: absolute;
   }
+  .fixed {
+    position: fixed;
+  }
   .relative {
     position: relative;
+  }
+  .static {
+    position: static;
   }
   .inset-0 {
     inset: calc(var(--spacing) * 0);
   }
+  .-top-0 {
+    top: calc(var(--spacing) * -0);
+  }
+  .-top-0\.5 {
+    top: calc(var(--spacing) * -0.5);
+  }
   .-top-1 {
     top: calc(var(--spacing) * -1);
   }
+  .top-2 {
+    top: calc(var(--spacing) * 2);
+  }
   .top-2\.5 {
     top: calc(var(--spacing) * 2.5);
+  }
+  .-right-0 {
+    right: calc(var(--spacing) * -0);
+  }
+  .-right-0\.5 {
+    right: calc(var(--spacing) * -0.5);
   }
   .-right-1 {
     right: calc(var(--spacing) * -1);
   }
   .-left-1 {
     left: calc(var(--spacing) * -1);
+  }
+  .left-1 {
+    left: calc(var(--spacing) * 1);
   }
   .left-1\/2 {
     left: calc(1/2 * 100%);
@@ -253,11 +301,26 @@
   .z-50 {
     z-index: 50;
   }
-  .mt-0\.5 {
-    margin-top: calc(var(--spacing) * 0.5);
+  .mt-0 {
+    margin-top: calc(var(--spacing) * 0);
+  }
+  .mt-1 {
+    margin-top: calc(var(--spacing) * 1);
+  }
+  .mb-0 {
+    margin-bottom: calc(var(--spacing) * 0);
+  }
+  .mb-0\.5 {
+    margin-bottom: calc(var(--spacing) * 0.5);
   }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
+  }
+  .block {
+    display: block;
+  }
+  .contents {
+    display: contents;
   }
   .flex {
     display: flex;
@@ -268,20 +331,38 @@
   .hidden {
     display: none;
   }
+  .inline {
+    display: inline;
+  }
   .inline-block {
     display: inline-block;
   }
   .inline-flex {
     display: inline-flex;
   }
+  .table {
+    display: table;
+  }
+  .h-1 {
+    height: calc(var(--spacing) * 1);
+  }
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
+  }
+  .h-2 {
+    height: calc(var(--spacing) * 2);
   }
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
+  .h-3\.5 {
+    height: calc(var(--spacing) * 3.5);
+  }
   .h-4 {
     height: calc(var(--spacing) * 4);
+  }
+  .h-5 {
+    height: calc(var(--spacing) * 5);
   }
   .h-6 {
     height: calc(var(--spacing) * 6);
@@ -292,17 +373,35 @@
   .h-9 {
     height: calc(var(--spacing) * 9);
   }
+  .h-11 {
+    height: calc(var(--spacing) * 11);
+  }
   .h-12 {
     height: calc(var(--spacing) * 12);
+  }
+  .max-h-\[58dvh\] {
+    max-height: 58dvh;
+  }
+  .w-1 {
+    width: calc(var(--spacing) * 1);
   }
   .w-1\.5 {
     width: calc(var(--spacing) * 1.5);
   }
+  .w-2 {
+    width: calc(var(--spacing) * 2);
+  }
   .w-3 {
     width: calc(var(--spacing) * 3);
   }
+  .w-3\.5 {
+    width: calc(var(--spacing) * 3.5);
+  }
   .w-4 {
     width: calc(var(--spacing) * 4);
+  }
+  .w-5 {
+    width: calc(var(--spacing) * 5);
   }
   .w-6 {
     width: calc(var(--spacing) * 6);
@@ -313,6 +412,9 @@
   .w-9 {
     width: calc(var(--spacing) * 9);
   }
+  .w-11 {
+    width: calc(var(--spacing) * 11);
+  }
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
@@ -321,6 +423,9 @@
   }
   .max-w-\[76px\] {
     max-width: 76px;
+  }
+  .max-w-sm {
+    max-width: var(--container-sm);
   }
   .max-w-xs {
     max-width: var(--container-xs);
@@ -334,11 +439,32 @@
   .flex-1 {
     flex: 1;
   }
+  .flex-shrink {
+    flex-shrink: 1;
+  }
+  .flex-shrink-0 {
+    flex-shrink: 0;
+  }
   .shrink-0 {
     flex-shrink: 0;
   }
+  .border-collapse {
+    border-collapse: collapse;
+  }
+  .transform {
+    transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .animate-pulse {
+    animation: var(--animate-pulse);
+  }
+  .cursor-pointer {
+    cursor: pointer;
+  }
   .resize {
     resize: both;
+  }
+  .grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -346,11 +472,17 @@
   .flex-col {
     flex-direction: column;
   }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
   .items-center {
     align-items: center;
   }
   .items-end {
     align-items: flex-end;
+  }
+  .items-start {
+    align-items: flex-start;
   }
   .justify-between {
     justify-content: space-between;
@@ -360,6 +492,12 @@
   }
   .justify-end {
     justify-content: flex-end;
+  }
+  .gap-0 {
+    gap: calc(var(--spacing) * 0);
+  }
+  .gap-0\.5 {
+    gap: calc(var(--spacing) * 0.5);
   }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
@@ -376,11 +514,25 @@
   .gap-6 {
     gap: calc(var(--spacing) * 6);
   }
-  .space-y-1\.5 {
+  .space-y-0 {
     :where(& > :not(:last-child)) {
       --tw-space-y-reverse: 0;
-      margin-block-start: calc(calc(var(--spacing) * 1.5) * var(--tw-space-y-reverse));
-      margin-block-end: calc(calc(var(--spacing) * 1.5) * calc(1 - var(--tw-space-y-reverse)));
+      margin-block-start: calc(calc(var(--spacing) * 0) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 0) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-0\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 0.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 0.5) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-1 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 1) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 1) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .space-y-2 {
@@ -388,6 +540,27 @@
       --tw-space-y-reverse: 0;
       margin-block-start: calc(calc(var(--spacing) * 2) * var(--tw-space-y-reverse));
       margin-block-end: calc(calc(var(--spacing) * 2) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-2\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 2.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 2.5) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-3 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 3) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 3) * calc(1 - var(--tw-space-y-reverse)));
+    }
+  }
+  .space-y-3\.5 {
+    :where(& > :not(:last-child)) {
+      --tw-space-y-reverse: 0;
+      margin-block-start: calc(calc(var(--spacing) * 3.5) * var(--tw-space-y-reverse));
+      margin-block-end: calc(calc(var(--spacing) * 3.5) * calc(1 - var(--tw-space-y-reverse)));
     }
   }
   .space-y-5 {
@@ -411,6 +584,9 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-y-auto {
+    overflow-y: auto;
   }
   .rounded {
     border-radius: 0.25rem;
@@ -438,11 +614,33 @@
     border-inline-style: var(--tw-border-style);
     border-inline-width: 1px;
   }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
+  .border-amber-500 {
+    border-color: var(--color-amber-500);
+  }
   .border-amber-500\/30 {
     border-color: color-mix(in srgb, oklch(76.9% 0.188 70.08) 30%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-amber-500) 30%, transparent);
     }
+  }
+  .border-emerald-400 {
+    border-color: var(--color-emerald-400);
+  }
+  .border-emerald-500 {
+    border-color: var(--color-emerald-500);
+  }
+  .border-emerald-500\/30 {
+    border-color: color-mix(in srgb, oklch(69.6% 0.17 162.48) 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-emerald-500) 30%, transparent);
+    }
+  }
+  .border-rose-500 {
+    border-color: var(--color-rose-500);
   }
   .border-rose-500\/40 {
     border-color: color-mix(in srgb, oklch(64.5% 0.246 16.439) 40%, transparent);
@@ -450,10 +648,22 @@
       border-color: color-mix(in oklab, var(--color-rose-500) 40%, transparent);
     }
   }
-  .border-sky-500\/20 {
-    border-color: color-mix(in srgb, oklch(68.5% 0.169 237.323) 20%, transparent);
+  .border-sky-400 {
+    border-color: var(--color-sky-400);
+  }
+  .border-sky-400\/40 {
+    border-color: color-mix(in srgb, oklch(74.6% 0.16 232.661) 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-sky-500) 20%, transparent);
+      border-color: color-mix(in oklab, var(--color-sky-400) 40%, transparent);
+    }
+  }
+  .border-sky-500 {
+    border-color: var(--color-sky-500);
+  }
+  .border-sky-500\/30 {
+    border-color: color-mix(in srgb, oklch(68.5% 0.169 237.323) 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-sky-500) 30%, transparent);
     }
   }
   .border-sky-500\/40 {
@@ -461,6 +671,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-sky-500) 40%, transparent);
     }
+  }
+  .border-slate-700 {
+    border-color: var(--color-slate-700);
   }
   .border-slate-700\/80 {
     border-color: color-mix(in srgb, oklch(37.2% 0.044 257.287) 80%, transparent);
@@ -470,6 +683,12 @@
   }
   .border-slate-800 {
     border-color: var(--color-slate-800);
+  }
+  .border-slate-800\/60 {
+    border-color: color-mix(in srgb, oklch(27.9% 0.041 260.031) 60%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      border-color: color-mix(in oklab, var(--color-slate-800) 60%, transparent);
+    }
   }
   .border-slate-800\/80 {
     border-color: color-mix(in srgb, oklch(27.9% 0.041 260.031) 80%, transparent);
@@ -486,8 +705,14 @@
   .border-transparent {
     border-color: transparent;
   }
+  .border-white {
+    border-color: var(--color-white);
+  }
   .bg-amber-400 {
     background-color: var(--color-amber-400);
+  }
+  .bg-amber-500 {
+    background-color: var(--color-amber-500);
   }
   .bg-amber-500\/10 {
     background-color: color-mix(in srgb, oklch(76.9% 0.188 70.08) 10%, transparent);
@@ -495,32 +720,50 @@
       background-color: color-mix(in oklab, var(--color-amber-500) 10%, transparent);
     }
   }
+  .bg-emerald-400 {
+    background-color: var(--color-emerald-400);
+  }
   .bg-rose-500 {
     background-color: var(--color-rose-500);
   }
   .bg-sky-400 {
     background-color: var(--color-sky-400);
   }
-  .bg-sky-500\/10 {
-    background-color: color-mix(in srgb, oklch(68.5% 0.169 237.323) 10%, transparent);
+  .bg-sky-500 {
+    background-color: var(--color-sky-500);
+  }
+  .bg-sky-500\/15 {
+    background-color: color-mix(in srgb, oklch(68.5% 0.169 237.323) 15%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-sky-500) 10%, transparent);
+      background-color: color-mix(in oklab, var(--color-sky-500) 15%, transparent);
+    }
+  }
+  .bg-slate-800 {
+    background-color: var(--color-slate-800);
+  }
+  .bg-slate-800\/80 {
+    background-color: color-mix(in srgb, oklch(27.9% 0.041 260.031) 80%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent);
     }
   }
   .bg-slate-900 {
     background-color: var(--color-slate-900);
   }
-  .bg-slate-900\/70 {
-    background-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 70%, transparent);
+  .bg-slate-900\/80 {
+    background-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 80%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-900) 70%, transparent);
+      background-color: color-mix(in oklab, var(--color-slate-900) 80%, transparent);
     }
   }
-  .bg-slate-950\/88 {
-    background-color: color-mix(in srgb, oklch(12.9% 0.042 264.695) 88%, transparent);
+  .bg-slate-900\/90 {
+    background-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 90%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-950) 88%, transparent);
+      background-color: color-mix(in oklab, var(--color-slate-900) 90%, transparent);
     }
+  }
+  .bg-slate-950 {
+    background-color: var(--color-slate-950);
   }
   .bg-slate-950\/90 {
     background-color: color-mix(in srgb, oklch(12.9% 0.042 264.695) 90%, transparent);
@@ -528,14 +771,79 @@
       background-color: color-mix(in oklab, var(--color-slate-950) 90%, transparent);
     }
   }
+  .bg-slate-950\/92 {
+    background-color: color-mix(in srgb, oklch(12.9% 0.042 264.695) 92%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      background-color: color-mix(in oklab, var(--color-slate-950) 92%, transparent);
+    }
+  }
   .bg-white {
     background-color: var(--color-white);
+  }
+  .bg-gradient-to-r {
+    --tw-gradient-position: to right in oklab;
+    background-image: linear-gradient(var(--tw-gradient-stops));
+  }
+  .bg-gradient-to-tr {
+    --tw-gradient-position: to top right in oklab;
+    background-image: linear-gradient(var(--tw-gradient-stops));
+  }
+  .from-emerald-500 {
+    --tw-gradient-from: var(--color-emerald-500);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-sky-600 {
+    --tw-gradient-from: var(--color-sky-600);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .from-sky-600\/30 {
+    --tw-gradient-from: color-mix(in srgb, oklch(58.8% 0.158 241.966) 30%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-gradient-from: color-mix(in oklab, var(--color-sky-600) 30%, transparent);
+    }
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-blue-500 {
+    --tw-gradient-to: var(--color-blue-500);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-blue-500\/20 {
+    --tw-gradient-to: color-mix(in srgb, oklch(62.3% 0.214 259.815) 20%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-gradient-to: color-mix(in oklab, var(--color-blue-500) 20%, transparent);
+    }
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .to-teal-600 {
+    --tw-gradient-to: var(--color-teal-600);
+    --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+  }
+  .p-0 {
+    padding: calc(var(--spacing) * 0);
+  }
+  .p-0\.5 {
+    padding: calc(var(--spacing) * 0.5);
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
   }
+  .p-1\.5 {
+    padding: calc(var(--spacing) * 1.5);
+  }
+  .p-2 {
+    padding: calc(var(--spacing) * 2);
+  }
   .p-2\.5 {
     padding: calc(var(--spacing) * 2.5);
+  }
+  .p-3 {
+    padding: calc(var(--spacing) * 3);
+  }
+  .p-3\.5 {
+    padding: calc(var(--spacing) * 3.5);
+  }
+  .p-4 {
+    padding: calc(var(--spacing) * 4);
   }
   .p-5 {
     padding: calc(var(--spacing) * 5);
@@ -543,8 +851,11 @@
   .p-6 {
     padding: calc(var(--spacing) * 6);
   }
-  .px-0\.5 {
-    padding-inline: calc(var(--spacing) * 0.5);
+  .px-0 {
+    padding-inline: calc(var(--spacing) * 0);
+  }
+  .px-1 {
+    padding-inline: calc(var(--spacing) * 1);
   }
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
@@ -561,6 +872,12 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
+  .px-5 {
+    padding-inline: calc(var(--spacing) * 5);
+  }
+  .py-0 {
+    padding-block: calc(var(--spacing) * 0);
+  }
   .py-0\.5 {
     padding-block: calc(var(--spacing) * 0.5);
   }
@@ -573,17 +890,50 @@
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
+  .py-2\.5 {
+    padding-block: calc(var(--spacing) * 2.5);
+  }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
-  .py-3\.5 {
-    padding-block: calc(var(--spacing) * 3.5);
+  .pt-0 {
+    padding-top: calc(var(--spacing) * 0);
+  }
+  .pt-0\.5 {
+    padding-top: calc(var(--spacing) * 0.5);
+  }
+  .pt-2 {
+    padding-top: calc(var(--spacing) * 2);
   }
   .pt-2\.5 {
     padding-top: calc(var(--spacing) * 2.5);
   }
+  .pt-4 {
+    padding-top: calc(var(--spacing) * 4);
+  }
+  .pt-5 {
+    padding-top: calc(var(--spacing) * 5);
+  }
+  .pr-1 {
+    padding-right: calc(var(--spacing) * 1);
+  }
+  .pb-0 {
+    padding-bottom: calc(var(--spacing) * 0);
+  }
+  .pb-0\.5 {
+    padding-bottom: calc(var(--spacing) * 0.5);
+  }
+  .pb-1 {
+    padding-bottom: calc(var(--spacing) * 1);
+  }
   .pb-1\.5 {
     padding-bottom: calc(var(--spacing) * 1.5);
+  }
+  .pb-2 {
+    padding-bottom: calc(var(--spacing) * 2);
+  }
+  .pb-5 {
+    padding-bottom: calc(var(--spacing) * 5);
   }
   .text-center {
     text-align: center;
@@ -636,6 +986,10 @@
     --tw-leading: var(--leading-relaxed);
     line-height: var(--leading-relaxed);
   }
+  .leading-snug {
+    --tw-leading: var(--leading-snug);
+    line-height: var(--leading-snug);
+  }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
@@ -652,6 +1006,14 @@
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
   }
+  .tracking-\[0\.25em\] {
+    --tw-tracking: 0.25em;
+    letter-spacing: 0.25em;
+  }
+  .tracking-wide {
+    --tw-tracking: var(--tracking-wide);
+    letter-spacing: var(--tracking-wide);
+  }
   .tracking-wider {
     --tw-tracking: var(--tracking-wider);
     letter-spacing: var(--tracking-wider);
@@ -665,6 +1027,12 @@
   }
   .text-amber-400 {
     color: var(--color-amber-400);
+  }
+  .text-emerald-300 {
+    color: var(--color-emerald-300);
+  }
+  .text-emerald-400 {
+    color: var(--color-emerald-400);
   }
   .text-rose-400 {
     color: var(--color-rose-400);
@@ -690,6 +1058,9 @@
   .text-slate-600 {
     color: var(--color-slate-600);
   }
+  .text-slate-900 {
+    color: var(--color-slate-900);
+  }
   .text-slate-950 {
     color: var(--color-slate-950);
   }
@@ -698,6 +1069,9 @@
   }
   .uppercase {
     text-transform: uppercase;
+  }
+  .underline {
+    text-decoration-line: underline;
   }
   .antialiased {
     -webkit-font-smoothing: antialiased;
@@ -715,6 +1089,10 @@
     --tw-shadow: 0 10px 15px -3px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 4px 6px -4px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .shadow-md {
+    --tw-shadow: 0 4px 6px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 2px 4px -2px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
   .shadow-sm {
     --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -723,15 +1101,51 @@
     --tw-shadow: 0 20px 25px -5px var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 8px 10px -6px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .ring {
+    --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
   .ring-2 {
     --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor);
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
+  .shadow-emerald-500 {
+    --tw-shadow-color: oklch(69.6% 0.17 162.48);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-shadow-color: color-mix(in oklab, var(--color-emerald-500) var(--tw-shadow-alpha), transparent);
+    }
+  }
+  .shadow-emerald-500\/25 {
+    --tw-shadow-color: color-mix(in srgb, oklch(69.6% 0.17 162.48) 25%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-emerald-500) 25%, transparent) var(--tw-shadow-alpha), transparent);
+    }
+  }
   .ring-slate-950 {
     --tw-ring-color: var(--color-slate-950);
   }
+  .outline {
+    outline-style: var(--tw-outline-style);
+    outline-width: 1px;
+  }
+  .blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .drop-shadow-md {
+    --tw-drop-shadow-size: drop-shadow(0 3px 3px var(--tw-drop-shadow-color, rgb(0 0 0 / 0.12)));
+    --tw-drop-shadow: drop-shadow(var(--drop-shadow-md));
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
+  .filter {
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .backdrop-blur-md {
     --tw-backdrop-blur: blur(var(--blur-md));
+    -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+  }
+  .backdrop-filter {
     -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
     backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
   }
@@ -744,6 +1158,14 @@
     transition-property: all;
     transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--default-transition-duration));
+  }
+  .ease-in-out {
+    --tw-ease: var(--ease-in-out);
+    transition-timing-function: var(--ease-in-out);
+  }
+  .select-all {
+    -webkit-user-select: all;
+    user-select: all;
   }
   .select-none {
     -webkit-user-select: none;
@@ -765,17 +1187,33 @@
       color: var(--color-white);
     }
   }
-  .hover\:border-slate-700 {
-    &:hover {
-      @media (hover: hover) {
-        border-color: var(--color-slate-700);
-      }
-    }
-  }
   .hover\:bg-slate-100 {
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-slate-100);
+      }
+    }
+  }
+  .hover\:bg-slate-800 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-slate-800);
+      }
+    }
+  }
+  .hover\:from-emerald-400 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-gradient-from: var(--color-emerald-400);
+        --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
+      }
+    }
+  }
+  .hover\:to-teal-500 {
+    &:hover {
+      @media (hover: hover) {
+        --tw-gradient-to: var(--color-teal-500);
+        --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
       }
     }
   }
@@ -786,6 +1224,12 @@
       }
     }
   }
+  .focus\:outline-none {
+    &:focus {
+      --tw-outline-style: none;
+      outline-style: none;
+    }
+  }
   .active\:scale-95 {
     &:active {
       --tw-scale-x: 95%;
@@ -794,6 +1238,45 @@
       scale: var(--tw-scale-x) var(--tw-scale-y);
     }
   }
+  .sm\:p-5 {
+    @media (width >= 40rem) {
+      padding: calc(var(--spacing) * 5);
+    }
+  }
+  .sm\:text-3xl {
+    @media (width >= 40rem) {
+      font-size: var(--text-3xl);
+      line-height: var(--tw-leading, var(--text-3xl--line-height));
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+@property --tw-rotate-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-rotate-z {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-skew-y {
+  syntax: "*";
+  inherits: false;
 }
 @property --tw-space-y-reverse {
   syntax: "*";
@@ -804,6 +1287,48 @@
   syntax: "*";
   inherits: false;
   initial-value: solid;
+}
+@property --tw-gradient-position {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-via {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-to {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: #0000;
+}
+@property --tw-gradient-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-via-stops {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-gradient-from-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+@property --tw-gradient-via-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+@property --tw-gradient-to-position {
+  syntax: "<length-percentage>";
+  inherits: false;
+  initial-value: 100%;
 }
 @property --tw-leading {
   syntax: "*";
@@ -882,6 +1407,64 @@
   inherits: false;
   initial-value: 0 0 #0000;
 }
+@property --tw-outline-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-blur {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-brightness {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-contrast {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-grayscale {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-hue-rotate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-invert {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-opacity {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-saturate {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-sepia {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-color {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-drop-shadow-alpha {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 100%;
+}
+@property --tw-drop-shadow-size {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-backdrop-blur {
   syntax: "*";
   inherits: false;
@@ -918,6 +1501,10 @@
   syntax: "*";
   inherits: false;
 }
+@property --tw-ease {
+  syntax: "*";
+  inherits: false;
+}
 @property --tw-scale-x {
   syntax: "*";
   inherits: false;
@@ -933,11 +1520,30 @@
   inherits: false;
   initial-value: 1;
 }
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
     *, ::before, ::after, ::backdrop {
+      --tw-rotate-x: initial;
+      --tw-rotate-y: initial;
+      --tw-rotate-z: initial;
+      --tw-skew-x: initial;
+      --tw-skew-y: initial;
       --tw-space-y-reverse: 0;
       --tw-border-style: solid;
+      --tw-gradient-position: initial;
+      --tw-gradient-from: #0000;
+      --tw-gradient-via: #0000;
+      --tw-gradient-to: #0000;
+      --tw-gradient-stops: initial;
+      --tw-gradient-via-stops: initial;
+      --tw-gradient-from-position: 0%;
+      --tw-gradient-via-position: 50%;
+      --tw-gradient-to-position: 100%;
       --tw-leading: initial;
       --tw-font-weight: initial;
       --tw-tracking: initial;
@@ -955,6 +1561,20 @@
       --tw-ring-offset-width: 0px;
       --tw-ring-offset-color: #fff;
       --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-outline-style: solid;
+      --tw-blur: initial;
+      --tw-brightness: initial;
+      --tw-contrast: initial;
+      --tw-grayscale: initial;
+      --tw-hue-rotate: initial;
+      --tw-invert: initial;
+      --tw-opacity: initial;
+      --tw-saturate: initial;
+      --tw-sepia: initial;
+      --tw-drop-shadow: initial;
+      --tw-drop-shadow-color: initial;
+      --tw-drop-shadow-alpha: 100%;
+      --tw-drop-shadow-size: initial;
       --tw-backdrop-blur: initial;
       --tw-backdrop-brightness: initial;
       --tw-backdrop-contrast: initial;
@@ -964,13 +1584,13 @@
       --tw-backdrop-opacity: initial;
       --tw-backdrop-saturate: initial;
       --tw-backdrop-sepia: initial;
+      --tw-ease: initial;
       --tw-scale-x: 1;
       --tw-scale-y: 1;
       --tw-scale-z: 1;
     }
   }
 }
-
   </style>
   <style>
     /* ═══════════════════════════════════════════
@@ -981,8 +1601,6 @@
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      -webkit-user-select: none;
     }
     html, body {
       margin: 0; padding: 0;
@@ -991,6 +1609,18 @@
       background-color: #030509;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* Panels and instructions are readable/selectable; controls stay tap-safe. */
+    .modal-card {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+    .modal-card button,
+    .modal-card .hud-interactive {
+      -webkit-user-select: none;
+      user-select: none;
     }
 
     /* ── Typography ── */
@@ -1132,9 +1762,9 @@
     /* ── Close / Icon Button ── */
     .btn-icon {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 32px; height: 32px;
+      width: 36px; height: 36px;
       border-radius: 0.5rem;
-      color: #64748b;
+      color: #94a3b8;
       background: rgba(15,23,42,0.5);
       border: 1px solid rgba(255,255,255,0.08);
       transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
@@ -1152,6 +1782,7 @@
     .modal-backdrop.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
     .modal-card {
       max-height: 94dvh; overflow-y: auto; overscroll-behavior: contain;
+      touch-action: pan-y;
       transform: translateY(10px) scale(0.96);
       transition: transform 0.24s cubic-bezier(0.16,1,0.3,1);
     }
@@ -1173,7 +1804,7 @@
       flex-shrink: 0;
     }
     .modal-title { font-family: Impact,"Arial Narrow",sans-serif; font-size: 0.9rem; font-weight: 700; color: #f1f5f9; letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.1; }
-    .modal-subtitle { font-size: 0.6rem; color: #64748b; font-weight: 600; letter-spacing: 0.04em; margin-top: 1px; }
+    .modal-subtitle { font-size: 0.65rem; color: #94a3b8; font-weight: 600; letter-spacing: 0.04em; margin-top: 1px; }
 
     /* ── Settings Row ── */
     .setting-row {
@@ -1184,15 +1815,16 @@
       border: 1px solid rgba(255,255,255,0.07);
     }
     .setting-label { font-size: 0.75rem; font-weight: 700; color: #e2e8f0; }
-    .setting-desc { font-size: 0.6rem; color: #475569; margin-top: 1px; }
+    .setting-desc { font-size: 0.6rem; color: #94a3b8; margin-top: 1px; }
     .setting-toggle {
+      min-height: 32px; min-width: 48px;
       padding: 4px 10px; border-radius: 0.4rem;
       font-size: 0.6rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
       transition: all 0.15s ease; cursor: pointer;
       border: 1px solid;
     }
     .setting-toggle.on  { background: rgba(16,185,129,0.15); color: #34d399; border-color: rgba(16,185,129,0.35); }
-    .setting-toggle.off { background: rgba(15,23,42,0.8);    color: #475569;  border-color: rgba(255,255,255,0.08); }
+    .setting-toggle.off { background: rgba(15,23,42,0.8);    color: #94a3b8;  border-color: rgba(255,255,255,0.08); }
 
     /* ── Score Box (shared in pause / post-match) ── */
     .score-box {
@@ -1257,13 +1889,13 @@
 
     /* ── Onboarding Swipe Hint ── */
     #onboard-overlay {
-      position:absolute; inset:0; z-index:60;
+      position:absolute; inset:0; z-index:30;
       display:flex; flex-direction:column;
       align-items:center; justify-content:flex-end;
       padding-bottom:20%; pointer-events:none;
       transition:opacity 0.5s ease;
     }
-    #onboard-overlay.hidden { opacity:0; }
+    #onboard-overlay.hidden { opacity:0; visibility:hidden; }
     .onboard-hint { display:flex; flex-direction:column; align-items:center; gap:8px; }
     .onboard-hand { font-size:2rem; animation:swipe-hint 1.5s ease-in-out infinite; }
     @keyframes swipe-hint { 0%,100%{transform:translateY(0);opacity:0.75} 50%{transform:translateY(-26px);opacity:1} }
@@ -1281,8 +1913,29 @@
       border:1px solid rgba(255,255,255,0.07);
       gap:3px;
     }
-    .stat-label { font-size:0.55rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#475569; }
+    .stat-label { font-size:0.625rem; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:#94a3b8; }
     .stat-value { font-family:Impact,"Arial Narrow",sans-serif; font-size:0.875rem; font-weight:700; color:#e2e8f0; }
+
+    /* ── Accessibility: readable captions and larger touch targets ── */
+    .text-\[9px\] { font-size: 10px; }
+    .text-\[10px\] { font-size: 11px; }
+    .difficulty-btn { min-height: 30px; }
+    #input-room-code:focus { border-color: rgba(52,211,153,0.5); }
+    @media (max-width: 520px) {
+      .hud-nav-row { flex-wrap: wrap; row-gap: 4px; }
+      .hud-difficulty { order: 3; flex: 1 0 100%; }
+      .hud-btn { width: 38px; height: 36px; }
+      .hud-scoreboard { padding-left: 0.625rem; padding-right: 0.625rem; }
+      .hud-score-side { flex: 1 1 0; min-width: 0; gap: 0.5rem; }
+      .hud-score-center { min-width: 92px; padding-left: 0.5rem; padding-right: 0.5rem; }
+      .hud-score-status { max-width: 64px; }
+    }
+    @media (max-width: 360px) {
+      .hud-btn { width: 32px; height: 32px; }
+      .hud-scoreboard { padding-left: 0.5rem; padding-right: 0.5rem; }
+      .hud-score-center { min-width: 74px; }
+      .hud-score-status { display: none; }
+    }
   </style>
 </head>
 <body class="text-slate-100 antialiased selection:bg-sky-500 selection:text-white">
@@ -1291,9 +1944,9 @@
     <!-- TOP HUD: Scoreboard & Controls -->
     <header id="top-hud" class="z-20 px-3 pt-2.5 pb-1.5 flex flex-col gap-1.5 shrink-0 select-none">
       <!-- Broadcast Scoreboard -->
-      <div class="glass-panel rounded-xl px-3.5 py-2 flex items-center justify-between shadow-xl pointer-events-none">
+      <div class="hud-scoreboard glass-panel rounded-xl px-3.5 py-2 flex items-center justify-between shadow-xl pointer-events-none">
         <!-- Player Score -->
-        <div class="flex items-center gap-2.5 min-w-[104px]">
+        <div class="hud-score-side flex items-center gap-2.5 min-w-[104px]">
           <div class="relative flex items-center justify-center w-9 h-9 rounded-lg bg-slate-900 border border-rose-500/40 shadow-inner">
             <span id="player-score" class="font-arcade text-2xl font-bold text-white leading-none">0</span>
             <span id="player-serve-badge" class="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-400 ring-2 ring-slate-950 shadow-sm" title="Player Serve"></span>
@@ -1303,15 +1956,15 @@
               <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
               <span class="text-[10px] font-bold uppercase tracking-widest text-slate-300">PLAYER</span>
             </div>
-            <span id="player-spin-label" class="text-[11px] text-slate-400 font-medium truncate max-w-[76px]">Ready</span>
+            <span id="player-spin-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[76px]">Ready</span>
           </div>
         </div>
 
         <!-- Center Telemetry -->
-        <div class="flex flex-col items-center justify-center px-3 border-x border-slate-800/90 min-w-[108px]">
+        <div class="hud-score-center flex flex-col items-center justify-center px-3 border-x border-slate-800/90 min-w-[108px]">
           <div id="sets-strip"></div>
           <div class="flex items-center gap-1.5">
-            <span class="text-[9px] uppercase tracking-widest text-slate-500 font-bold" title="Shots in this rally">SHOTS</span>
+            <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold" title="Shots in this rally">SHOTS</span>
             <span id="rally-count" class="font-arcade text-base font-bold text-slate-200">0</span>
           </div>
           <div class="flex items-center gap-1 text-[11px] font-semibold">
@@ -1325,13 +1978,13 @@
         </div>
 
         <!-- AI Score -->
-        <div class="flex items-center justify-end gap-2.5 min-w-[104px]">
+        <div class="hud-score-side flex items-center justify-end gap-2.5 min-w-[104px]">
           <div class="flex flex-col items-end">
             <div class="flex items-center gap-1.5">
               <span id="ai-name-label" class="text-[10px] font-bold uppercase tracking-widest text-slate-300">RELAXED</span>
               <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
             </div>
-            <span id="ai-status-label" class="text-[11px] text-slate-400 font-medium truncate max-w-[76px]">Standby</span>
+            <span id="ai-status-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[76px]">Standby</span>
           </div>
           <div class="relative flex items-center justify-center w-9 h-9 rounded-lg bg-slate-900 border border-sky-500/40 shadow-inner">
             <span id="ai-score" class="font-arcade text-2xl font-bold text-white leading-none">0</span>
@@ -1341,11 +1994,11 @@
       </div>
 
       <!-- Navigation, Difficulty Switcher & Utility Buttons -->
-      <div class="flex items-center justify-between gap-1.5">
+      <div class="hud-nav-row flex items-center justify-between gap-1.5">
         <button type="button" id="btn-hud-home" aria-label="Main Menu" class="hud-interactive hud-btn" title="Return to Main Menu">
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         </button>
-        <div class="glass-panel rounded-lg p-1 flex items-center gap-1 flex-1">
+        <div class="hud-difficulty glass-panel rounded-lg p-1 flex items-center gap-1 flex-1">
           <button type="button" data-diff="rookie" class="difficulty-btn hud-interactive active flex-1 py-1 px-2 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all flex items-center justify-center gap-1">
             <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v4l2.5 2.5"></path></svg>
             <span>Relaxed</span>
@@ -1383,7 +2036,7 @@
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
             <span id="online-ping-dot" class="hidden absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-slate-950"></span>
           </button>
-          <button type="button" id="btn-restart" class="hud-interactive hud-btn" title="Reset Match">
+          <button type="button" id="btn-restart" aria-label="Reset Match" class="hud-interactive hud-btn" title="Reset Match">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
           </button>
         </div>
@@ -1395,13 +2048,13 @@
       <canvas id="table-canvas"></canvas>
 
       <!-- Broadcast Status Banner -->
-      <div id="point-banner" class="hud-banner absolute left-1/2 top-2.5 z-10 px-4 py-1 rounded-md bg-slate-950/90 border border-slate-700/80 shadow-xl flex items-center gap-2 whitespace-nowrap pointer-events-none">
+      <div id="point-banner" role="status" aria-live="polite" class="hud-banner absolute left-1/2 top-2.5 z-10 px-4 py-1 rounded-md bg-slate-950/90 border border-slate-700/80 shadow-xl flex items-center gap-2 whitespace-nowrap pointer-events-none">
         <span id="point-banner-text" class="font-arcade font-bold text-xs tracking-widest uppercase text-slate-100">POINT PLAYER</span>
       </div>
     </main>
 
     <!-- START MATCH / MAIN MENU SCREEN OVERLAY -->
-    <div id="start-modal" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3.5 sm:p-5">
+    <div id="start-modal" role="dialog" aria-labelledby="start-modal-title" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3.5 sm:p-5">
       <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl space-y-3.5 text-center">
         <!-- Top Menu Quick Bar -->
         <div class="flex items-center justify-between pb-0.5">
@@ -1412,11 +2065,11 @@
             <span>WTT Championship Pro</span>
           </div>
           <div class="flex items-center gap-1">
-            <button type="button" id="menu-btn-sound" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Sound">
+            <button type="button" id="menu-btn-sound" aria-label="Toggle sound" aria-pressed="false" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Sound">
               <svg class="w-3.5 h-3.5 menu-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
               <svg class="w-3.5 h-3.5 menu-sound-off hidden text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line></svg>
             </button>
-            <button type="button" id="menu-btn-fullscreen" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Fullscreen">
+            <button type="button" id="menu-btn-fullscreen" aria-label="Toggle fullscreen" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Fullscreen">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
             </button>
           </div>
@@ -1430,7 +2083,7 @@
               <path d="M10.5 4.5a7.5 7.5 0 0 0-6 11.5L2 20l4-2.5a7.5 7.5 0 0 0 11.5-6c0-4.14-3.36-7-7-7z"></path>
             </svg>
           </div>
-          <h1 class="font-arcade text-2xl sm:text-3xl font-extrabold tracking-wider text-white uppercase drop-shadow-md">WTT ARENA PRO</h1>
+          <h1 id="start-modal-title" class="font-arcade text-2xl sm:text-3xl font-extrabold tracking-wider text-white uppercase drop-shadow-md">WTT ARENA PRO</h1>
           <p class="text-[11px] text-sky-400 font-medium">3D Table Tennis Championship</p>
         </div>
 
@@ -1454,7 +2107,7 @@
                 Pro
               </button>
             </div>
-            <button type="button" id="btn-start-match" class="hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-md active:scale-95 transition flex items-center justify-center gap-1.5 border border-white">
+            <button type="button" id="btn-start-match" data-autofocus class="hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-md active:scale-95 transition flex items-center justify-center gap-1.5 border border-white">
               <svg class="w-4 h-4 text-slate-900" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
               <span>PLAY SOLO MATCH</span>
             </button>
@@ -1488,11 +2141,12 @@
             <span class="text-[9px] font-bold uppercase tracking-wider">Settings</span>
           </button>
         </div>
+        <p class="text-[9px] leading-snug text-slate-400 pt-0.5">Unofficial fan project · Not affiliated with World Table Tennis</p>
       </div>
     </div>
 
     <!-- POST-MATCH SUMMARY MODAL -->
-    <div id="match-modal" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="match-modal" role="dialog" aria-modal="true" aria-labelledby="match-result-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
       <div class="modal-card glass-panel rounded-2xl max-w-xs w-full border border-slate-800/60 shadow-2xl overflow-hidden">
 
         <!-- Header -->
@@ -1545,7 +2199,7 @@
               <div id="stat-aces" class="stat-value">0</div>
             </div>
             <div class="stat-card">
-              <svg class="w-3 h-3" style="color:#475569" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+              <svg class="w-3 h-3" style="color:#94a3b8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
               <div class="stat-label">Faults</div>
               <div id="stat-faults" class="stat-value">0</div>
             </div>
@@ -1558,9 +2212,9 @@
 
           <!-- Actions -->
           <div class="space-y-2">
-            <button type="button" id="btn-play-again" class="btn-primary hud-interactive">
+            <button type="button" id="btn-play-again" data-autofocus class="btn-primary hud-interactive">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-              REMATCH
+              <span id="btn-play-again-label">REMATCH</span>
             </button>
             <button type="button" id="btn-match-menu" class="btn-secondary hud-interactive">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -1572,7 +2226,7 @@
     </div>
 
     <!-- IN-GAME PAUSE MODAL -->
-    <div id="modal-pause" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="modal-pause" role="dialog" aria-modal="true" aria-labelledby="pause-modal-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
       <div class="modal-card glass-panel rounded-2xl max-w-xs w-full border border-slate-800/60 shadow-2xl overflow-hidden">
 
         <!-- Header -->
@@ -1582,7 +2236,7 @@
               <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="10" y1="4" x2="10" y2="20"/><line x1="14" y1="4" x2="14" y2="20"/></svg>
             </div>
             <div>
-              <h2 class="modal-title">MATCH PAUSED</h2>
+              <h2 id="pause-modal-title" class="modal-title">MATCH PAUSED</h2>
               <p class="modal-subtitle">Game is frozen</p>
             </div>
           </div>
@@ -1603,7 +2257,7 @@
           </div>
 
           <!-- Actions -->
-          <button type="button" id="pause-btn-resume" class="btn-accent hud-interactive">
+          <button type="button" id="pause-btn-resume" data-autofocus class="btn-accent hud-interactive">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             RESUME MATCH
           </button>
@@ -1627,7 +2281,7 @@
     </div>
 
     <!-- HOW TO PLAY / CONTROLS MODAL -->
-    <div id="modal-how-to-play" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="modal-how-to-play" role="dialog" aria-modal="true" aria-labelledby="how-to-play-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
       <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl text-left space-y-3.5">
         <div class="flex items-center justify-between pb-2 border-b border-slate-800/80">
           <div class="flex items-center gap-2">
@@ -1635,11 +2289,11 @@
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
             </div>
             <div>
-              <h2 class="font-arcade text-base font-bold text-white tracking-wider uppercase">HOW TO PLAY</h2>
-              <p class="text-[10px] text-slate-400 font-medium">Controls & Championship Rules</p>
+              <h2 id="how-to-play-title" class="font-arcade text-base font-bold text-white tracking-wider uppercase">HOW TO PLAY</h2>
+              <p class="text-[10px] text-slate-400 font-medium">Controls &amp; Championship Rules</p>
             </div>
           </div>
-          <button type="button" class="btn-close-how-to-play p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition">
+          <button type="button" class="btn-close-how-to-play p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition" aria-label="Close how to play">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
@@ -1658,7 +2312,7 @@
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
             <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🏓</div>
             <div class="space-y-0.5">
-              <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wide">2. Aiming & Returning</h4>
+              <h4 class="text-xs font-bold text-rose-400 uppercase tracking-wide">2. Aiming &amp; Returning</h4>
               <p class="text-[11px] text-slate-300 leading-snug">Glide your paddle to intercept the ball after it bounces on your court. Swipe angle and speed direct ball placement.</p>
             </div>
           </div>
@@ -1667,7 +2321,7 @@
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
             <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🌪️</div>
             <div class="space-y-0.5">
-              <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wide">3. Topspin & Smashes</h4>
+              <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wide">3. Topspin &amp; Smashes</h4>
               <p class="text-[11px] text-slate-300 leading-snug">Fast upward strokes generate heavy topspin with a sharp table dip. High-speed swings unleash Smash Winners!</p>
             </div>
           </div>
@@ -1676,15 +2330,20 @@
           <div class="p-2.5 rounded-xl bg-slate-900/80 border border-slate-800/80 flex items-start gap-2.5">
             <div class="text-lg shrink-0 p-1 bg-slate-800/80 rounded-lg">🏆</div>
             <div class="space-y-0.5">
-              <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wide">4. Rules & Scoring</h4>
+              <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wide">4. Rules &amp; Scoring</h4>
               <p class="text-[11px] text-slate-300 leading-snug">First to 11 points wins (must win by 2). Service alternates every 2 points. At 10-10 Deuce, serve alternates every point.</p>
             </div>
           </div>
         </div>
 
         <button type="button" class="btn-close-how-to-play hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-arcade font-bold text-xs text-slate-950 tracking-wider uppercase shadow-lg active:scale-95 transition">
-         <!-- SETTINGS MODAL -->
-    <div id="modal-settings" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
+          GOT IT, LET'S PLAY
+        </button>
+      </div>
+    </div>
+
+    <!-- SETTINGS MODAL -->
+    <div id="modal-settings" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
       <div class="modal-card glass-panel rounded-2xl max-w-sm w-full border border-slate-800/60 shadow-2xl overflow-hidden">
 
         <!-- Header -->
@@ -1694,11 +2353,11 @@
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             </div>
             <div>
-              <h2 class="modal-title">SETTINGS</h2>
+              <h2 id="settings-modal-title" class="modal-title">SETTINGS</h2>
               <p class="modal-subtitle">Audio, Vibration &amp; Gameplay</p>
             </div>
           </div>
-          <button type="button" class="btn-close-settings btn-icon">
+          <button type="button" class="btn-close-settings btn-icon" aria-label="Close settings">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
@@ -1709,28 +2368,28 @@
               <div class="setting-label">Sound Effects</div>
               <div class="setting-desc">Paddle hits and crowd ambience</div>
             </div>
-            <button type="button" id="setting-toggle-sound" class="setting-toggle on hud-interactive">ON</button>
+            <button type="button" id="setting-toggle-sound" class="setting-toggle on hud-interactive" aria-label="Sound effects" aria-pressed="true">ON</button>
           </div>
           <div class="setting-row">
             <div>
               <div class="setting-label">Haptic Feedback</div>
               <div class="setting-desc">Vibrate on hits (mobile)</div>
             </div>
-            <button type="button" id="setting-toggle-haptics" class="setting-toggle on hud-interactive">ON</button>
+            <button type="button" id="setting-toggle-haptics" class="setting-toggle on hud-interactive" aria-label="Haptic feedback" aria-pressed="true">ON</button>
           </div>
           <div class="setting-row">
             <div>
               <div class="setting-label">Speed Unit</div>
               <div class="setting-desc">Speedometer unit display</div>
             </div>
-            <button type="button" id="setting-toggle-speed-unit" class="setting-toggle off hud-interactive">KM/H</button>
+            <button type="button" id="setting-toggle-speed-unit" class="setting-toggle off hud-interactive" aria-label="Speed unit">KM/H</button>
           </div>
           <div class="setting-row">
             <div>
               <div class="setting-label">Reduced Motion</div>
               <div class="setting-desc">Reduce screen shake and tilt</div>
             </div>
-            <button type="button" id="setting-toggle-motion" class="setting-toggle off hud-interactive">OFF</button>
+            <button type="button" id="setting-toggle-motion" class="setting-toggle off hud-interactive" aria-label="Reduced motion" aria-pressed="false">OFF</button>
           </div>
 
           <button type="button" class="btn-close-settings btn-primary hud-interactive mt-1">
@@ -1740,24 +2399,24 @@
       </div>
     </div>
     <!-- ONLINE MULTIPLAYER MODAL -->
-    <div id="online-modal" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="online-modal" role="dialog" aria-modal="true" aria-labelledby="online-modal-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
       <div class="modal-card glass-panel rounded-2xl max-w-xs w-full border border-slate-800/60 shadow-2xl overflow-hidden">
 
         <!-- Header -->
         <div class="modal-header px-5 pt-5" style="border-bottom-color:rgba(255,255,255,0.06)">
           <div class="modal-header-left">
-            <button type="button" id="btn-back-online" class="btn-icon" title="Back to Main Menu">
+            <button type="button" id="btn-back-online" class="btn-icon" aria-label="Back to main menu" title="Back to Main Menu">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
             </button>
             <div class="modal-icon" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#34d399">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
             </div>
             <div>
-              <h2 class="modal-title">ONLINE ARENA</h2>
+              <h2 id="online-modal-title" class="modal-title">ONLINE ARENA</h2>
               <p id="online-status-badge" class="modal-subtitle" style="color:#34d399">P2P Low Latency</p>
             </div>
           </div>
-          <button type="button" id="btn-close-online" class="btn-icon">
+          <button type="button" id="btn-close-online" class="btn-icon" aria-label="Close online arena">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
         </div>
@@ -1765,22 +2424,22 @@
         <div class="px-5 pb-5 pt-4 space-y-3">
           <!-- Host / Join Tab Strip -->
           <div class="flex items-center gap-1 p-0.5 rounded-xl" style="background:rgba(5,8,15,0.7);border:1px solid rgba(255,255,255,0.06)">
-            <button type="button" id="tab-host" class="online-tab-btn hud-interactive active flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition-all" style="color:#64748b">Host Match</button>
-            <button type="button" id="tab-join" class="online-tab-btn hud-interactive flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition-all" style="color:#64748b">Join Match</button>
+            <button type="button" id="tab-host" class="online-tab-btn hud-interactive active flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition-all" style="color:#94a3b8">Host Match</button>
+            <button type="button" id="tab-join" class="online-tab-btn hud-interactive flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition-all" style="color:#94a3b8">Join Match</button>
           </div>
 
           <!-- Host Panel -->
           <div id="panel-host" class="space-y-2.5">
             <div class="card-section space-y-2">
-              <span class="text-[9px] font-bold uppercase tracking-widest block" style="color:#64748b">Your Match Code</span>
-              <div id="host-code-display" class="font-arcade text-2xl font-extrabold tracking-[0.25em] select-all cursor-pointer" style="color:#34d399">. . . .</div>
-              <p class="text-[10px]" style="color:#475569">Share this code with your friend to invite them.</p>
+              <span class="text-[9px] font-bold uppercase tracking-widest block" style="color:#94a3b8">Your Match Code</span>
+              <div id="host-code-display" class="font-arcade text-2xl font-extrabold tracking-[0.25em] select-all cursor-pointer" style="color:#34d399">. . . . . .</div>
+              <p class="text-[10px]" style="color:#94a3b8">Share this code with your friend to invite them.</p>
               <div class="flex gap-1.5">
-                <button type="button" id="btn-copy-code" class="btn-secondary hud-interactive flex-1" style="width:auto;font-size:0.6rem;padding:6px 8px">
+                <button type="button" id="btn-copy-code" class="btn-secondary hud-interactive flex-1" style="width:auto;font-size:0.65rem;padding:6px 8px">
                   <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
                   <span id="copy-code-text">Copy Code</span>
                 </button>
-                <button type="button" id="btn-copy-link" class="btn-secondary hud-interactive flex-1" style="width:auto;font-size:0.6rem;padding:6px 8px">
+                <button type="button" id="btn-copy-link" class="btn-secondary hud-interactive flex-1" style="width:auto;font-size:0.65rem;padding:6px 8px">
                   <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                   <span id="copy-link-text">Invite Link</span>
                 </button>
@@ -1795,9 +2454,9 @@
           <!-- Join Panel -->
           <div id="panel-join" class="space-y-2.5 hidden">
             <div class="card-section space-y-2">
-              <label for="input-room-code" class="text-[9px] font-bold uppercase tracking-widest block text-left" style="color:#64748b">Enter Match Code</label>
-              <input type="text" id="input-room-code" maxlength="6" placeholder="0000" class="w-full text-center font-arcade text-2xl font-extrabold tracking-[0.25em] uppercase py-2 px-3 rounded-xl focus:outline-none transition" style="background:rgba(5,8,15,0.8);border:1px solid rgba(255,255,255,0.1);color:#34d399" autocomplete="off" autocorrect="off" spellcheck="false" onfocus="this.style.borderColor='rgba(52,211,153,0.5)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" />
-              <p class="text-[10px]" style="color:#475569">Ask your host for their 4-digit code.</p>
+              <label for="input-room-code" class="text-[9px] font-bold uppercase tracking-widest block text-left" style="color:#94a3b8">Enter Match Code</label>
+              <input type="text" id="input-room-code" maxlength="6" placeholder="000000" inputmode="text" class="w-full text-center font-arcade text-2xl font-extrabold tracking-[0.25em] uppercase py-2 px-3 rounded-xl focus:outline-none transition" style="background:rgba(5,8,15,0.8);border:1px solid rgba(255,255,255,0.1);color:#34d399" autocomplete="off" autocorrect="off" spellcheck="false" />
+              <p class="text-[10px]" style="color:#94a3b8">Ask your host for their 6-character code.</p>
             </div>
             <button type="button" id="btn-join-room" class="btn-accent hud-interactive">
               <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -1808,7 +2467,7 @@
           <!-- Live Status Bar -->
           <div id="online-status-bar" class="flex items-center justify-center gap-2 py-2 px-3 rounded-xl text-[10px]" style="background:rgba(5,8,15,0.6);border:1px solid rgba(255,255,255,0.06)">
             <span id="online-status-dot" class="w-2 h-2 rounded-full flex-shrink-0" style="background:#334155"></span>
-            <span id="online-status-text" style="color:#475569">Select Host or Join to start</span>
+            <span id="online-status-text" aria-live="polite" style="color:#94a3b8">Select Host or Join to start</span>
           </div>
 
           <!-- Active match controls (Leave Online Match) -->
@@ -1817,10 +2476,6 @@
               Leave Online Match
             </button>
           </div>
-        </div>
-      </div>
-    </div>ne Match
-          </button>
         </div>
       </div>
     </div>
@@ -1932,9 +2587,19 @@
         }
       };
 
-      let audioMuted = false;
-      let hapticsEnabled = true;
-      let speedUnitKmh = true; // #21 toggleable speed unit
+      function readStoredBool(key, fallback) {
+        try {
+          const saved = localStorage.getItem(key);
+          if (saved === null) return fallback;
+          return saved === 'true' || saved === '1';
+        } catch (_) {
+          return fallback;
+        }
+      }
+
+      let audioMuted = readStoredBool('wtt-arena-muted', false);
+      let hapticsEnabled = readStoredBool('wtt-arena-haptics', true);
+      let speedUnitKmh = readStoredBool('wtt-arena-speed-kmh', true); // #21 toggleable speed unit
       const winningScore = 11;
       const totalSets   = 1;
 
@@ -2290,6 +2955,29 @@
       let currentRoomCode = '';
       let netPingMs = 0;
       let lastPingSent = 0;
+      let lastHostSnapshotAt = 0;
+      let lastGuestPaddleAt = 0;
+      let hostSnapshotSeq = 0;
+      let lastGuestSnapshotSeq = -1;
+      let lastGuestHudAt = 0;
+      let lastGuestHudKey = '';
+      let lastNetworkActivityAt = 0;
+      let onlineDisconnected = false;
+      let onlineRequestId = 0;
+
+      const NET_SNAPSHOT_INTERVAL = 1000 / 30;
+      const NET_PADDLE_INTERVAL = 1000 / 30;
+      const ICE_SERVERS = [
+        { urls: 'stun:stun.l.google.com:19302' },
+        { urls: 'stun:global.stun.twilio.com:3478' }
+      ];
+      // Optional TURN relay: define window.WTT_TURN_SERVERS before this script,
+      // e.g. [{ urls: 'turn:...', username: '...', credential: '...' }].
+      try {
+        if (Array.isArray(window.WTT_TURN_SERVERS)) {
+          ICE_SERVERS.push(...window.WTT_TURN_SERVERS);
+        }
+      } catch (_) {}
 
       const elOnlineModal = document.getElementById('online-modal');
       const elBtnOpenOnline = document.getElementById('btn-open-online');
@@ -2320,7 +3008,13 @@
 
       let difficultyKey = (() => { try { const saved = localStorage.getItem('wtt-arena-difficulty'); return DIFFICULTIES[saved] ? saved : 'rookie'; } catch (_) { return 'rookie'; } })();
       let aiConfig = DIFFICULTIES[difficultyKey];
-      let reducedMotion = (() => { try { return localStorage.getItem('wtt-arena-reduced-motion') === 'true'; } catch (_) { return false; } })();
+      let reducedMotion = (() => {
+        try {
+          const saved = localStorage.getItem('wtt-arena-reduced-motion');
+          if (saved !== null) return saved === 'true';
+        } catch (_) {}
+        return Boolean(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      })();
       let practiceMode = false;
 
       const matchStats = {
@@ -2649,14 +3343,14 @@
           bCtx.ellipse(xCenter, botY + 2, w * 0.85, 3.0, 0, 0, Math.PI * 2);
           bCtx.fill();
 
-          bCtx.fillStyle = darkness < 1 ? '#334155' : '#475569';
+          bCtx.fillStyle = darkness < 1 ? '#334155' : '#94a3b8';
           bCtx.beginPath();
           bCtx.ellipse(xCenter, botY, w * 0.7, 2.2, 0, 0, Math.PI * 2);
           bCtx.fill();
 
           const legGrad = bCtx.createLinearGradient(left, topY, left + w, topY);
           legGrad.addColorStop(0, '#070b16');
-          legGrad.addColorStop(0.4, darkness < 1 ? '#334155' : '#475569');
+          legGrad.addColorStop(0.4, darkness < 1 ? '#334155' : '#94a3b8');
           legGrad.addColorStop(0.75, '#1e293b');
           legGrad.addColorStop(1, '#050811');
           bCtx.fillStyle = legGrad;
@@ -2986,6 +3680,7 @@
           ball.vz = 0;
           elPlayerSpinLabel.textContent = 'Hold & Swipe to Serve';
           elAiStatusLabel.textContent = 'Receiving';
+          maybeShowOnboarding();
           if (specialStatus) {
             showBanner(specialStatus.text, specialStatus.border, specialStatus.color);
           } else {
@@ -3066,8 +3761,8 @@
           showBanner(reasonText || 'POINT AI', 'rgba(248, 113, 113, 0.5)', '#f87171');
           spawnImpactParticles(ai.x, ai.y + 24, '#38bdf8', 10, 0.65);
         }
-        // #16 fault vs winner counting
-        if (reasonText && (reasonText.includes('FAULT') || (reasonText.includes('OUT') && ball.lastHitter === 'player'))) {
+        // #16 fault vs winner counting — only count faults committed by the player
+        if (winner === 'ai' && reasonText && /FAULT|OUT|NET/.test(reasonText)) {
           matchStats.faults++;
         }
 
@@ -3123,21 +3818,37 @@
         stateTimer = 68;
       }
 
-      function showMatchModal(playerWon) {
+      function showMatchModal(playerWon, options = {}) {
+        const online = options.online !== undefined ? options.online : isOnline;
+        const disconnected = Boolean(options.disconnected);
         gameState = 'GAME_OVER';
         hideBanner();
 
         const trophyEl = document.getElementById('match-trophy');
-        trophyEl.className = playerWon
+        trophyEl.className = (playerWon && !disconnected)
           ? 'inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 mb-1'
           : 'inline-flex items-center justify-center w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 text-slate-400 mb-1';
 
         const titleEl = document.getElementById('match-result-title');
-        titleEl.textContent = playerWon ? 'MATCH VICTORY' : 'MATCH COMPLETE';
+        titleEl.textContent = disconnected
+          ? 'OPPONENT LEFT'
+          : (playerWon ? 'MATCH VICTORY' : 'MATCH COMPLETE');
 
-        document.getElementById('match-result-subtitle').textContent = playerWon
-          ? `Defeated ${aiConfig.name} Division`
-          : `${aiConfig.name} Division clinched the match`;
+        const subtitleEl = document.getElementById('match-result-subtitle');
+        if (disconnected) {
+          subtitleEl.textContent = 'The match ended because your opponent disconnected.';
+        } else if (online) {
+          subtitleEl.textContent = playerWon ? 'You defeated your opponent' : 'Your opponent clinched the match';
+        } else {
+          subtitleEl.textContent = playerWon
+            ? `Defeated ${aiConfig.name} Division`
+            : `${aiConfig.name} Division clinched the match`;
+        }
+
+        const playAgainLabel = document.getElementById('btn-play-again-label');
+        if (playAgainLabel) {
+          playAgainLabel.textContent = disconnected ? 'MAIN MENU' : 'REMATCH';
+        }
 
         // #26 score count-up animation
         function countUp(el, target, duration = 600) {
@@ -3152,11 +3863,13 @@
         countUp(document.getElementById('final-player-score'), matchStats.playerScore);
         countUp(document.getElementById('final-ai-score'), matchStats.aiScore, 650);
 
-        document.getElementById('final-ai-label').textContent = aiConfig.name;
+        document.getElementById('final-ai-label').textContent = online ? 'OPPONENT' : aiConfig.name;
 
         // #26 stats count-up
         countUp(document.getElementById('stat-longest-rally'), matchStats.longestRally, 500);
-        document.getElementById('stat-max-speed').textContent = `${Math.round(matchStats.maxSpeedKmh)} km/h`;
+        document.getElementById('stat-max-speed').textContent = speedUnitKmh
+          ? `${Math.round(matchStats.maxSpeedKmh)} km/h`
+          : `${Math.round(matchStats.maxSpeedKmh * 0.621371)} mph`;
         countUp(document.getElementById('stat-smashes'), matchStats.totalWinners, 400);
         countUp(document.getElementById('stat-aces'), matchStats.aces, 350);
         countUp(document.getElementById('stat-faults'), matchStats.faults, 350);
@@ -3168,9 +3881,36 @@
         }
 
         elMatchModal.classList.add('is-open');
+        focusModal(elMatchModal);
+      }
+
+      function maybeShowOnboarding() {
+        try {
+          if (!localStorage.getItem('wtt-onboarded')) {
+            elOnboardOverlay.classList.remove('hidden');
+          }
+        } catch (_) {}
+      }
+
+      function markOnboarded() {
+        try { localStorage.setItem('wtt-onboarded', '1'); } catch (_) {}
+        elOnboardOverlay.classList.add('hidden');
       }
 
       function startNewMatch() {
+        // If a room was being hosted in the background and the player starts
+        // a solo match, drop the unused room so an invite cannot hijack it.
+        if (!isOnline) {
+          onlineRequestId += 1;
+          if (netConn) { try { netConn.close(); } catch (_) {} netConn = null; }
+          if (netPeer) { try { netPeer.destroy(); } catch (_) {} netPeer = null; }
+          if (currentRoomCode || elHostCodeDisplay) {
+            currentRoomCode = '';
+            if (elHostCodeDisplay) elHostCodeDisplay.textContent = '. . . . . .';
+            setOnlineStatus('Select Host or Join to start', '#94a3b8', false);
+          }
+        }
+
         matchStats.playerScore = 0;
         matchStats.aiScore = 0;
         matchStats.rally = 0;
@@ -3187,6 +3927,16 @@
         streak = { winner: null, count: 0 }; // #13
         serveTossPhase = 0;
         aiTelegraphLean = 0;
+        isGamePaused = false;
+        onlineDisconnected = false;
+        hostSnapshotSeq = 0;
+        lastGuestSnapshotSeq = -1;
+        lastHostSnapshotAt = 0;
+        lastGuestPaddleAt = 0;
+        lastGuestHudAt = 0;
+        lastGuestHudKey = '';
+        if (elModalPause) elModalPause.classList.remove('is-open');
+        if (elMatchModal) elMatchModal.classList.remove('is-open');
 
         // #7 persist practice mode to localStorage
         try { localStorage.setItem('wtt-practice', practiceMode ? '1' : '0'); } catch (_) {}
@@ -3203,8 +3953,7 @@
         ai.targetX = ai.x;
         ai.targetY = ai.y;
 
-        // #19 hide onboarding once player starts
-        try { localStorage.setItem('wtt-onboarded', '1'); } catch (_) {}
+        // #19 hide the hint until it is actually relevant (first serve)
         elOnboardOverlay.classList.add('hidden');
 
         elStartModal.classList.remove('is-open');
@@ -3212,9 +3961,41 @@
         if (elModalPause) elModalPause.classList.remove('is-open');
         if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
         if (elModalSettings) elModalSettings.classList.remove('is-open');
+        // Do not leave focus on a now-hidden menu button: Space is the serve
+        // key and must not re-activate the Start Match button.
+        if (document.activeElement && typeof document.activeElement.blur === 'function') {
+          document.activeElement.blur();
+        }
         if (elTopHud) elTopHud.classList.remove('is-menu');
         isGamePaused = false;
         enterServeState();
+      }
+
+      function restartMatch() {
+        if (!isOnline) {
+          startNewMatch();
+          return;
+        }
+        if (!netConn || !netConn.open) {
+          showBanner('CONNECTION LOST', 'rgba(244, 63, 94, 0.65)', '#f43f5e');
+          return;
+        }
+
+        if (isHost) {
+          // The host owns the match state; restart locally and tell the guest
+          // to reset at the same time.
+          netConn.send({ t: 'REMATCH' });
+          showBanner('MATCH RESTARTED', 'rgba(16, 185, 129, 0.55)', '#10b981');
+          startNewMatch();
+          return;
+        }
+
+        // The guest cannot reset the host's simulation. If paused, resume
+        // first so the host (and the guest) can see the request banner, then
+        // ask the host to restart.
+        if (isGamePaused) netConn.send({ t: 'RESUME_REQ' });
+        netConn.send({ t: 'REMATCH_REQ' });
+        showBanner('RESTART REQUESTED — WAITING FOR HOST', 'rgba(56, 189, 248, 0.65)', '#38bdf8');
       }
 
       function solveBounceVz(gravity, framesToBounce, zStart) {
@@ -3289,6 +4070,7 @@
       function strikeBallWithPlayerPaddle(isServe = false) {
         if (player.hitCooldown > 0) return;
         player.hitCooldown = 12;
+        if (isServe) markOnboarded();
 
         player.x = player.targetX;
         player.y = player.targetY;
@@ -3777,7 +4559,7 @@
             ball.y += ball.vy;
             ball.z = Math.max(0, ball.z + ball.vz);
             ball.vz -= ball.gravity;
-            pushTrailPoint(ball.x, ball.y, ball.z, ball.speedKmh);
+            pushTrailPoint(ball.x, ball.y, ball.z, ball.spin, ball.isSmash, ball.isDropShot);
 
             if (ball.vy > 0 && ball.y >= TABLE.netY + 14 && ball.bouncesOnTargetSide >= 1 && !ball.serveLetTriggered) {
               const sweepDist = distToSegment(player.x, player.y - 6, ball.prevX, ball.prevY, ball.x, ball.y);
@@ -4331,7 +5113,7 @@
             rubberGrad.addColorStop(0.75, '#9f1239');
             rubberGrad.addColorStop(1, '#4c0519');
           } else {
-            rubberGrad.addColorStop(0, '#475569');
+            rubberGrad.addColorStop(0, '#94a3b8');
             rubberGrad.addColorStop(0.30, '#1e293b');
             rubberGrad.addColorStop(0.78, '#0f172a');
             rubberGrad.addColorStop(1, '#020408');
@@ -4774,38 +5556,21 @@
 
       document.getElementById('btn-mute').addEventListener('click', (e) => {
         e.stopPropagation();
-        audioMuted = !audioMuted;
-        document.getElementById('icon-sound-on').classList.toggle('hidden', audioMuted);
-        document.getElementById('icon-sound-off').classList.toggle('hidden', !audioMuted);
-        e.currentTarget.setAttribute('aria-pressed', String(audioMuted));
-        e.currentTarget.setAttribute('aria-label', audioMuted ? 'Unmute audio' : 'Mute audio');
-        // #29 Toggle crowd ambience with mute
-        sound.setAmbienceVolume(audioMuted ? 0 : 0.08);
+        toggleAudioMute();
       });
 
       document.getElementById('btn-haptics').addEventListener('click', (e) => {
         e.stopPropagation();
-        hapticsEnabled = !hapticsEnabled;
-        document.getElementById('icon-haptics-on').classList.toggle('hidden', !hapticsEnabled);
-        document.getElementById('icon-haptics-off').classList.toggle('hidden', hapticsEnabled);
-        e.currentTarget.setAttribute('aria-pressed', String(hapticsEnabled));
-        e.currentTarget.setAttribute('aria-label', hapticsEnabled ? 'Disable vibration' : 'Enable vibration');
+        setHapticsEnabled(!hapticsEnabled);
       });
 
       const motionButton = document.getElementById('btn-motion');
       if (motionButton) {
-        motionButton.setAttribute('aria-pressed', String(reducedMotion));
-        motionButton.setAttribute('aria-label', reducedMotion ? 'Disable reduced motion' : 'Enable reduced motion');
-        motionButton.classList.toggle('active', reducedMotion);
         motionButton.addEventListener('click', (e) => {
           e.stopPropagation();
-          reducedMotion = !reducedMotion;
-          try { localStorage.setItem('wtt-arena-reduced-motion', String(reducedMotion)); } catch (_) {}
-          motionButton.setAttribute('aria-pressed', String(reducedMotion));
-          motionButton.setAttribute('aria-label', reducedMotion ? 'Disable reduced motion' : 'Enable reduced motion');
-          motionButton.classList.toggle('active', reducedMotion);
-          if (reducedMotion) screenShake = 0;
+          setReducedMotion(!reducedMotion);
         });
+        renderMotionState();
       }
       const practiceButton = document.getElementById('btn-practice');
       if (practiceButton) {
@@ -4833,7 +5598,7 @@
       document.getElementById('btn-restart').addEventListener('click', (e) => {
         e.stopPropagation();
         sound.init();
-        startNewMatch();
+        restartMatch();
       });
 
       document.getElementById('btn-start-match').addEventListener('click', (e) => {
@@ -4858,7 +5623,7 @@
       function generateRoomCode() {
         const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
         let code = '';
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 6; i++) {
           code += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return code;
@@ -4882,8 +5647,16 @@
       }
 
       async function hostOnlineMatch(forcedCode = null) {
+        const requestId = ++onlineRequestId;
+        // Creating a new room supersedes any existing online session. Mark it
+        // as intentional so the old connection's close event cannot hijack the
+        // new lobby with a disconnect modal.
+        isOnline = false;
         if (netConn) { try { netConn.close(); } catch (_) {} netConn = null; }
         if (netPeer) { try { netPeer.destroy(); } catch (_) {} netPeer = null; }
+        hostSnapshotSeq = 0;
+        lastGuestSnapshotSeq = -1;
+        onlineDisconnected = false;
 
         const code = (forcedCode || generateRoomCode()).toUpperCase();
         currentRoomCode = code;
@@ -4896,17 +5669,13 @@
           setOnlineStatus('PeerJS CDN unreachable: ' + err.message, '#f43f5e', false);
           return;
         }
+        if (requestId !== onlineRequestId) return;
 
         const peerId = 'wtt-arena-' + code.toLowerCase();
         try {
           netPeer = new window.Peer(peerId, {
             debug: 1,
-            config: {
-              iceServers: [
-                { urls: 'stun:stun.l.google.com:19302' },
-                { urls: 'stun:global.stun.twilio.com:3478' }
-              ]
-            }
+            config: { iceServers: ICE_SERVERS }
           });
 
           netPeer.on('open', () => {
@@ -4914,6 +5683,10 @@
           });
 
           netPeer.on('connection', (conn) => {
+            if (netConn && netConn !== conn) {
+              try { conn.close(); } catch (_) {}
+              return;
+            }
             netConn = conn;
             setupNetworkConnection(true);
           });
@@ -4932,15 +5705,19 @@
       }
 
       async function joinOnlineMatch(code) {
-        if (!code || code.trim().length < 3) {
-          setOnlineStatus('Please enter a valid match code', '#f43f5e', false);
+        code = (code || '').trim().toUpperCase();
+        if (!/^[A-Z0-9]{6}$/.test(code)) {
+          setOnlineStatus('Enter the 6-character match code', '#f43f5e', false);
           return;
         }
-        code = code.trim().toUpperCase();
+        const requestId = ++onlineRequestId;
         currentRoomCode = code;
 
+        isOnline = false;
         if (netConn) { try { netConn.close(); } catch (_) {} netConn = null; }
         if (netPeer) { try { netPeer.destroy(); } catch (_) {} netPeer = null; }
+        lastGuestSnapshotSeq = -1;
+        onlineDisconnected = false;
 
         setOnlineStatus(`Connecting to room ${code}...`, '#fbbf24', true);
 
@@ -4950,21 +5727,19 @@
           setOnlineStatus('PeerJS CDN unreachable: ' + err.message, '#f43f5e', false);
           return;
         }
+        if (requestId !== onlineRequestId) return;
 
         try {
           netPeer = new window.Peer({
             debug: 1,
-            config: {
-              iceServers: [
-                { urls: 'stun:stun.l.google.com:19302' },
-                { urls: 'stun:global.stun.twilio.com:3478' }
-              ]
-            }
+            config: { iceServers: ICE_SERVERS }
           });
 
           netPeer.on('open', () => {
             const targetId = 'wtt-arena-' + code.toLowerCase();
-            const conn = netPeer.connect(targetId, { reliable: false });
+            // Reliable, ordered control channel: critical events (INIT/HIT/PT/REMATCH)
+            // must never be silently dropped. Snapshots are throttled by the host.
+            const conn = netPeer.connect(targetId, { reliable: true });
             netConn = conn;
             setupNetworkConnection(false);
           });
@@ -4982,11 +5757,18 @@
 
         netConn.on('open', () => {
           isOnline = true;
+          isGamePaused = false;
+          onlineDisconnected = false;
+          lastNetworkActivityAt = performance.now();
+          hostSnapshotSeq = 0;
+          lastGuestSnapshotSeq = -1;
+          lastHostSnapshotAt = 0;
+          lastGuestPaddleAt = 0;
           setOnlineStatus('Connected to Opponent!', '#10b981', false);
           if (elOnlineBadge) elOnlineBadge.classList.remove('hidden');
           if (elOnlinePingDot) elOnlinePingDot.classList.remove('hidden');
           if (elOnlineActiveControls) elOnlineActiveControls.classList.remove('hidden');
-          hideOnlineModal();
+          hideOnlineModal(false);
           elStartModal.classList.remove('is-open');
           elMatchModal.classList.remove('is-open');
 
@@ -5000,6 +5782,7 @@
         });
 
         netConn.on('data', (data) => {
+          lastNetworkActivityAt = performance.now();
           handleNetworkPacket(data);
         });
 
@@ -5013,15 +5796,59 @@
         });
       }
 
+      // Watchdog for silently broken P2P links (e.g. Wi-Fi loss without a
+      // clean DataChannel close event). Skipped while paused/menu/end state.
+      setInterval(() => {
+        if (document.hidden) return;
+        if (!isOnline || isGamePaused || gameState === 'GAME_OVER' || gameState === 'MENU') return;
+        if (performance.now() - lastNetworkActivityAt > 15000) {
+          handleNetworkDisconnect();
+        }
+      }, 2500);
+
+      // Returning from a background tab is not evidence of a dead connection;
+      // restart the watchdog window instead of showing a false disconnect.
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) lastNetworkActivityAt = performance.now();
+      });
+
       function handleNetworkDisconnect() {
         if (!isOnline) return;
+        const matchAlreadyFinished = gameState === 'GAME_OVER'
+          && elMatchModal && elMatchModal.classList.contains('is-open');
         isOnline = false;
-        showBanner('OPPONENT DISCONNECTED', 'rgba(244, 63, 94, 0.65)', '#f43f5e');
+        onlineDisconnected = true;
+        isGamePaused = false;
+        gameState = 'GAME_OVER';
+        lastNetworkActivityAt = 0;
+
+        if (elModalPause) elModalPause.classList.remove('is-open');
         if (elOnlineBadge) elOnlineBadge.classList.add('hidden');
         if (elOnlinePingDot) elOnlinePingDot.classList.add('hidden');
         if (elOnlineActiveControls) elOnlineActiveControls.classList.add('hidden');
         setOnlineStatus('Opponent disconnected', '#f43f5e', false);
+
+        if (netConn) {
+          const conn = netConn;
+          netConn = null;
+          try { conn.close(); } catch (_) {}
+        }
+        if (netPeer) {
+          const peer = netPeer;
+          netPeer = null;
+          try { peer.destroy(); } catch (_) {}
+        }
+
         updateHUD();
+        if (matchAlreadyFinished) {
+          // Keep the completed result on screen instead of replacing it with
+          // an "opponent left" screen. The rematch action must become a menu
+          // action because there is no peer left.
+          const label = document.getElementById('btn-play-again-label');
+          if (label) label.textContent = 'MAIN MENU';
+        } else {
+          showMatchModal(matchStats.playerScore > matchStats.aiScore, { online: true, disconnected: true });
+        }
       }
 
       function handleNetworkPacket(data) {
@@ -5030,6 +5857,13 @@
         switch (data.t) {
           case 'S':
             if (!isHost) {
+              // Ignore out-of-order snapshots (also protects against replayed packets).
+              if (typeof data.q === 'number') {
+                if (data.q <= lastGuestSnapshotSeq) break;
+                lastGuestSnapshotSeq = data.q;
+              }
+              const prevGameState = gameState;
+              const prevServer = matchStats.server;
               ball.x = 420 - data.b[0];
               ball.y = 626 - data.b[1];
               ball.z = data.b[2];
@@ -5054,8 +5888,44 @@
               matchStats.aiScore = data.s[0];
               matchStats.server = data.srv === 'player' ? 'ai' : 'player';
               matchStats.rally = data.r;
+              if (Array.isArray(data.st)) {
+                matchStats.maxSpeedKmh = data.st[0];
+                matchStats.longestRally = Math.max(matchStats.longestRally, data.st[1]);
+              }
               gameState = data.g;
-              updateHUD();
+
+              // Mirror the host's serve prompt on the guest. The host owns the
+              // authoritative state, but the guest still needs to know when it
+              // is their turn to serve. A rematch resets the guest locally, so
+              // also react when the mirrored server changes without a state
+              // transition.
+              if (data.g === 'SERVE' && (prevGameState !== 'SERVE' || prevServer !== matchStats.server)) {
+                hasSwipedToServe = false;
+                if (matchStats.server === 'player') {
+                  if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Hold & Swipe to Serve';
+                  if (elAiStatusLabel) elAiStatusLabel.textContent = 'Receiving';
+                  maybeShowOnboarding();
+                  showBanner('YOUR SERVE — SWIPE UP TO LAUNCH', 'rgba(56, 189, 248, 0.45)', '#38bdf8');
+                } else {
+                  if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Receiving';
+                  if (elAiStatusLabel) elAiStatusLabel.textContent = 'Service';
+                  showBanner('OPPONENT SERVICE', 'rgba(56, 189, 248, 0.45)', '#e2e8f0');
+                }
+              }
+
+              // Avoid repainting the whole HUD 30x/sec; update immediately on
+              // score/server/state changes, otherwise a few times per second.
+              const now = performance.now();
+              const hudKey = `${data.s[0]}:${data.s[1]}:${data.srv}:${data.g}`;
+              if (hudKey !== lastGuestHudKey || now - lastGuestHudAt > 250) {
+                lastGuestHudKey = hudKey;
+                lastGuestHudAt = now;
+                updateHUD();
+              }
+
+              if (data.g === 'GAME_OVER' && !elMatchModal.classList.contains('is-open')) {
+                showMatchModal(matchStats.playerScore > matchStats.aiScore, { online: true });
+              }
             }
             break;
 
@@ -5083,10 +5953,9 @@
                 const targetX = 420 - data.tx;
                 const targetY = 626 - data.ty;
                 launchBallToward(targetX, targetY, data.spd, -data.spn, data.top, 'ai', data.smash, data.drop, false);
+                // The guest already played its local hit sound. Do not echo
+                // SND_HIT back, or the guest hears every hit twice.
                 sound.playPaddleHit(data.spd / 9.0, -data.spn, data.smash, ball.x, ball.y);
-                if (netConn && netConn.open) {
-                  netConn.send({ t: 'SND_HIT', spd: data.spd, spn: data.spn, smash: data.smash });
-                }
               }
             }
             break;
@@ -5113,8 +5982,24 @@
 
           case 'REMATCH_REQ':
             if (isHost) {
-              showBanner('OPPONENT REQUESTED REMATCH — TAP REMATCH TO PLAY', 'rgba(56, 189, 248, 0.65)', '#38bdf8');
+              showBanner('OPPONENT REQUESTED A RESTART', 'rgba(56, 189, 248, 0.65)', '#38bdf8');
             }
+            break;
+
+          case 'PAUSE':
+            if (!isHost) togglePause(true, true);
+            break;
+
+          case 'RESUME':
+            if (!isHost) togglePause(false, true);
+            break;
+
+          case 'PAUSE_REQ':
+            if (isHost) togglePause(true);
+            break;
+
+          case 'RESUME_REQ':
+            if (isHost) togglePause(false);
             break;
 
           case 'PING':
@@ -5144,8 +6029,12 @@
 
       function broadcastHostSnapshot() {
         if (!netConn || !netConn.open) return;
+        const now = performance.now();
+        if (now - lastHostSnapshotAt < NET_SNAPSHOT_INTERVAL) return;
+        lastHostSnapshotAt = now;
         netConn.send({
           t: 'S',
+          q: ++hostSnapshotSeq,
           b: [
             +ball.x.toFixed(1),
             +ball.y.toFixed(1),
@@ -5168,12 +6057,15 @@
             +player.swingAnim.toFixed(2)
           ],
           s: [matchStats.playerScore, matchStats.aiScore],
+          st: [
+            Math.round(matchStats.maxSpeedKmh),
+            matchStats.longestRally
+          ],
           g: gameState,
           srv: matchStats.server,
           r: matchStats.rally
         });
 
-        const now = performance.now();
         if (now - lastPingSent > 1200) {
           lastPingSent = now;
           netConn.send({ t: 'PING', ts: now });
@@ -5182,6 +6074,9 @@
 
       function sendGuestPaddle() {
         if (!netConn || !netConn.open) return;
+        const now = performance.now();
+        if (now - lastGuestPaddleAt < NET_PADDLE_INTERVAL) return;
+        lastGuestPaddleAt = now;
         netConn.send({
           t: 'P',
           x: +player.x.toFixed(1),
@@ -5194,22 +6089,31 @@
       }
 
       function openOnlineModal(tab = 'host', prefillCode = '') {
+        if (elStartModal) elStartModal.classList.remove('is-open');
         elOnlineModal.classList.add('is-open');
         if (tab === 'join') {
           switchToJoinTab();
           if (prefillCode && elInputRoomCode) {
             elInputRoomCode.value = prefillCode;
           }
+          if (elInputRoomCode) elInputRoomCode.focus({ preventScroll: true });
         } else {
           switchToHostTab();
+          focusModal(elOnlineModal);
           if (!netPeer || !currentRoomCode) {
             hostOnlineMatch();
           }
         }
       }
 
-      function hideOnlineModal() {
+      function hideOnlineModal(restoreStart = true) {
+        // Cancel any room/join request that is still waiting for PeerJS to load.
+        onlineRequestId += 1;
         elOnlineModal.classList.remove('is-open');
+        if (restoreStart && gameState === 'MENU' && elStartModal) {
+          elStartModal.classList.add('is-open');
+          focusModal(elStartModal);
+        }
       }
 
       function switchToHostTab() {
@@ -5232,7 +6136,20 @@
       if (elTabJoin) elTabJoin.addEventListener('click', e => { e.stopPropagation(); switchToJoinTab(); });
 
       if (elBtnOpenOnline) elBtnOpenOnline.addEventListener('click', e => { e.stopPropagation(); openOnlineModal('host'); });
-      if (elBtnOnlineHud) elBtnOnlineHud.addEventListener('click', e => { e.stopPropagation(); openOnlineModal('host'); });
+      if (elBtnOnlineHud) {
+        elBtnOnlineHud.addEventListener('click', e => {
+          e.stopPropagation();
+          if (isOnline && !isHost) {
+            // The guest is connected to the host's room, not hosting it. Show
+            // the join panel with the host code instead of a misleading "Your
+            // Match Code" card.
+            openOnlineModal('join', currentRoomCode);
+            setOnlineStatus('Connected to host ' + currentRoomCode, '#10b981', false);
+          } else {
+            openOnlineModal('host');
+          }
+        });
+      }
       if (elBtnCloseOnline) elBtnCloseOnline.addEventListener('click', e => { e.stopPropagation(); hideOnlineModal(); });
 
       if (elBtnCreateRoom) elBtnCreateRoom.addEventListener('click', e => { e.stopPropagation(); hostOnlineMatch(); });
@@ -5284,16 +6201,14 @@
       if (elBtnLeaveOnline) {
         elBtnLeaveOnline.addEventListener('click', e => {
           e.stopPropagation();
-          if (netConn) { try { netConn.close(); } catch(_) {} netConn = null; }
-          if (netPeer) { try { netPeer.destroy(); } catch(_) {} netPeer = null; }
-          isOnline = false;
-          hideOnlineModal();
+          // Explicitly leaving should not look like an opponent disconnect.
+          returnToMainMenu();
           showBanner('LEFT ONLINE ARENA', 'rgba(56, 189, 248, 0.5)', '#38bdf8');
-          updateHUD();
         });
       }
 
       function returnToMainMenu() {
+        onlineRequestId += 1;
         isGamePaused = false;
         gameState = 'MENU';
         if (elModalPause) elModalPause.classList.remove('is-open');
@@ -5301,15 +6216,33 @@
         if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
         if (elModalSettings) elModalSettings.classList.remove('is-open');
         if (elOnlineModal) elOnlineModal.classList.remove('is-open');
-        if (elStartModal) elStartModal.classList.add('is-open');
+        if (elStartModal) {
+          elStartModal.classList.add('is-open');
+          focusModal(elStartModal);
+        }
         if (elTopHud) elTopHud.classList.add('is-menu');
         hideBanner();
 
-        if (isOnline) {
+        if (isOnline || netConn || netPeer) {
+          // Mark this as an intentional leave before closing, so the close
+          // handler does not show the "opponent disconnected" result modal.
+          isOnline = false;
+          onlineDisconnected = true;
           if (netConn) { try { netConn.close(); } catch(_) {} netConn = null; }
           if (netPeer) { try { netPeer.destroy(); } catch(_) {} netPeer = null; }
-          isOnline = false;
+          onlineDisconnected = false;
         }
+        netPingMs = 0;
+        onlineDisconnected = false;
+        lastNetworkActivityAt = 0;
+        lastGuestSnapshotSeq = -1;
+        currentRoomCode = '';
+        if (elHostCodeDisplay) elHostCodeDisplay.textContent = '. . . . . .';
+        hostSnapshotSeq = 0;
+        if (elOnlineBadge) elOnlineBadge.classList.add('hidden');
+        if (elOnlinePingDot) elOnlinePingDot.classList.add('hidden');
+        if (elOnlineActiveControls) elOnlineActiveControls.classList.add('hidden');
+        setOnlineStatus('Select Host or Join to start', '#94a3b8', false);
 
         player.x = TABLE.centerX;
         player.y = TABLE.bottom - 18;
@@ -5333,22 +6266,47 @@
         updateHUD();
       }
 
-      function togglePause(forceState) {
+      function togglePause(forceState, fromNetwork = false) {
         if (gameState === 'MENU' || gameState === 'GAME_OVER') return;
         const target = (typeof forceState === 'boolean') ? forceState : !isGamePaused;
+
+        // The guest cannot pause the host's simulation. Ask the host, which
+        // then broadcasts the authoritative PAUSE/RESUME state.
+        if (isOnline && !isHost && !fromNetwork) {
+          if (netConn && netConn.open) {
+            netConn.send({ t: target ? 'PAUSE_REQ' : 'RESUME_REQ' });
+            showBanner(target ? 'PAUSE REQUEST SENT' : 'RESUME REQUEST SENT', 'rgba(56, 189, 248, 0.5)', '#38bdf8');
+          }
+          return;
+        }
+
         isGamePaused = target;
+
+        if (isOnline && isHost && !fromNetwork && netConn && netConn.open) {
+          netConn.send({ t: target ? 'PAUSE' : 'RESUME' });
+        }
+
         if (isGamePaused) {
           if (elPausePlayerScore) elPausePlayerScore.textContent = matchStats.playerScore;
           if (elPauseAiScore) elPauseAiScore.textContent = matchStats.aiScore;
           if (elPauseAiLabel) elPauseAiLabel.textContent = isOnline ? 'OPPONENT' : aiConfig.name;
-          if (elModalPause) elModalPause.classList.add('is-open');
+          if (elModalPause) {
+            elModalPause.classList.add('is-open');
+            focusModal(elModalPause);
+          }
         } else {
           if (elModalPause) elModalPause.classList.remove('is-open');
+          if (document.activeElement && elModalPause && elModalPause.contains(document.activeElement)) {
+            document.activeElement.blur();
+          }
         }
       }
 
       function openHowToPlay() {
-        if (elModalHowToPlay) elModalHowToPlay.classList.add('is-open');
+        if (elModalHowToPlay) {
+          elModalHowToPlay.classList.add('is-open');
+          focusModal(elModalHowToPlay);
+        }
       }
       function closeHowToPlay() {
         if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
@@ -5358,10 +6316,12 @@
         if (elSettingToggleSound) {
           elSettingToggleSound.textContent = audioMuted ? 'OFF' : 'ON';
           elSettingToggleSound.className = `setting-toggle hud-interactive ${audioMuted ? 'off' : 'on'}`;
+          elSettingToggleSound.setAttribute('aria-pressed', String(!audioMuted));
         }
         if (elSettingToggleHaptics) {
           elSettingToggleHaptics.textContent = hapticsEnabled ? 'ON' : 'OFF';
           elSettingToggleHaptics.className = `setting-toggle hud-interactive ${hapticsEnabled ? 'on' : 'off'}`;
+          elSettingToggleHaptics.setAttribute('aria-pressed', String(hapticsEnabled));
         }
         if (elSettingToggleSpeedUnit) {
           elSettingToggleSpeedUnit.textContent = speedUnitKmh ? 'KM/H' : 'MPH';
@@ -5370,32 +6330,111 @@
         if (elSettingToggleMotion) {
           elSettingToggleMotion.textContent = reducedMotion ? 'ON' : 'OFF';
           elSettingToggleMotion.className = `setting-toggle hud-interactive ${reducedMotion ? 'on' : 'off'}`;
+          elSettingToggleMotion.setAttribute('aria-pressed', String(reducedMotion));
         }
+      }
+
+      function focusModal(modal) {
+        if (!modal) return;
+        // Wait for the open transition to make the dialog focusable, then
+        // move focus to its first control (or the primary action).
+        setTimeout(() => {
+          if (!modal.isConnected || !modal.classList.contains('is-open')) return;
+          void modal.offsetWidth;
+          const preferred = modal.querySelector('[data-autofocus]');
+          const focusables = modal.querySelectorAll(
+            'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+          );
+          const target = (preferred && preferred.offsetParent !== null)
+            ? preferred
+            : Array.from(focusables).find(el => el.offsetParent !== null);
+          if (target) target.focus({ preventScroll: true });
+        }, 80);
       }
 
       function openSettings() {
         syncSettingsUI();
-        if (elModalSettings) elModalSettings.classList.add('is-open');
+        if (elModalSettings) {
+          elModalSettings.classList.add('is-open');
+          focusModal(elModalSettings);
+        }
       }
       function closeSettings() {
         if (elModalSettings) elModalSettings.classList.remove('is-open');
       }
 
-      function toggleAudioMute() {
-        audioMuted = !audioMuted;
+      function persistBool(key, value) {
+        try { localStorage.setItem(key, String(Boolean(value))); } catch (_) {}
+      }
+
+      function renderAudioState() {
         document.querySelectorAll('.menu-sound-on').forEach(el => el.classList.toggle('hidden', audioMuted));
         document.querySelectorAll('.menu-sound-off').forEach(el => el.classList.toggle('hidden', !audioMuted));
         const iconOn = document.getElementById('icon-sound-on');
         const iconOff = document.getElementById('icon-sound-off');
         if (iconOn) iconOn.classList.toggle('hidden', audioMuted);
         if (iconOff) iconOff.classList.toggle('hidden', !audioMuted);
+        const menuSoundBtn = document.getElementById('menu-btn-sound');
+        if (menuSoundBtn) {
+          menuSoundBtn.setAttribute('aria-pressed', String(audioMuted));
+          menuSoundBtn.setAttribute('aria-label', audioMuted ? 'Unmute sound' : 'Mute sound');
+        }
         const btnMute = document.getElementById('btn-mute');
         if (btnMute) {
           btnMute.setAttribute('aria-pressed', String(audioMuted));
           btnMute.setAttribute('aria-label', audioMuted ? 'Unmute audio' : 'Mute audio');
         }
         sound.setAmbienceVolume(audioMuted ? 0 : 0.08);
+      }
+
+      function toggleAudioMute() {
+        audioMuted = !audioMuted;
+        persistBool('wtt-arena-muted', audioMuted);
+        renderAudioState();
         syncSettingsUI();
+      }
+
+      function renderHapticsState() {
+        const hapticsBtn = document.getElementById('btn-haptics');
+        if (hapticsBtn) {
+          hapticsBtn.setAttribute('aria-pressed', String(hapticsEnabled));
+          hapticsBtn.setAttribute('aria-label', hapticsEnabled ? 'Disable vibration' : 'Enable vibration');
+        }
+        const iconOn = document.getElementById('icon-haptics-on');
+        const iconOff = document.getElementById('icon-haptics-off');
+        if (iconOn) iconOn.classList.toggle('hidden', !hapticsEnabled);
+        if (iconOff) iconOff.classList.toggle('hidden', hapticsEnabled);
+      }
+
+      function setHapticsEnabled(enabled) {
+        hapticsEnabled = Boolean(enabled);
+        persistBool('wtt-arena-haptics', hapticsEnabled);
+        renderHapticsState();
+        syncSettingsUI();
+      }
+
+      function renderMotionState() {
+        const motionBtn = document.getElementById('btn-motion');
+        if (motionBtn) {
+          motionBtn.setAttribute('aria-pressed', String(reducedMotion));
+          motionBtn.setAttribute('aria-label', reducedMotion ? 'Disable reduced motion' : 'Enable reduced motion');
+          motionBtn.classList.toggle('active', reducedMotion);
+        }
+      }
+
+      function setReducedMotion(enabled) {
+        reducedMotion = Boolean(enabled);
+        persistBool('wtt-arena-reduced-motion', reducedMotion);
+        renderMotionState();
+        if (reducedMotion) screenShake = 0;
+        syncSettingsUI();
+      }
+
+      function setSpeedUnitKmh(enabled) {
+        speedUnitKmh = Boolean(enabled);
+        persistBool('wtt-arena-speed-kmh', speedUnitKmh);
+        syncSettingsUI();
+        updateHUD();
       }
 
       function toggleFullscreen() {
@@ -5438,7 +6477,7 @@
         elPauseBtnRestart.addEventListener('click', e => {
           e.stopPropagation();
           sound.init();
-          startNewMatch();
+          restartMatch();
         });
       }
 
@@ -5553,43 +6592,31 @@
       if (elSettingToggleHaptics) {
         elSettingToggleHaptics.addEventListener('click', e => {
           e.stopPropagation();
-          hapticsEnabled = !hapticsEnabled;
-          const hapticsBtn = document.getElementById('btn-haptics');
-          if (hapticsBtn) {
-            hapticsBtn.setAttribute('aria-pressed', String(hapticsEnabled));
-            document.getElementById('icon-haptics-on').classList.toggle('hidden', !hapticsEnabled);
-            document.getElementById('icon-haptics-off').classList.toggle('hidden', hapticsEnabled);
-          }
-          syncSettingsUI();
+          setHapticsEnabled(!hapticsEnabled);
         });
       }
 
       if (elSettingToggleSpeedUnit) {
         elSettingToggleSpeedUnit.addEventListener('click', e => {
           e.stopPropagation();
-          speedUnitKmh = !speedUnitKmh;
-          syncSettingsUI();
-          updateHUD();
+          setSpeedUnitKmh(!speedUnitKmh);
         });
       }
 
       if (elSettingToggleMotion) {
         elSettingToggleMotion.addEventListener('click', e => {
           e.stopPropagation();
-          reducedMotion = !reducedMotion;
-          try { localStorage.setItem('wtt-arena-reduced-motion', String(reducedMotion)); } catch (_) {}
-          const motionBtn = document.getElementById('btn-motion');
-          if (motionBtn) {
-            motionBtn.setAttribute('aria-pressed', String(reducedMotion));
-            motionBtn.classList.toggle('active', reducedMotion);
-          }
-          syncSettingsUI();
+          setReducedMotion(!reducedMotion);
         });
       }
 
       document.getElementById('btn-play-again').addEventListener('click', (e) => {
         e.stopPropagation();
         sound.init();
+        if (onlineDisconnected) {
+          returnToMainMenu();
+          return;
+        }
         if (isOnline) {
           if (isHost) {
             if (netConn && netConn.open) {
@@ -5609,6 +6636,10 @@
 
       window.onload = function () {
         resizeCanvas();
+        renderAudioState();
+        renderHapticsState();
+        renderMotionState();
+        syncSettingsUI();
 
         // Restore saved difficulty
         const savedDiff = (() => { try { return localStorage.getItem('wtt-arena-difficulty') || 'rookie'; } catch(_) { return 'rookie'; } })();
@@ -5625,25 +6656,43 @@
 
         gameState = 'MENU';
         if (elTopHud) elTopHud.classList.add('is-menu');
-        if (elStartModal) elStartModal.classList.add('is-open');
+        if (elStartModal && (!elOnlineModal || !elOnlineModal.classList.contains('is-open'))) {
+          elStartModal.classList.add('is-open');
+          focusModal(elStartModal);
+        }
         updateHUD();
         lastFrameTime = performance.now();
         requestAnimationFrame(gameLoop);
-
-        // #19 Show onboarding hint on first visit
-        try {
-          if (!localStorage.getItem('wtt-onboarded')) {
-            elOnboardOverlay.classList.remove('hidden');
-          }
-        } catch (_) {}
       };
 
       // #21 Speed unit toggle on readout click
       elSpeedReadout.addEventListener('click', e => {
         e.stopPropagation();
-        speedUnitKmh = !speedUnitKmh;
-        syncSettingsUI();
-        updateHUD();
+        setSpeedUnitKmh(!speedUnitKmh);
+      });
+
+      // Keep keyboard focus inside the topmost open dialog.
+      window.addEventListener('keydown', e => {
+        if (e.key !== 'Tab') return;
+        const modals = Array.from(document.querySelectorAll('.modal-backdrop.is-open'));
+        if (!modals.length) return;
+        const modal = modals[modals.length - 1];
+        const focusables = Array.from(modal.querySelectorAll(
+          'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+        )).filter(el => el.offsetParent !== null);
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (!modal.contains(document.activeElement)) {
+          e.preventDefault();
+          first.focus();
+        } else if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
       });
 
       // Keyboard & navigation support for desktop
@@ -5685,7 +6734,14 @@
               gameState = 'PLAYING';
               strikeBallWithPlayerPaddle(true);
             } else if (gameState === 'PLAYING') {
-              strikeBallWithPlayerPaddle(false);
+              // Space is a convenience for desktop players, but it should only
+              // work when the ball is actually reachable on the player's side.
+              const reach = player.radius + ball.radius + 34;
+              const inReach = ball.lastHitter === 'ai'
+                && ball.y >= TABLE.netY
+                && ball.z < 78
+                && Math.hypot(ball.x - player.x, ball.y - (player.y - 6)) <= reach;
+              if (inReach) strikeBallWithPlayerPaddle(false);
             }
             break;
           default: return;

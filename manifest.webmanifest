@@ -1,0 +1,19 @@
+{
+  "name": "WTT Arena Pro — Pocket Table Tennis",
+  "short_name": "WTT Arena",
+  "description": "A fast, mobile-first 3D table tennis game with solo AI and private peer-to-peer online matches.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#030509",
+  "theme_color": "#030509",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
