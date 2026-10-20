@@ -134,6 +134,7 @@
     --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --drop-shadow-md: 0 3px 3px rgb(0 0 0 / 0.12);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --animate-pulse: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     --blur-md: 12px;
@@ -306,6 +307,9 @@
   }
   .static {
     position: static;
+  }
+  .sticky {
+    position: sticky;
   }
   .inset-0 {
     inset: calc(var(--spacing) * 0);
@@ -1099,6 +1103,9 @@
     --tw-tracking: var(--tracking-widest);
     letter-spacing: var(--tracking-widest);
   }
+  .text-wrap {
+    text-wrap: wrap;
+  }
   .whitespace-nowrap {
     white-space: nowrap;
   }
@@ -1205,6 +1212,12 @@
       --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-emerald-500) 25%, transparent) var(--tw-shadow-alpha), transparent);
     }
   }
+  .shadow-sky-950 {
+    --tw-shadow-color: oklch(29.3% 0.066 243.157);
+    @supports (color: color-mix(in lab, red, red)) {
+      --tw-shadow-color: color-mix(in oklab, var(--color-sky-950) var(--tw-shadow-alpha), transparent);
+    }
+  }
   .shadow-sky-950\/60 {
     --tw-shadow-color: color-mix(in srgb, oklch(29.3% 0.066 243.157) 60%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -1252,6 +1265,10 @@
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
+  }
+  .ease-out {
+    --tw-ease: var(--ease-out);
+    transition-timing-function: var(--ease-out);
   }
   .select-all {
     -webkit-user-select: all;
@@ -1343,7 +1360,7 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 150ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
@@ -1717,12 +1734,24 @@
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
     }
+    :root {
+      /* Motion tokens: strong ease-out for UI, smooth in-out for travel. */
+      --wtt-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --wtt-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --wtt-ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+      --wtt-duration-press: 120ms;
+      --wtt-duration-ui: 180ms;
+      --wtt-duration-modal: 260ms;
+    }
     html, body {
       margin: 0; padding: 0;
       width: 100%; height: 100%;
       overflow: hidden;
       background-color: #030509;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-optical-sizing: auto;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
       touch-action: none;
       -webkit-user-select: none;
       user-select: none;
@@ -1743,6 +1772,9 @@
       font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Narrow", "Roboto Condensed", "sans-serif-condensed", sans-serif;
       letter-spacing: 0.03em;
     }
+    /* Balanced display lines and prettier prose without layout hacks. */
+    .modal-title, #start-modal-title, #rotate-overlay h2, .guide-title { text-wrap: balance; }
+    .modal-subtitle, .guide-desc, .setting-desc, #rotate-overlay p { text-wrap: pretty; }
     /* Legible, cross-platform numerals for scores and room codes. Impact is
        missing on most phones, so scores must not depend on it. */
     .score-digits {
@@ -1793,9 +1825,11 @@
 
     /* ── Surface Tokens ── */
     .glass-panel {
-      background: rgba(9, 13, 22, 0.93);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
+      background-color: rgba(9, 13, 22, 0.93);
+      /* A faint top sheen catches the light like a real material edge. */
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0) 96px);
+      backdrop-filter: blur(20px) saturate(140%);
+      -webkit-backdrop-filter: blur(20px) saturate(140%);
       border: 1px solid rgba(255,255,255,0.07);
     }
     .card-section {
@@ -1815,14 +1849,20 @@
       color: #94a3b8;
       background: rgba(15,23,42,0.78);
       border: 1px solid rgba(255,255,255,0.08);
-      transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease;
       cursor: pointer;
+      touch-action: manipulation;
     }
-    .hud-btn:hover { color: #f8fafc; border-color: rgba(255,255,255,0.18); background: rgba(30,41,59,0.85); }
 
     /* ── Global Interactive Press ── */
     .hud-btn:active,
-    .hud-interactive:active { transform: scale(0.93); }
+    .hud-btn.is-pressed,
+    .hud-interactive:active,
+    .hud-interactive.is-pressed { transform: scale(0.97); }
 
     /* ── Difficulty / Segment Active State ── */
     .difficulty-btn.active,
@@ -1851,11 +1891,16 @@
       font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
       box-shadow: 0 4px 20px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.4);
-      transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease,
+        box-shadow var(--wtt-duration-ui) ease;
       cursor: pointer;
     }
-    .btn-primary:hover { background: linear-gradient(135deg, #fff 0%, #f1f5f9 100%); box-shadow: 0 6px 24px rgba(255,255,255,0.16); }
-    .btn-primary:active { transform: scale(0.95); }
+    .btn-primary:active,
+    .btn-primary.is-pressed { transform: scale(0.97); }
 
     .btn-accent {
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -1868,11 +1913,16 @@
       font-size: 0.75rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
       box-shadow: 0 4px 20px rgba(16,185,129,0.22), inset 0 1px 0 rgba(255,255,255,0.15);
-      transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease,
+        box-shadow var(--wtt-duration-ui) ease;
       cursor: pointer;
     }
-    .btn-accent:hover { background: linear-gradient(135deg, #34d399 0%, #10b981 100%); box-shadow: 0 6px 24px rgba(16,185,129,0.32); }
-    .btn-accent:active { transform: scale(0.95); }
+    .btn-accent:active,
+    .btn-accent.is-pressed { transform: scale(0.97); }
 
     .btn-secondary {
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -1884,11 +1934,16 @@
       font-family: Impact, "Arial Narrow", sans-serif;
       font-size: 0.7rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease,
+        box-shadow var(--wtt-duration-ui) ease;
       cursor: pointer;
     }
-    .btn-secondary:hover { background: rgba(30,41,59,0.85); color: #f1f5f9; border-color: rgba(255,255,255,0.18); }
-    .btn-secondary:active { transform: scale(0.95); }
+    .btn-secondary:active,
+    .btn-secondary.is-pressed { transform: scale(0.97); }
 
     .btn-danger {
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -1900,11 +1955,16 @@
       font-family: Impact, "Arial Narrow", sans-serif;
       font-size: 0.7rem; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease,
+        box-shadow var(--wtt-duration-ui) ease;
       cursor: pointer;
     }
-    .btn-danger:hover { background: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.4); }
-    .btn-danger:active { transform: scale(0.95); }
+    .btn-danger:active,
+    .btn-danger.is-pressed { transform: scale(0.97); }
 
     /* Buttons use a cross-platform UI font instead of Impact so labels stay
        readable when Impact is missing, and keep a 46px touch height. */
@@ -1912,6 +1972,7 @@
       font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
       font-weight: 800;
       min-height: 46px;
+      touch-action: manipulation;
     }
     .btn-primary, .btn-accent { font-size: 0.8rem; }
     .btn-secondary, .btn-danger { font-size: 0.75rem; }
@@ -1969,30 +2030,64 @@
       color: #94a3b8;
       background: rgba(15,23,42,0.5);
       border: 1px solid rgba(255,255,255,0.08);
-      transition: all 0.15s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease,
+        box-shadow var(--wtt-duration-ui) ease;
       cursor: pointer;
       flex-shrink: 0;
+      touch-action: manipulation;
     }
-    .btn-icon:hover { color: #f1f5f9; background: rgba(30,41,59,0.9); border-color: rgba(255,255,255,0.18); }
-    .btn-icon:active { transform: scale(0.9); }
+    .btn-icon:active,
+    .btn-icon.is-pressed { transform: scale(0.96); }
 
-    /* ── Modal System ── */
+    /* Pointer-only hover states: touch taps must not leave a sticky hover. */
+    @media (hover: hover) and (pointer: fine) {
+      .hud-btn:hover { color: #f8fafc; border-color: rgba(255,255,255,0.18); background-color: rgba(30,41,59,0.85); }
+      .btn-primary:hover { background: linear-gradient(135deg, #fff 0%, #f1f5f9 100%); box-shadow: 0 6px 24px rgba(255,255,255,0.16); }
+      .btn-accent:hover { background: linear-gradient(135deg, #34d399 0%, #10b981 100%); box-shadow: 0 6px 24px rgba(16,185,129,0.32); }
+      .btn-secondary:hover { background-color: rgba(30,41,59,0.85); color: #f1f5f9; border-color: rgba(255,255,255,0.18); }
+      .btn-danger:hover { background-color: rgba(239,68,68,0.16); border-color: rgba(239,68,68,0.4); }
+      .btn-icon:hover { color: #f1f5f9; background-color: rgba(30,41,59,0.9); border-color: rgba(255,255,255,0.18); }
+    }
+
+    /* ── Modal System ──
+       Enter slowly enough to read as a material arriving; exit faster so the
+       interface never feels like it is waiting on chrome. */
     .modal-backdrop {
       opacity: 0; visibility: hidden; pointer-events: none;
-      transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), visibility 0.22s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        opacity var(--wtt-duration-ui) var(--wtt-ease-out),
+        visibility 0s linear var(--wtt-duration-ui);
       padding-top: max(0.875rem, env(safe-area-inset-top, 0px));
       padding-bottom: max(0.875rem, env(safe-area-inset-bottom, 0px));
     }
-    .modal-backdrop.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .modal-backdrop.is-open {
+      opacity: 1; visibility: visible; pointer-events: auto;
+      transition:
+        opacity 220ms var(--wtt-ease-out),
+        visibility 0s linear 0s;
+    }
     .modal-card {
       max-height: 94dvh; overflow-y: auto; overscroll-behavior: contain;
       touch-action: pan-y;
-      transform: translateY(10px) scale(0.96);
-      transition: transform 0.24s cubic-bezier(0.16,1,0.3,1);
+      opacity: 0;
+      transform: translateY(12px) scale(0.96);
+      transition:
+        opacity 140ms ease-out,
+        transform var(--wtt-duration-ui) var(--wtt-ease-out);
     }
     .modal-card::-webkit-scrollbar { width: 3px; }
     .modal-card::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.2); border-radius: 4px; }
-    .modal-backdrop.is-open .modal-card { transform: translateY(0) scale(1); }
+    .modal-backdrop.is-open .modal-card {
+      opacity: 1;
+      transform: none;
+      transition:
+        opacity var(--wtt-duration-ui) ease-out,
+        transform var(--wtt-duration-modal) var(--wtt-ease-out);
+    }
 
     /* ── Modal Header (shared anatomy) ── */
     .modal-header {
@@ -2024,11 +2119,19 @@
       min-height: 44px; min-width: 58px;
       padding: 4px 12px; border-radius: 0.5rem;
       font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
-      transition: all 0.15s ease; cursor: pointer;
+      transition:
+        transform var(--wtt-duration-press) var(--wtt-ease-out),
+        background-color var(--wtt-duration-ui) ease,
+        color var(--wtt-duration-ui) ease,
+        border-color var(--wtt-duration-ui) ease;
+      cursor: pointer;
       border: 1px solid;
+      touch-action: manipulation;
     }
     .setting-toggle.on  { background: rgba(16,185,129,0.15); color: #34d399; border-color: rgba(16,185,129,0.35); }
     .setting-toggle.off { background: rgba(15,23,42,0.8);    color: #94a3b8;  border-color: rgba(255,255,255,0.08); }
+    .setting-toggle:active,
+    .setting-toggle.is-pressed { transform: scale(0.96); }
 
     /* ── Score Box (shared in pause / post-match) ── */
     .score-box {
@@ -2067,7 +2170,9 @@
 
     /* ── HUD Top-Bar ── */
     #top-hud {
-      transition: opacity 0.22s cubic-bezier(0.16,1,0.3,1), transform 0.22s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        opacity var(--wtt-duration-ui) var(--wtt-ease-out),
+        transform var(--wtt-duration-ui) var(--wtt-ease-out);
       padding-top: calc(0.625rem + env(safe-area-inset-top, 0px));
     }
     #top-hud.is-menu { opacity: 0; pointer-events: none; visibility: hidden; transform: translateY(-8px); }
@@ -2076,17 +2181,19 @@
     .hud-banner {
       opacity: 0;
       transform: translate(-50%, -6px) scale(0.95);
-      transition: opacity 0.14s ease-out, transform 0.14s cubic-bezier(0.16,1,0.3,1);
+      transition:
+        opacity 140ms ease-out,
+        transform 140ms var(--wtt-ease-out);
       pointer-events: none;
     }
     .hud-banner.is-visible { opacity: 1; transform: translate(-50%, 0) scale(1); }
 
     /* ── Score Pulse Animation ── */
-    @keyframes score-pulse { 0%{transform:scale(1)} 40%{transform:scale(1.5)} 100%{transform:scale(1)} }
-    .score-pulse { animation: score-pulse 0.32s cubic-bezier(0.16,1,0.3,1); }
+    @keyframes score-pulse { 0%{transform:scale(1)} 40%{transform:scale(1.22)} 100%{transform:scale(1)} }
+    .score-pulse { animation: score-pulse 280ms var(--wtt-ease-out); }
 
     /* ── Serve Badge Transition ── */
-    #player-serve-badge, #ai-serve-badge { transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
+    #player-serve-badge, #ai-serve-badge { transition: opacity 180ms ease, transform 180ms var(--wtt-ease-out); }
 
     /* ── Speed Readout Colour Tiers ── */
     .speed-low  { color: var(--color-slate-400); }
@@ -2096,11 +2203,11 @@
     #speed-readout { cursor: pointer; }
 
     /* ── Streak Badge ── */
-    #streak-badge { transition: opacity 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); letter-spacing: 0.08em; }
+    #streak-badge { transition: opacity 180ms ease, transform 180ms var(--wtt-ease-out); letter-spacing: 0.08em; }
 
     /* ── Sets Pip Strip ── */
     #sets-strip { display:flex; gap:3px; align-items:center; justify-content:center; min-height:9px; }
-    .set-pip { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.15); transition:background 0.22s ease, transform 0.22s cubic-bezier(0.16,1,0.3,1); }
+    .set-pip { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.15); transition:background-color 220ms ease, transform 220ms var(--wtt-ease-out); }
     .set-pip.won-player { background:var(--color-rose-400); transform:scale(1.25); }
     .set-pip.won-ai     { background:var(--color-sky-400);  transform:scale(1.25); }
 
@@ -2117,7 +2224,7 @@
     .onboard-hand { display:flex; color:#7dd3fc; animation:swipe-hint 1.5s ease-in-out infinite; filter:drop-shadow(0 4px 10px rgba(0,0,0,0.7)); }
     @keyframes swipe-hint { 0%,100%{transform:translateY(0);opacity:0.75} 50%{transform:translateY(-26px);opacity:1} }
     .onboard-label {
-      font-size:12px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+      font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
       color:rgba(255,255,255,0.78); text-shadow:0 2px 10px rgba(0,0,0,0.95);
     }
 
@@ -2138,8 +2245,8 @@
     }
 
     /* ── Accessibility: readable captions and larger touch targets ── */
-    .text-\[9px\] { font-size: 11px; }
-    .text-\[10px\] { font-size: 12px; }
+    .text-\[9px\] { font-size: 0.6875rem; }
+    .text-\[10px\] { font-size: 0.75rem; }
     .difficulty-btn { min-height: 44px; font-size: 0.7rem; }
     #input-room-code:focus {
       border-color: rgba(52,211,153,0.6);
@@ -2160,10 +2267,14 @@
       display: inline-flex; align-items: center; justify-content: center;
       background: none; border: 0; min-width: 44px; min-height: 44px;
       padding: 0 12px; margin: -15px -12px;
-      font-size: 11px; line-height: 1.2;
+      font-size: 0.6875rem; line-height: 1.2;
       cursor: pointer;
       border-radius: 8px;
+      transition: transform var(--wtt-duration-press) var(--wtt-ease-out);
+      touch-action: manipulation;
     }
+    #speed-readout:active,
+    #speed-readout.is-pressed { transform: scale(0.96); }
 
     /* ── How-to-play "more below" hint ── */
     .howto-more-btn {
@@ -2177,7 +2288,11 @@
       color: #7dd3fc;
       font-size: 0.65rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
       cursor: pointer;
+      transition: transform var(--wtt-duration-press) var(--wtt-ease-out);
+      touch-action: manipulation;
     }
+    .howto-more-btn:active,
+    .howto-more-btn.is-pressed { transform: scale(0.97); }
     .howto-more-btn.visible { display: block; }
 
     /* ── Portrait orientation prompt ── */
@@ -2214,6 +2329,58 @@
       .hud-score-center { min-width: 76px; }
       .hud-score-side { min-width: 82px; }
       .hud-score-status { max-width: 64px; }
+    }
+
+    /* ── Adaptive materials ──
+       Respect the OS-level transparency preference instead of forcing glass. */
+    @media (prefers-reduced-transparency: reduce) {
+      .glass-panel {
+        background-color: #0a0f19;
+        background-image: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+      .modal-backdrop {
+        background-color: rgba(3, 5, 9, 0.97) !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+    }
+
+    /* Stronger separation and text contrast when the user asks for it. */
+    @media (prefers-contrast: more) {
+      .glass-panel { background-color: #070b13; border-color: rgba(255,255,255,0.3); }
+      .setting-row, .guide-row, .stat-card, .card-section, .score-box {
+        border-color: rgba(255,255,255,0.28);
+      }
+      .modal-subtitle, .setting-desc, .guide-desc, #rotate-overlay p { color: #cbd5e1; }
+    }
+
+    /* Reduced motion keeps the explanatory fades but removes travel/overshoot. */
+    @media (prefers-reduced-motion: reduce) {
+      .modal-backdrop {
+        transition: opacity 140ms linear, visibility 0s linear 140ms !important;
+      }
+      .modal-backdrop.is-open {
+        transition: opacity 140ms linear, visibility 0s linear 0s !important;
+      }
+      .modal-card,
+      .modal-backdrop.is-open .modal-card {
+        transform: none !important;
+        transition: opacity 140ms linear !important;
+      }
+      #top-hud {
+        transform: none !important;
+        transition: opacity 140ms linear !important;
+      }
+      .hud-banner {
+        transform: translate(-50%, 0) !important;
+        transition: opacity 140ms linear !important;
+      }
+      #onboard-overlay { transition: opacity 200ms linear !important; }
+      .onboard-hand,
+      #rotate-overlay .rotate-icon { animation: none !important; }
+      .score-pulse { animation: none !important; }
     }
   </style>
 </head>
@@ -2334,13 +2501,13 @@
             </div>
             <!-- Division Selector Inside Solo Card -->
             <div role="group" aria-label="AI difficulty" class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex items-center gap-1">
-              <button type="button" data-diff="rookie" aria-pressed="true" class="difficulty-btn hud-interactive active flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+              <button type="button" data-diff="rookie" aria-pressed="true" class="difficulty-btn hud-interactive active flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition">
                 Relaxed
               </button>
-              <button type="button" data-diff="pro" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+              <button type="button" data-diff="pro" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition">
                 Casual
               </button>
-              <button type="button" data-diff="grandmaster" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition-all">
+              <button type="button" data-diff="grandmaster" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition">
                 Pro
               </button>
             </div>
@@ -2681,8 +2848,8 @@
         <div class="px-5 pb-5 pt-4 space-y-3">
           <!-- Host / Join Tab Strip -->
           <div class="flex items-center gap-1 p-0.5 rounded-xl" style="background:rgba(5,8,15,0.7);border:1px solid rgba(255,255,255,0.06)">
-            <button type="button" id="tab-host" class="online-tab-btn hud-interactive active flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition-all" style="color:#94a3b8">Host Match</button>
-            <button type="button" id="tab-join" class="online-tab-btn hud-interactive flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition-all" style="color:#94a3b8">Join Match</button>
+            <button type="button" id="tab-host" class="online-tab-btn hud-interactive active flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition" style="color:#94a3b8">Host Match</button>
+            <button type="button" id="tab-join" class="online-tab-btn hud-interactive flex-1 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider border border-transparent transition" style="color:#94a3b8">Join Match</button>
           </div>
 
           <!-- Host Panel -->
@@ -7063,6 +7230,24 @@
         }
         e.preventDefault();
       });
+
+      // Guarantee press feedback on pointer-down. iOS does not always apply
+      // :active without a touch listener, so mirror it with a short-lived class.
+      document.addEventListener('pointerdown', e => {
+        if (e.button !== 0) return;
+        const control = e.target instanceof Element
+          ? e.target.closest('button, [role="button"], .hud-interactive')
+          : null;
+        if (!control || control.disabled || control.getAttribute('aria-disabled') === 'true') return;
+        control.classList.add('is-pressed');
+        const release = () => {
+          control.classList.remove('is-pressed');
+          window.removeEventListener('pointerup', release);
+          window.removeEventListener('pointercancel', release);
+        };
+        window.addEventListener('pointerup', release, { once: true });
+        window.addEventListener('pointercancel', release, { once: true });
+      }, { passive: true, capture: true });
     })();
   </script>
 </body>

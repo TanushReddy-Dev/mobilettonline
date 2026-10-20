@@ -6,7 +6,9 @@
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    /* Keep short color/opacity changes; the app's own reduced-motion rules
+       remove travel, scale and looping animation. */
+    transition-duration: 150ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
   }
