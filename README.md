@@ -9,8 +9,8 @@ A fast, mobile-first 3D table tennis game. Play solo against the AI or challenge
 ## 🌐 Online Multiplayer
 
 - **Private match codes** — create a room, share a 6-character code or invite link, and play from two browsers.
-- **Peer-to-peer WebRTC** — direct browser-to-browser DataChannel play via PeerJS, with client-side prediction and throttled 30 Hz snapshots.
-- **Reliable transport** — all online messages use a single reliable, ordered DataChannel; snapshots and paddle updates are throttled to 30 Hz so critical events are not silently dropped.
+- **Peer-to-peer WebRTC** — direct browser-to-browser DataChannel play via PeerJS, with guest-side bounce prediction and 60 Hz snapshots.
+- **Reliable transport** — all online messages use a single reliable, ordered DataChannel; snapshots and paddle updates are throttled to 60 Hz so critical events are not silently dropped.
 - **Symmetrical 3D perspective** — both players play from behind their own paddle at the bottom baseline.
 - **Physics** — spin, topspin, backspin, sidespin/Magnus, net cords, smashes and drop shots.
 - **Zero server setup** — the game is a single static `index.html`.
@@ -85,7 +85,8 @@ $env:RUN_ONLINE_TESTS="1"; npm test
 | `src/tailwind.css` | Tailwind source used to generate the inline utility bundle. |
 | `scripts/inject-tailwind.mjs` | Injects generated CSS into `index.html`. |
 | `tests/` | Playwright smoke, modal-structure, preference and server tests. |
-| `icon.svg`, `manifest.webmanifest` | Favicon and installable web-app metadata. |
+| `icon.svg`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`, `favicon.ico`, `og-image.png` | Brand mark, installable web-app icons, and the social share card. |
+| `manifest.webmanifest` | PWA name, colours, orientation, and installed-app icon set. |
 
 ## 📜 License
 

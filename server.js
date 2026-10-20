@@ -20,6 +20,14 @@ const START_PORT = Number(process.env.PORT) || 3000;
 const PUBLIC_FILES = new Set([
   'index.html',
   'icon.svg',
+  'icon-192.png',
+  'icon-512.png',
+  'icon-maskable-512.png',
+  'apple-touch-icon.png',
+  'favicon.ico',
+  'favicon-16.png',
+  'favicon-32.png',
+  'og-image.png',
   'manifest.webmanifest'
 ]);
 
