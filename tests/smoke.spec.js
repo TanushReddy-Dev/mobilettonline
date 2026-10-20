@@ -23,6 +23,8 @@ test('loads the menu with valid, non-nested modals', async ({ page }) => {
   await expect(page).toHaveTitle(/WTT Arena Pro/);
   await expect(page.locator('#start-modal')).toHaveClass(/is-open/);
   await expect(page.locator('#modal-settings')).not.toHaveClass(/is-open/);
+  await expect(page.locator('#pause-remote-request')).toHaveClass(/hidden/);
+  await expect(page.locator('#match-remote-request')).toHaveClass(/hidden/);
 
   const structure = await page.evaluate(() => {
     const ids = Array.from(document.querySelectorAll('[id]')).map(el => el.id);
@@ -52,6 +54,43 @@ test('loads the menu with valid, non-nested modals', async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test('centers the start-screen utility icons and exposes fullscreen state', async ({ page }) => {
+  await page.goto('/');
+
+  const layout = await page.evaluate(() => {
+    const measure = (id) => {
+      const button = document.getElementById(id);
+      const icon = button.querySelector('svg:not(.hidden)');
+      const b = button.getBoundingClientRect();
+      const i = icon.getBoundingClientRect();
+      const enter = button.querySelector('.menu-fullscreen-enter');
+      const exit = button.querySelector('.menu-fullscreen-exit');
+      return {
+        display: getComputedStyle(button).display,
+        dx: (i.left + i.width / 2) - (b.left + b.width / 2),
+        dy: (i.top + i.height / 2) - (b.top + b.height / 2),
+        unavailable: button.classList.contains('is-unavailable'),
+        label: button.getAttribute('aria-label'),
+        enterHidden: enter ? enter.classList.contains('hidden') : null,
+        exitHidden: exit ? exit.classList.contains('hidden') : null
+      };
+    };
+    return { sound: measure('menu-btn-sound'), fullscreen: measure('menu-btn-fullscreen') };
+  });
+
+  for (const control of [layout.sound, layout.fullscreen]) {
+    if (control.unavailable) continue;
+    expect(control.display).toMatch(/flex/);
+    expect(Math.abs(control.dx)).toBeLessThan(0.75);
+    expect(Math.abs(control.dy)).toBeLessThan(0.75);
+  }
+  if (!layout.fullscreen.unavailable) {
+    expect(layout.fullscreen.label).toMatch(/fullscreen/i);
+    expect(layout.fullscreen.enterHidden).toBe(false);
+    expect(layout.fullscreen.exitHidden).toBe(true);
+  }
+});
+
 test('opens and closes settings and how-to-play dialogs', async ({ page }) => {
   await page.goto('/');
 
@@ -77,6 +116,28 @@ test('starts a solo match and shows the in-game HUD', async ({ page }) => {
   await expect(page.locator('#table-canvas')).toBeVisible();
   await expect(page.locator('#btn-hud-pause')).toBeVisible();
   await expect(page.locator('#player-score')).toHaveText('0');
+});
+
+test('serves again with keyboard Space after a point', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('button', { name: /play solo match/i }).click();
+
+  // A point is played out without returning the serve; whichever player wins,
+  // the server stays the same after the first point. The next Space press must
+  // start a fresh rally, not be ignored by the old "already served" guard.
+  await page.keyboard.press('Space');
+  await page.waitForFunction(() => {
+    const player = Number(document.getElementById('player-score').textContent);
+    const ai = Number(document.getElementById('ai-score').textContent);
+    return player + ai > 0;
+  }, null, { timeout: 15000 });
+
+  await expect(page.locator('#rally-count')).toHaveText('0', { timeout: 5000 });
+  await page.keyboard.press('Space');
+  await expect.poll(async () => Number(await page.locator('#rally-count').textContent()), {
+    timeout: 3000
+  }).toBeGreaterThan(0);
 });
 
 test('persists sound, haptics and speed-unit preferences', async ({ page }) => {
@@ -168,6 +229,28 @@ test('keeps HUD controls inside the app frame with touch-sized targets', async (
     expect(button.width, button.id).toBeGreaterThanOrEqual(43.5);
     expect(button.height, button.id).toBeGreaterThanOrEqual(43.5);
   }
+});
+
+test('keeps the narrow-phone HUD free of overlap', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto('/');
+  await page.getByRole('button', { name: /play solo match/i }).click();
+  await expect(page.locator('#top-hud')).not.toHaveClass(/is-menu/);
+
+  const layout = await page.evaluate(() => {
+    const badge = document.getElementById('player-serve-badge');
+    const center = document.querySelector('.hud-score-center').getBoundingClientRect();
+    const badgeBox = badge.getBoundingClientRect();
+    return {
+      badgeDisplay: getComputedStyle(badge).display,
+      overlap: badgeBox.right > center.left,
+      pageOverflow: document.documentElement.scrollWidth > window.innerWidth
+    };
+  });
+
+  expect(layout.badgeDisplay).toBe('none');
+  expect(layout.overlap).toBe(false);
+  expect(layout.pageOverflow).toBe(false);
 });
 
 test('keeps difficulty and destructive actions out of the HUD', async ({ page }) => {
