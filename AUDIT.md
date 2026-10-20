@@ -11,7 +11,8 @@
 
 - **Start-screen sound/fullscreen icons are centered.** Both utilities are `44×44`; the visible Iconoir glyphs measure `dx=0`, `dy=0` at 320 px and 390 px widths.
 - **Fullscreen is feature-detected.** Unsupported browsers hide the control and remove it from the tab order. Enter/exit Iconoir icons, `aria-pressed`, the accessible label, and resize handling now update on `fullscreenchange`.
-- **Narrow-phone layout holds.** At 320×568 all start-menu controls remain reachable, the serve badges hide only where they would collide with the score center, and the HUD has no horizontal overflow. HUD action targets remain at least `44×44`; pause actions are `46 px` high.
+- **Narrow-phone layout holds.** At 320×568 all start-menu controls remain reachable, serve badges are hidden on phone-width HUDs, and the HUD has no horizontal overflow. HUD action targets remain at least `44×44`; pause actions are `46 px` high.
+- **HUD geometry is stable during rallies.** Serve badges reserve a fixed slot on wider HUDs, and online/streak telemetry is overlaid rather than added to the layout. The score digits, scoreboard, and canvas no longer move when service changes or a streak badge appears.
 - **Short-screen start menu compacts instead of shrinking controls.** The 320×568 menu has a small internal scroll area, but no controls are lost.
 - **Reduced-motion tokens, Apple/Emil motion refinements, and the Iconoir audit are in place.** No non-Iconoir UI glyphs were introduced.
 
@@ -78,16 +79,16 @@
 - No committed test for **background auto-pause**, reconnect-adjacent behavior, or the connection watchdog.
 - No committed test for the **guest result correction** or rematch-request notes beyond their initial hidden state.
 - No committed test for **fullscreen enter/exit** (the control state and unsupported fallback were checked manually).
-- No committed 320 px start/settings/pause layout test, and no online HUD test with badges/streak visible.
+- No committed 320 px start/settings/pause layout test. The HUD geometry regression test toggles telemetry synthetically rather than exercising a live online match.
 - No test for **online difficulty normalization** or the `PLAYER`/`AI` → `YOU`/`GUEST`/`OPPONENT` banner translation.
 
 ## 4. Validation performed
 
 - `npm run build:css` — generated Tailwind CSS injected successfully.
 - `npm run validate` — HTML validation and inline-JS syntax check pass.
-- `npm test` — **16 passed, 1 skipped** (the online suite is opt-in).
-- `RUN_ONLINE_TESTS=1 npx playwright test tests/online.spec.js` — **1 passed** (22.0 s).
-- Scripted UI audit at 320×568 and 390×844 — no console/page errors, no horizontal page overflow, HUD controls inside the app frame, serve-badge collision absent at 320 px, pause actions all 46 px high.
+- `npm test` — **17 passed, 1 skipped** (the online suite is opt-in).
+- `RUN_ONLINE_TESTS=1 npx playwright test tests/online.spec.js` — **1 passed** (24.2 s).
+- Scripted UI audit at 320×568 and 390×844 — no console/page errors, no horizontal page overflow, HUD controls inside the app frame, serve-badge collision absent on phone widths, pause actions all 46 px high. HUD height, canvas top, and score positions stayed fixed when serve, online, and streak indicators changed.
 - Fullscreen enter/exit — `aria-label`, `aria-pressed`, enter/exit icon visibility, and canvas metrics updated correctly. Unsupported-mode simulation hid the button (`display:none`, `aria-hidden="true"`, `tabIndex=-1`).
 - Screenshots: `C:\Users\Tanus\AppData\Local\Temp\wtt-final`.
 

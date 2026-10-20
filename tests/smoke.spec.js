@@ -253,6 +253,91 @@ test('keeps the narrow-phone HUD free of overlap', async ({ page }) => {
   expect(layout.pageOverflow).toBe(false);
 });
 
+test('keeps HUD geometry stable when serve and streak badges change', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.getByRole('button', { name: /play solo match/i }).click();
+  await expect(page.locator('#top-hud')).not.toHaveClass(/is-menu/);
+
+  const snapshot = () => page.evaluate(() => {
+    const box = id => {
+      const r = document.getElementById(id).getBoundingClientRect();
+      return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width, height: r.height };
+    };
+    const scoreboard = document.querySelector('.hud-scoreboard').getBoundingClientRect();
+    const canvas = document.getElementById('table-canvas').getBoundingClientRect();
+    return {
+      hudHeight: document.getElementById('top-hud').getBoundingClientRect().height,
+      scoreboardHeight: scoreboard.height,
+      canvasTop: canvas.top,
+      playerScore: box('player-score'),
+      aiScore: box('ai-score'),
+      meta: box('hud-meta'),
+      pageOverflow: document.documentElement.scrollWidth > innerWidth
+    };
+  });
+  const expectStable = (actual, expected, label) => {
+    expect(Math.abs(actual - expected), label).toBeLessThan(0.75);
+  };
+
+  const baseline = await snapshot();
+
+  // Switch the service indicator without waiting for a real point. The score
+  // digits must not slide sideways as the badge changes.
+  await page.evaluate(() => {
+    document.getElementById('player-serve-badge').classList.add('is-serve-hidden');
+    document.getElementById('ai-serve-badge').classList.remove('is-serve-hidden');
+  });
+  await page.waitForTimeout(250);
+  const aiServe = await snapshot();
+
+  // The transient online/streak telemetry is overlaid, not added to the
+  // scoreboard's flow, so the canvas must not move down when it appears.
+  await page.evaluate(() => {
+    document.getElementById('online-badge').classList.remove('hidden');
+    const streak = document.getElementById('streak-badge');
+    streak.textContent = '3★ HAT TRICK';
+    streak.classList.remove('hidden');
+  });
+  await page.waitForTimeout(250);
+  const telemetry = await snapshot();
+
+  for (const [name, state] of [['ai serve', aiServe], ['telemetry', telemetry]]) {
+    expectStable(state.hudHeight, baseline.hudHeight, `${name}: HUD height`);
+    expectStable(state.scoreboardHeight, baseline.scoreboardHeight, `${name}: scoreboard height`);
+    expectStable(state.canvasTop, baseline.canvasTop, `${name}: canvas top`);
+    expectStable(state.playerScore.left, baseline.playerScore.left, `${name}: player score x`);
+    expectStable(state.aiScore.left, baseline.aiScore.left, `${name}: AI score x`);
+    expect(state.pageOverflow, `${name}: page overflow`).toBe(false);
+  }
+  expect(telemetry.meta.left).toBeGreaterThanOrEqual(0);
+  expect(telemetry.meta.right).toBeLessThanOrEqual(390);
+
+  // On a wider HUD the badges are visible. Their fixed slots must still keep
+  // the score digits from moving when the server changes.
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await page.evaluate(() => {
+    document.getElementById('player-serve-badge').classList.remove('is-serve-hidden');
+    document.getElementById('ai-serve-badge').classList.add('is-serve-hidden');
+  });
+  await page.waitForTimeout(250);
+  const tabletPlayer = await snapshot();
+  await page.evaluate(() => {
+    document.getElementById('player-serve-badge').classList.add('is-serve-hidden');
+    document.getElementById('ai-serve-badge').classList.remove('is-serve-hidden');
+  });
+  await page.waitForTimeout(250);
+  const tabletAi = await snapshot();
+  expectStable(tabletAi.playerScore.left, tabletPlayer.playerScore.left, 'tablet: player score x');
+  expectStable(tabletAi.aiScore.left, tabletPlayer.aiScore.left, 'tablet: AI score x');
+  expectStable(tabletAi.hudHeight, tabletPlayer.hudHeight, 'tablet: HUD height');
+  const badgeWidths = await page.evaluate(() => [
+    getComputedStyle(document.getElementById('player-serve-badge')).width,
+    getComputedStyle(document.getElementById('ai-serve-badge')).width
+  ]);
+  expect(badgeWidths).toEqual(['47px', '47px']);
+});
+
 test('keeps difficulty and destructive actions out of the HUD', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('#start-modal .difficulty-btn')).toHaveCount(3);
@@ -263,7 +348,9 @@ test('keeps difficulty and destructive actions out of the HUD', async ({ page })
   await expect(page.locator('#top-hud .difficulty-btn')).toHaveCount(0);
   await expect(page.locator('#top-hud #btn-restart')).toHaveCount(0);
   await expect(page.locator('#top-hud #btn-practice')).toHaveCount(0);
-  await expect(page.locator('#player-serve-badge')).toBeVisible();
+  // Phones use the readable serve status instead of the cramped badge.
+  await expect(page.locator('#player-spin-label')).toHaveText('Your Serve');
+  await expect(page.locator('#player-serve-badge')).toBeHidden();
 
   // Restart is still available, but only through the pause hub.
   await page.locator('#btn-hud-pause').click();

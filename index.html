@@ -2205,8 +2205,39 @@
     @keyframes score-pulse { 0%{transform:scale(1)} 40%{transform:scale(1.22)} 100%{transform:scale(1)} }
     .score-pulse { animation: score-pulse 280ms var(--wtt-ease-out); }
 
-    /* ── Serve Badge Transition ── */
-    #player-serve-badge, #ai-serve-badge { transition: opacity 180ms ease, transform 180ms var(--wtt-ease-out); }
+    /* ── Serve Badge Slot ──
+       Reserve the badge width while it fades, so the score boxes do not
+       slide sideways when service changes. */
+    #player-serve-badge, #ai-serve-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      flex: 0 0 47px; width: 47px; min-width: 47px;
+      transition: opacity 180ms ease, transform 180ms var(--wtt-ease-out);
+    }
+    #player-serve-badge.is-serve-hidden, #ai-serve-badge.is-serve-hidden {
+      visibility: hidden; opacity: 0; transform: translateY(-2px);
+    }
+
+    /* Keep streak/online telemetry out of the layout so showing it never
+       pushes the scoreboard or the canvas down mid-rally. */
+    .hud-score-center { position: relative; }
+    .hud-meta {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center;
+      gap: 2px;
+      z-index: 2;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    #streak-badge, #online-badge {
+      padding: 1px 6px;
+      border-radius: 5px;
+      background: rgba(3,7,17,0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+      line-height: 1.3;
+    }
 
     /* ── Speed Readout Colour Tiers ── */
     .speed-low  { color: var(--color-slate-400); }
@@ -2349,10 +2380,15 @@
       .hud-score-side { min-width: 82px; }
       .hud-score-status { max-width: 64px; }
     }
-    @media (max-width: 380px) {
+    @media (max-width: 520px) {
       /* The broad status banner already says who serves; the extra badge
-         collides with the SHOTS counter on narrow phones. */
+         collides with the SHOTS counter on phones. */
       #player-serve-badge, #ai-serve-badge { display: none !important; }
+    }
+    @media (max-width: 380px) {
+      /* The telemetry sits beside the 44px HUD buttons; keep the longest
+         streak label out of their hit area on the narrowest phones. */
+      #streak-badge, #online-badge { font-size: 9px; padding-left: 4px; padding-right: 4px; }
     }
 
     /* ── Adaptive materials ──
@@ -2440,18 +2476,20 @@
           <div class="flex items-center gap-1 text-[11px] font-semibold">
             <button type="button" id="speed-readout" aria-label="Toggle speed unit between KM/H and MPH" class="score-digits tracking-wider speed-med" title="Tap to toggle KM/H · MPH">0 KM/H</button>
           </div>
-          <span id="streak-badge" class="hidden text-[9px] font-bold uppercase text-amber-400"></span>
-          <span id="online-badge" class="hidden text-[9px] font-bold uppercase text-emerald-400 flex items-center gap-1">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span id="online-ping-text">ONLINE</span>
-          </span>
+          <div id="hud-meta" class="hud-meta">
+            <span id="online-badge" class="hidden text-[9px] font-bold uppercase text-emerald-400 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="online-ping-text">ONLINE</span>
+            </span>
+            <span id="streak-badge" class="hidden text-[9px] font-bold uppercase text-amber-400"></span>
+          </div>
         </div>
 
         <!-- Opponent Score -->
         <div class="hud-score-side flex items-center justify-end gap-2.5 min-w-[104px]">
           <div class="flex flex-col items-end">
             <div class="flex items-center gap-1.5">
-              <span id="ai-serve-badge" class="hidden rounded border border-amber-400/50 bg-amber-400/15 px-1 py-[1px] text-[9px] font-black uppercase tracking-wider text-amber-300" title="Opponent Serve">Serve</span>
+              <span id="ai-serve-badge" class="is-serve-hidden rounded border border-amber-400/50 bg-amber-400/15 px-1 py-[1px] text-[9px] font-black uppercase tracking-wider text-amber-300" title="Opponent Serve">Serve</span>
               <span id="ai-name-label" class="text-[10px] font-bold uppercase tracking-widest text-slate-300">RELAXED</span>
               <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
             </div>
@@ -4048,11 +4086,11 @@
           matchStats.server = computeCurrentServer();
         }
         if (matchStats.server === 'player') {
-          elPlayerServeBadge.classList.remove('hidden');
-          elAiServeBadge.classList.add('hidden');
+          elPlayerServeBadge.classList.remove('is-serve-hidden');
+          elAiServeBadge.classList.add('is-serve-hidden');
         } else {
-          elPlayerServeBadge.classList.add('hidden');
-          elAiServeBadge.classList.remove('hidden');
+          elPlayerServeBadge.classList.add('is-serve-hidden');
+          elAiServeBadge.classList.remove('is-serve-hidden');
         }
 
         if (isOnline) {
