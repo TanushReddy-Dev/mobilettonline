@@ -20,7 +20,7 @@ test('loads the menu with valid, non-nested modals', async ({ page }) => {
 
   await page.goto('/');
 
-  await expect(page).toHaveTitle(/WTT Arena Pro/);
+  await expect(page).toHaveTitle(/Pocket Table Tennis/);
   await expect(page.locator('#start-modal')).toHaveClass(/is-open/);
   await expect(page.locator('#modal-settings')).not.toHaveClass(/is-open/);
   await expect(page.locator('#pause-remote-request')).toHaveClass(/hidden/);

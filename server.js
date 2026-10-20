@@ -1,5 +1,5 @@
 /**
- * WTT Arena Pro - local development server
+ * Pocket Table Tennis - local development server
  *
  *   npm run serve        # http://localhost:3000
  *
@@ -28,7 +28,9 @@ const PUBLIC_FILES = new Set([
   'favicon-16.png',
   'favicon-32.png',
   'og-image.png',
-  'manifest.webmanifest'
+  'manifest.webmanifest',
+  'assets/fonts/manrope-latin-var.woff2',
+  'assets/fonts/outfit-latin-var.woff2'
 ]);
 
 const MIME_TYPES = {
@@ -119,7 +121,7 @@ let currentPort = START_PORT;
 
 function printAddresses(port) {
   console.log('\n======================================================');
-  console.log('🏓  WTT Arena Pro local server');
+  console.log('🏓  Pocket Table Tennis local server');
   console.log(`👉  Local:   http://localhost:${port}`);
   for (const addresses of Object.values(os.networkInterfaces())) {
     for (const address of addresses || []) {

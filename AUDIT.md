@@ -1,4 +1,4 @@
-# WTT Arena Pro — Prioritized Audit
+# Pocket Table Tennis — Prioritized Audit
 
 - **Reviewed:** 20 October 2026
 - **Scope:** start screen, HUD, dialogs, navigation, settings, solo AI, physics, online P2P play, PWA metadata, CI/deploy.

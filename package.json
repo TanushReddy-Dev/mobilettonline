@@ -1,8 +1,8 @@
 {
-  "name": "wtt-arena-pro",
+  "name": "pocket-table-tennis",
   "version": "1.0.0",
   "private": true,
-  "description": "WTT Arena Pro - a pocket table tennis game with local AI and P2P online play.",
+  "description": "Pocket Table Tennis - a pocket table tennis game with local AI and P2P online play.",
   "license": "MIT",
   "type": "module",
   "engines": {

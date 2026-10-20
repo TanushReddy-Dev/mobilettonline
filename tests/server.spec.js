@@ -3,9 +3,15 @@ import { test, expect } from '@playwright/test';
 test('serves the app and rejects traversal/non-public files', async ({ request }) => {
   const index = await request.get('/');
   expect(index.status()).toBe(200);
-  expect(await index.text()).toContain('WTT ARENA PRO');
+  expect(await index.text()).toContain('POCKET TABLE TENNIS');
 
-  for (const path of ['/index.html', '/icon.svg', '/manifest.webmanifest']) {
+  for (const path of [
+    '/index.html',
+    '/icon.svg',
+    '/manifest.webmanifest',
+    '/assets/fonts/manrope-latin-var.woff2',
+    '/assets/fonts/outfit-latin-var.woff2'
+  ]) {
     const response = await request.get(path);
     expect(response.status(), path).toBe(200);
   }

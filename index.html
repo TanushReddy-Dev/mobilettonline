@@ -1,37 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>WTT Arena Pro — Pocket Table Tennis | Solo AI &amp; Online P2P</title>
-  <meta name="description" content="Play WTT Arena Pro, a fast mobile-first 3D table tennis game. Face the AI solo or challenge a friend to a private peer-to-peer match with a 6-character code. No install, no account." />
+  <title>Pocket Table Tennis - Fast hands. Small table.</title>
+  <meta name="description" content="Pocket Table Tennis is a fast, mobile-first table tennis game. Face the house AI solo or challenge a friend to a private peer-to-peer match with a 6-character code. No install, no account." />
   <meta name="author" content="Tanush Reddy" />
-  <meta name="application-name" content="WTT Arena Pro" />
+  <meta name="application-name" content="Pocket Table Tennis" />
   <meta name="robots" content="index, follow" />
-  <meta name="theme-color" content="#030509" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#080d16" />
+  <meta name="color-scheme" content="dark light" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="WTT Arena" />
+  <meta name="apple-mobile-web-app-title" content="Pocket Table Tennis" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="canonical" href="https://TanushReddy-Dev.github.io/mobilettonline/" />
 
-  <meta property="og:site_name" content="WTT Arena Pro" />
-  <meta property="og:title" content="WTT Arena Pro — Pocket Table Tennis" />
-  <meta property="og:description" content="Play 3D table tennis solo against the AI or challenge a friend to a private P2P match. No install, no account, just a match code." />
+  <meta property="og:site_name" content="Pocket Table Tennis" />
+  <meta property="og:title" content="Pocket Table Tennis" />
+  <meta property="og:description" content="Fast hands. Small table. Play solo against the house AI or challenge a friend to a private P2P match. No install, no account, just a match code." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://TanushReddy-Dev.github.io/mobilettonline/" />
   <meta property="og:image" content="https://TanushReddy-Dev.github.io/mobilettonline/og-image.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="WTT Arena Pro app icon with a red table tennis paddle, green table and a white ball on a blue background." />
+  <meta property="og:image:alt" content="Pocket Table Tennis court mark on a studio court." />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="WTT Arena Pro — Pocket Table Tennis" />
-  <meta name="twitter:description" content="Play 3D table tennis solo against the AI or challenge a friend to a private P2P match. No install, no account, just a match code." />
+  <meta name="twitter:title" content="Pocket Table Tennis" />
+  <meta name="twitter:description" content="Fast hands. Small table. Play solo against the house AI or challenge a friend to a private P2P match." />
   <meta name="twitter:image" content="https://TanushReddy-Dev.github.io/mobilettonline/og-image.png" />
-  <meta name="twitter:image:alt" content="WTT Arena Pro app icon with a red table tennis paddle, green table and a white ball on a blue background." />
+  <meta name="twitter:image:alt" content="Pocket Table Tennis court mark on a studio court." />
+
+  <script>
+    (function () {
+      try {
+        var preference = localStorage.getItem('wtt-theme') || 'system';
+        var dark = preference === 'dark' || (preference !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+      } catch (_) {
+        document.documentElement.dataset.theme = 'dark';
+      }
+    })();
+  </script>
 
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -44,8 +57,8 @@
   {
     "@context": "https://schema.org",
     "@type": "VideoGame",
-    "name": "WTT Arena Pro",
-    "alternateName": "WTT Arena Pro — Pocket Table Tennis",
+    "name": "Pocket Table Tennis",
+    "alternateName": "Pocket Table Tennis - Courtlight Broadcast",
     "url": "https://TanushReddy-Dev.github.io/mobilettonline/",
     "image": "https://TanushReddy-Dev.github.io/mobilettonline/og-image.png",
     "description": "A fast, mobile-first 3D table tennis game with solo AI and private peer-to-peer online matches.",
@@ -383,9 +396,6 @@
   .mb-0 {
     margin-bottom: calc(var(--spacing) * 0);
   }
-  .mb-0\.5 {
-    margin-bottom: calc(var(--spacing) * 0.5);
-  }
   .mb-1 {
     margin-bottom: calc(var(--spacing) * 1);
   }
@@ -418,9 +428,6 @@
   }
   .h-1 {
     height: calc(var(--spacing) * 1);
-  }
-  .h-1\.5 {
-    height: calc(var(--spacing) * 1.5);
   }
   .h-2 {
     height: calc(var(--spacing) * 2);
@@ -464,9 +471,6 @@
   .w-1 {
     width: calc(var(--spacing) * 1);
   }
-  .w-1\.5 {
-    width: calc(var(--spacing) * 1.5);
-  }
   .w-2 {
     width: calc(var(--spacing) * 2);
   }
@@ -503,20 +507,11 @@
   .w-full {
     width: 100%;
   }
-  .max-w-\[92px\] {
-    max-width: 92px;
-  }
   .max-w-sm {
     max-width: var(--container-sm);
   }
   .max-w-xs {
     max-width: var(--container-xs);
-  }
-  .min-w-\[104px\] {
-    min-width: 104px;
-  }
-  .min-w-\[108px\] {
-    min-width: 108px;
   }
   .flex-1 {
     flex: 1;
@@ -673,9 +668,6 @@
   .rounded-2xl {
     border-radius: var(--radius-2xl);
   }
-  .rounded-\[14px\] {
-    border-radius: 14px;
-  }
   .rounded-full {
     border-radius: calc(infinity * 1px);
   }
@@ -703,12 +695,6 @@
   .border-amber-400 {
     border-color: var(--color-amber-400);
   }
-  .border-amber-400\/50 {
-    border-color: color-mix(in srgb, oklch(82.8% 0.189 84.429) 50%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-amber-400) 50%, transparent);
-    }
-  }
   .border-amber-500 {
     border-color: var(--color-amber-500);
   }
@@ -724,20 +710,8 @@
   .border-emerald-500 {
     border-color: var(--color-emerald-500);
   }
-  .border-emerald-500\/30 {
-    border-color: color-mix(in srgb, oklch(69.6% 0.17 162.48) 30%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-emerald-500) 30%, transparent);
-    }
-  }
   .border-rose-500 {
     border-color: var(--color-rose-500);
-  }
-  .border-rose-500\/40 {
-    border-color: color-mix(in srgb, oklch(64.5% 0.246 16.439) 40%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-rose-500) 40%, transparent);
-    }
   }
   .border-sky-400 {
     border-color: var(--color-sky-400);
@@ -751,20 +725,8 @@
       border-color: color-mix(in oklab, var(--color-sky-500) 30%, transparent);
     }
   }
-  .border-sky-500\/40 {
-    border-color: color-mix(in srgb, oklch(68.5% 0.169 237.323) 40%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-sky-500) 40%, transparent);
-    }
-  }
   .border-slate-700 {
     border-color: var(--color-slate-700);
-  }
-  .border-slate-700\/80 {
-    border-color: color-mix(in srgb, oklch(37.2% 0.044 257.287) 80%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-slate-700) 80%, transparent);
-    }
   }
   .border-slate-800 {
     border-color: var(--color-slate-800);
@@ -781,12 +743,6 @@
       border-color: color-mix(in oklab, var(--color-slate-800) 80%, transparent);
     }
   }
-  .border-slate-800\/90 {
-    border-color: color-mix(in srgb, oklch(27.9% 0.041 260.031) 90%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-slate-800) 90%, transparent);
-    }
-  }
   .border-transparent {
     border-color: transparent;
   }
@@ -795,12 +751,6 @@
   }
   .bg-amber-400 {
     background-color: var(--color-amber-400);
-  }
-  .bg-amber-400\/15 {
-    background-color: color-mix(in srgb, oklch(82.8% 0.189 84.429) 15%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-amber-400) 15%, transparent);
-    }
   }
   .bg-amber-500 {
     background-color: var(--color-amber-500);
@@ -839,12 +789,6 @@
     background-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 80%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-slate-900) 80%, transparent);
-    }
-  }
-  .bg-slate-900\/90 {
-    background-color: color-mix(in srgb, oklch(20.8% 0.042 265.755) 90%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      background-color: color-mix(in oklab, var(--color-slate-900) 90%, transparent);
     }
   }
   .bg-slate-950 {
@@ -898,9 +842,6 @@
   .p-1 {
     padding: calc(var(--spacing) * 1);
   }
-  .p-1\.5 {
-    padding: calc(var(--spacing) * 1.5);
-  }
   .p-2 {
     padding: calc(var(--spacing) * 2);
   }
@@ -909,9 +850,6 @@
   }
   .p-3 {
     padding: calc(var(--spacing) * 3);
-  }
-  .p-3\.5 {
-    padding: calc(var(--spacing) * 3.5);
   }
   .p-4 {
     padding: calc(var(--spacing) * 4);
@@ -931,14 +869,8 @@
   .px-2 {
     padding-inline: calc(var(--spacing) * 2);
   }
-  .px-2\.5 {
-    padding-inline: calc(var(--spacing) * 2.5);
-  }
   .px-3 {
     padding-inline: calc(var(--spacing) * 3);
-  }
-  .px-3\.5 {
-    padding-inline: calc(var(--spacing) * 3.5);
   }
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
@@ -949,9 +881,6 @@
   .py-0 {
     padding-block: calc(var(--spacing) * 0);
   }
-  .py-0\.5 {
-    padding-block: calc(var(--spacing) * 0.5);
-  }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
@@ -961,26 +890,14 @@
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
-  .py-2\.5 {
-    padding-block: calc(var(--spacing) * 2.5);
-  }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
-  }
-  .py-\[1px\] {
-    padding-block: 1px;
   }
   .pt-0 {
     padding-top: calc(var(--spacing) * 0);
   }
-  .pt-0\.5 {
-    padding-top: calc(var(--spacing) * 0.5);
-  }
   .pt-2 {
     padding-top: calc(var(--spacing) * 2);
-  }
-  .pt-2\.5 {
-    padding-top: calc(var(--spacing) * 2.5);
   }
   .pt-4 {
     padding-top: calc(var(--spacing) * 4);
@@ -994,14 +911,8 @@
   .pb-0 {
     padding-bottom: calc(var(--spacing) * 0);
   }
-  .pb-0\.5 {
-    padding-bottom: calc(var(--spacing) * 0.5);
-  }
   .pb-1 {
     padding-bottom: calc(var(--spacing) * 1);
-  }
-  .pb-1\.5 {
-    padding-bottom: calc(var(--spacing) * 1.5);
   }
   .pb-2 {
     padding-bottom: calc(var(--spacing) * 2);
@@ -1052,12 +963,6 @@
   .text-\[11px\] {
     font-size: 11px;
   }
-  .text-\[13px\] {
-    font-size: 13px;
-  }
-  .text-\[26px\] {
-    font-size: 26px;
-  }
   .leading-none {
     --tw-leading: 1;
     line-height: 1;
@@ -1089,10 +994,6 @@
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
     font-weight: var(--font-weight-semibold);
-  }
-  .tracking-\[0\.08em\] {
-    --tw-tracking: 0.08em;
-    letter-spacing: 0.08em;
   }
   .tracking-wide {
     --tw-tracking: var(--tracking-wide);
@@ -1171,6 +1072,10 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .shadow {
+    --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
   .shadow-2xl {
     --tw-shadow: 0 25px 50px -12px var(--tw-shadow-color, rgb(0 0 0 / 0.25));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
@@ -1209,22 +1114,10 @@
       --tw-shadow-color: color-mix(in oklab, var(--color-emerald-500) var(--tw-shadow-alpha), transparent);
     }
   }
-  .shadow-emerald-500\/25 {
-    --tw-shadow-color: color-mix(in srgb, oklch(69.6% 0.17 162.48) 25%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-emerald-500) 25%, transparent) var(--tw-shadow-alpha), transparent);
-    }
-  }
   .shadow-sky-950 {
     --tw-shadow-color: oklch(29.3% 0.066 243.157);
     @supports (color: color-mix(in lab, red, red)) {
       --tw-shadow-color: color-mix(in oklab, var(--color-sky-950) var(--tw-shadow-alpha), transparent);
-    }
-  }
-  .shadow-sky-950\/60 {
-    --tw-shadow-color: color-mix(in srgb, oklch(29.3% 0.066 243.157) 60%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      --tw-shadow-color: color-mix(in oklab, color-mix(in oklab, var(--color-sky-950) 60%, transparent) var(--tw-shadow-alpha), transparent);
     }
   }
   .ring-slate-950 {
@@ -1281,82 +1174,15 @@
     -webkit-user-select: none;
     user-select: none;
   }
-  .selection\:bg-sky-500 {
-    & *::selection {
-      background-color: var(--color-sky-500);
-    }
-    &::selection {
-      background-color: var(--color-sky-500);
-    }
-  }
-  .selection\:text-white {
-    & *::selection {
-      color: var(--color-white);
-    }
-    &::selection {
-      color: var(--color-white);
-    }
-  }
-  .hover\:bg-slate-100 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-slate-100);
-      }
-    }
-  }
-  .hover\:bg-slate-800 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-slate-800);
-      }
-    }
-  }
-  .hover\:from-emerald-400 {
-    &:hover {
-      @media (hover: hover) {
-        --tw-gradient-from: var(--color-emerald-400);
-        --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-      }
-    }
-  }
-  .hover\:to-teal-500 {
-    &:hover {
-      @media (hover: hover) {
-        --tw-gradient-to: var(--color-teal-500);
-        --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from) var(--tw-gradient-from-position), var(--tw-gradient-to) var(--tw-gradient-to-position));
-      }
-    }
-  }
-  .hover\:text-white {
-    &:hover {
-      @media (hover: hover) {
-        color: var(--color-white);
-      }
-    }
-  }
   .focus\:outline-none {
     &:focus {
       --tw-outline-style: none;
       outline-style: none;
     }
   }
-  .active\:scale-95 {
-    &:active {
-      --tw-scale-x: 95%;
-      --tw-scale-y: 95%;
-      --tw-scale-z: 95%;
-      scale: var(--tw-scale-x) var(--tw-scale-y);
-    }
-  }
   .sm\:p-5 {
     @media (width >= 40rem) {
       padding: calc(var(--spacing) * 5);
-    }
-  }
-  .sm\:text-3xl {
-    @media (width >= 40rem) {
-      font-size: var(--text-3xl);
-      line-height: var(--tw-leading, var(--text-3xl--line-height));
     }
   }
 }
@@ -1635,21 +1461,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-scale-x {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
 @keyframes pulse {
   50% {
     opacity: 0.5;
@@ -1720,16 +1531,13 @@
       --tw-backdrop-saturate: initial;
       --tw-backdrop-sepia: initial;
       --tw-ease: initial;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
     }
   }
 }
   </style>
   <style>
     /* ═══════════════════════════════════════════
-       WTT ARENA PRO — Unified Design System
+       POCKET TABLE TENNIS — Courtlight Design System
        ═══════════════════════════════════════════ */
 
     /* ── Reset & Base ── */
@@ -2442,174 +2250,1177 @@
       #rotate-overlay .rotate-icon { animation: none !important; }
       .score-pulse { animation: none !important; }
     }
+
+    /* ═══════════════════════════════════════════════════════════════════
+       COURTLIGHT BROADCAST
+       Friendly geometric type inside a precise studio-broadcast frame.
+       ═══════════════════════════════════════════════════════════════════ */
+    @font-face {
+      font-family: 'Manrope';
+      src: url('assets/fonts/manrope-latin-var.woff2') format('woff2');
+      font-weight: 400 800;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Outfit';
+      src: url('assets/fonts/outfit-latin-var.woff2') format('woff2');
+      font-weight: 400 800;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --font-display: 'Outfit', 'Manrope', system-ui, sans-serif;
+      --font-ui: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --app-max: 520px;
+
+      --page: #080d16;
+      --page-deep: #04070d;
+      --stage: #0b1421;
+      --stage-glow: rgba(42, 112, 196, 0.16);
+      --surface: #0d1725;
+      --surface-raised: #111e2e;
+      --surface-soft: #0a1420;
+      --surface-sunken: #07101a;
+      --text: #eaf2fb;
+      --text-strong: #f8fbff;
+      --muted: #9aabbe;
+      --quiet: #72859b;
+      --hairline: rgba(220, 235, 255, 0.10);
+      --hairline-strong: rgba(220, 235, 255, 0.18);
+      --backdrop: rgba(3, 7, 13, 0.68);
+
+      --player: #39d6e9;
+      --player-deep: #0a9eb5;
+      --player-wash: rgba(57, 214, 233, 0.14);
+      --opponent: #fb7185;
+      --opponent-deep: #dd4c68;
+      --opponent-wash: rgba(251, 113, 133, 0.14);
+      --serve: #f3c266;
+      --serve-wash: rgba(243, 194, 102, 0.14);
+      --online: #46d7a4;
+      --online-deep: #12996c;
+      --online-wash: rgba(70, 215, 164, 0.14);
+      --danger: #f47f8f;
+
+      --table: #1e62d4;
+      --table-deep: #103f9b;
+      --table-light: #3d86f0;
+      --table-edge: #d9e6f8;
+
+      --action: #f3f7fc;
+      --action-hover: #ffffff;
+      --action-ink: #0b1725;
+      --action-shadow: rgba(0, 0, 0, 0.34);
+
+      --shadow-card: 0 22px 60px rgba(0, 0, 0, 0.42);
+      --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.22);
+      --radius-sheet: 28px;
+      color-scheme: dark;
+    }
+
+    html[data-theme="light"] {
+      --page: #eaf1fa;
+      --page-deep: #dfe9f6;
+      --stage: #edf3fb;
+      --stage-glow: rgba(255, 255, 255, 0.78);
+      --surface: #ffffff;
+      --surface-raised: #f7fafe;
+      --surface-soft: #eef4fc;
+      --surface-sunken: #e8f0fa;
+      --text: #102033;
+      --text-strong: #071426;
+      --muted: #53677e;
+      --quiet: #7a8ca2;
+      --hairline: rgba(18, 45, 76, 0.11);
+      --hairline-strong: rgba(18, 45, 76, 0.20);
+      --backdrop: rgba(22, 43, 67, 0.26);
+
+      --player: #058ca4;
+      --player-deep: #04788d;
+      --player-wash: rgba(5, 140, 164, 0.10);
+      --opponent: #d84461;
+      --opponent-deep: #bd2f4b;
+      --opponent-wash: rgba(216, 68, 97, 0.10);
+      --serve: #9a6606;
+      --serve-wash: rgba(154, 102, 6, 0.10);
+      --online: #087b57;
+      --online-deep: #056348;
+      --online-wash: rgba(8, 123, 87, 0.10);
+
+      --table: #1b5fd0;
+      --table-deep: #0b3b94;
+      --table-light: #3d86f0;
+      --table-edge: #f7fbff;
+
+      --action: #0d2239;
+      --action-hover: #163552;
+      --action-ink: #f8fbff;
+      --action-shadow: rgba(13, 34, 57, 0.20);
+
+      --shadow-card: 0 24px 60px rgba(28, 51, 77, 0.16);
+      --shadow-soft: 0 10px 26px rgba(28, 51, 77, 0.10);
+      color-scheme: light;
+    }
+
+    html, body {
+      background: var(--page);
+      color: var(--text);
+      font-family: var(--font-ui);
+    }
+    body {
+      background:
+        radial-gradient(720px 540px at 50% -12%, var(--stage-glow), transparent 72%),
+        var(--page);
+      color: var(--text) !important;
+    }
+    button, input, select, textarea { font-family: var(--font-ui); }
+    button { color: inherit; }
+    h1, h2, h3, h4, .font-arcade, .display-type { font-family: var(--font-display); }
+
+    #game-wrapper {
+      max-width: var(--app-max);
+      background: var(--page);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18), 0 36px 100px rgba(0, 0, 0, 0.5);
+    }
+    html[data-theme="light"] #game-wrapper {
+      box-shadow: 0 0 0 1px rgba(26, 55, 86, 0.08), 0 36px 100px rgba(39, 69, 103, 0.18);
+    }
+    @media (min-width: 900px) {
+      body::before {
+        background:
+          radial-gradient(660px 460px at 50% 8%, var(--stage-glow), transparent 72%),
+          radial-gradient(760px 500px at 50% 100%, rgba(25, 72, 132, 0.10), transparent 75%);
+      }
+      #game-wrapper { border-inline: 1px solid var(--hairline); }
+    }
+
+    /* ── Core surfaces ───────────────────────────────────────────────── */
+    .glass-panel {
+      background-color: var(--surface);
+      background-image: linear-gradient(180deg, rgba(255,255,255,0.035), transparent 90px);
+      border-color: var(--hairline);
+      backdrop-filter: blur(22px) saturate(130%);
+      -webkit-backdrop-filter: blur(22px) saturate(130%);
+    }
+    .card-section {
+      background: var(--surface-raised);
+      border-color: var(--hairline);
+    }
+    .modal-backdrop {
+      background: var(--backdrop);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      border-radius: 22px;
+      color: var(--text);
+      box-shadow: var(--shadow-card);
+    }
+    .modal-card:focus, .modal-card:focus-visible, .start-sheet:focus, .start-sheet:focus-visible { outline: none; }
+    .modal-header { border-color: var(--hairline) !important; }
+    .modal-icon { border-radius: 12px; color: var(--muted); background: var(--surface-soft); border: 1px solid var(--hairline); }
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-strong);
+      line-height: 1.05;
+    }
+    .modal-subtitle { font-size: 0.7rem; color: var(--muted); font-weight: 600; letter-spacing: 0.02em; }
+    .btn-icon {
+      color: var(--muted);
+      background: var(--surface-soft);
+      border-color: var(--hairline);
+      border-radius: 12px;
+    }
+    .btn-icon:hover { color: var(--text-strong); background: var(--surface-raised); border-color: var(--hairline-strong); }
+
+    /* ── Button language ─────────────────────────────────────────────── */
+    .btn-primary, .btn-accent, .btn-secondary, .btn-danger {
+      font-family: var(--font-ui);
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      border-radius: 14px;
+      min-height: 48px;
+    }
+    .btn-primary {
+      background: var(--action);
+      color: var(--action-ink);
+      border: 1px solid transparent;
+      box-shadow: 0 10px 24px var(--action-shadow), inset 0 1px 0 rgba(255,255,255,0.32);
+    }
+    .btn-primary:hover { background: var(--action-hover); box-shadow: 0 12px 28px var(--action-shadow); }
+    .btn-accent {
+      background: var(--online);
+      color: #06251a;
+      border: 1px solid transparent;
+      box-shadow: 0 10px 24px rgba(18, 153, 108, 0.18);
+    }
+    html[data-theme="light"] .btn-accent { color: #f6fffb; }
+    .btn-accent:hover { background: var(--online-deep); }
+    .btn-secondary {
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--hairline);
+    }
+    .btn-secondary:hover { background: var(--surface-raised); border-color: var(--hairline-strong); color: var(--text-strong); }
+    .btn-danger {
+      background: rgba(244, 127, 143, 0.08);
+      color: var(--danger);
+      border: 1px solid rgba(244, 127, 143, 0.24);
+    }
+    .btn-danger:hover { background: rgba(244, 127, 143, 0.15); border-color: rgba(244, 127, 143, 0.42); }
+    #pause-btn-resume {
+      background: var(--action);
+      color: var(--action-ink);
+      border: 1px solid transparent;
+      box-shadow: 0 10px 24px var(--action-shadow), inset 0 1px 0 rgba(255,255,255,0.30);
+    }
+    #pause-btn-resume:hover {
+      background: var(--action-hover);
+      color: var(--action-ink);
+      box-shadow: 0 12px 28px var(--action-shadow);
+    }
+    .difficulty-btn.active, .hud-interactive.active {
+      background: var(--text-strong);
+      color: var(--surface) !important;
+      border-color: transparent;
+      box-shadow: none;
+    }
+    .online-tab-btn.active {
+      background: var(--online);
+      color: #052318 !important;
+      box-shadow: none;
+    }
+    button:focus-visible, input:focus-visible, [tabindex]:focus-visible {
+      outline: 2px solid var(--player);
+      outline-offset: 2px;
+    }
+
+    /* ── Start screen ───────────────────────────────────────────────── */
+    #start-modal.start-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-end;
+      padding: 0;
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      pointer-events: auto;
+    }
+    #start-modal.start-screen:not(.is-open) { pointer-events: none; }
+    .start-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 220px;
+      background: linear-gradient(180deg, rgba(4, 8, 14, 0.68), transparent);
+      pointer-events: none;
+      z-index: 1;
+    }
+    html[data-theme="light"] .start-screen::before {
+      background: linear-gradient(180deg, rgba(238, 245, 253, 0.65), transparent);
+    }
+    .start-topbar {
+      position: absolute;
+      z-index: 3;
+      top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: calc(env(safe-area-inset-top, 0px) + 16px) 18px 10px;
+      gap: 12px;
+    }
+    .brand-lockup { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-tile {
+      width: 38px; height: 38px; flex: 0 0 38px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: var(--action);
+      color: var(--action-ink);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    }
+    .brand-tile svg { width: 25px; height: 25px; display: block; }
+    .brand-lockup .brand-kicker {
+      display: block;
+      font-size: 8px; line-height: 1;
+      font-weight: 800; letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .brand-lockup .brand-name {
+      display: block;
+      margin-top: 3px;
+      font-family: var(--font-display);
+      font-size: 15px; line-height: 1;
+      font-weight: 700; letter-spacing: -0.01em;
+      color: var(--text-strong);
+      white-space: nowrap;
+    }
+    .start-actions { display: flex; align-items: center; gap: 7px; }
+    .start-actions .start-icon-btn,
+    #menu-btn-sound, #menu-btn-fullscreen, #menu-btn-theme {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+      padding: 0; flex-shrink: 0;
+      border-radius: 13px;
+      background: color-mix(in srgb, var(--surface) 78%, transparent);
+      color: var(--text);
+      border: 1px solid var(--hairline);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      cursor: pointer;
+    }
+    #menu-btn-sound:hover, #menu-btn-fullscreen:hover, #menu-btn-theme:hover {
+      background: var(--surface-raised);
+      border-color: var(--hairline-strong);
+    }
+    #menu-btn-sound > svg, #menu-btn-fullscreen > svg, #menu-btn-theme > svg { width: 18px; height: 18px; stroke-width: 1.8; }
+    .start-sheet {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-height: min(57dvh, 500px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 10px 18px calc(15px + env(safe-area-inset-bottom, 0px));
+      border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+      background: var(--surface);
+      border-top: 1px solid var(--hairline);
+      box-shadow: 0 -22px 60px rgba(0, 0, 0, 0.34);
+      scrollbar-width: none;
+    }
+    .start-sheet::-webkit-scrollbar { display: none; }
+    .sheet-grabber {
+      width: 34px; height: 4px; border-radius: 99px;
+      background: var(--hairline-strong);
+      margin: 0 auto 12px;
+    }
+    .sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+    .sheet-kicker {
+      margin: 0 0 4px;
+      font-size: 9px; line-height: 1.2;
+      font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    #start-modal-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(26px, 8.2vw, 34px);
+      line-height: 0.98; letter-spacing: -0.025em;
+      font-weight: 700;
+      color: var(--text-strong);
+      text-transform: none;
+    }
+    .sheet-tagline {
+      margin: 5px 0 0;
+      font-size: 11px; line-height: 1.35;
+      color: var(--muted);
+      max-width: 260px;
+    }
+    .match-pill {
+      flex: 0 0 auto;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 9px;
+      border-radius: 9px;
+      background: var(--surface-soft);
+      border: 1px solid var(--hairline);
+      color: var(--muted);
+      font-size: 8px; font-weight: 800;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .match-pill .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--online); }
+    .solo-card {
+      padding: 13px;
+      border-radius: 20px;
+      background: var(--surface-raised);
+      border: 1px solid var(--hairline);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+    }
+    .solo-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .solo-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 17px; line-height: 1.1; font-weight: 700;
+      color: var(--text-strong);
+      letter-spacing: -0.01em;
+    }
+    .solo-copy { margin: 4px 0 0; font-size: 10px; line-height: 1.35; color: var(--muted); }
+    .solo-rank {
+      flex: 0 0 auto; padding: 4px 7px;
+      border-radius: 7px;
+      background: var(--player-wash);
+      color: var(--player);
+      font-size: 8px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .difficulty-seg {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+      padding: 3px; margin: 11px 0;
+      border-radius: 12px;
+      background: var(--surface-sunken);
+      border: 1px solid var(--hairline);
+    }
+    .difficulty-seg .difficulty-btn {
+      min-height: 44px; height: 44px;
+      padding: 0 3px; border-radius: 9px;
+      background: transparent; border: 1px solid transparent;
+      color: var(--muted);
+      font-family: var(--font-ui); font-size: 9px; font-weight: 800;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: background-color var(--wtt-duration-ui) ease, color var(--wtt-duration-ui) ease, transform 120ms var(--wtt-ease-out);
+    }
+    .difficulty-seg .difficulty-btn.active {
+      background: var(--text-strong); color: var(--surface) !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    }
+    .start-primary {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      width: 100%; min-height: 54px;
+      padding: 0 15px;
+      border-radius: 14px;
+      background: var(--action);
+      color: var(--action-ink);
+      border: 1px solid transparent;
+      font-family: var(--font-ui);
+      font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      box-shadow: 0 12px 24px var(--action-shadow), inset 0 1px 0 rgba(255,255,255,0.30);
+      cursor: pointer;
+      transition: transform 120ms var(--wtt-ease-out), background-color 180ms ease, box-shadow 180ms ease;
+    }
+    .start-primary:hover { background: var(--action-hover); box-shadow: 0 14px 30px var(--action-shadow); }
+    .start-primary:active { transform: scale(0.985); }
+    .start-primary .start-primary-main { display: flex; align-items: center; gap: 9px; }
+    .start-primary .start-primary-main svg { width: 18px; height: 18px; stroke-width: 1.8; }
+    .start-primary .start-arrow { display: flex; opacity: 0.72; }
+    .start-primary .start-arrow svg { width: 16px; height: 16px; stroke-width: 1.8; }
+    .start-online {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      width: 100%; min-height: 50px;
+      margin-top: 8px; padding: 0 13px;
+      border-radius: 14px;
+      background: var(--surface-soft);
+      color: var(--text);
+      border: 1px solid var(--hairline);
+      cursor: pointer;
+      text-align: left;
+      transition: transform 120ms var(--wtt-ease-out), background-color 180ms ease, border-color 180ms ease;
+    }
+    .start-online:hover { background: var(--surface-raised); border-color: var(--hairline-strong); }
+    .start-online:active { transform: scale(0.985); }
+    .start-online-main { display: flex; align-items: center; gap: 9px; min-width: 0; }
+    .start-online-icon {
+      width: 30px; height: 30px; flex: 0 0 30px;
+      display: grid; place-items: center;
+      border-radius: 9px;
+      background: var(--online-wash);
+      color: var(--online);
+    }
+    .start-online-icon svg { width: 16px; height: 16px; stroke-width: 1.8; }
+    .start-online-copy { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .start-online-copy strong { font-size: 11px; font-weight: 800; letter-spacing: 0.035em; color: var(--text-strong); }
+    .start-online-copy span { font-size: 9px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .start-online .start-arrow { color: var(--muted); display: flex; }
+    .start-online .start-arrow svg { width: 15px; height: 15px; stroke-width: 1.8; }
+    .start-tertiary {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px; margin-top: 8px;
+    }
+    .start-tertiary button {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px;
+      min-height: 55px; padding: 6px 4px;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--hairline);
+      font-size: 8px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, transform 120ms var(--wtt-ease-out);
+    }
+    .start-tertiary button:hover { background: var(--surface-soft); color: var(--text); border-color: var(--hairline-strong); }
+    .start-tertiary button:active { transform: scale(0.97); }
+    .start-tertiary svg { width: 17px; height: 17px; stroke-width: 1.8; }
+    .start-legal {
+      margin: 11px 0 0;
+      font-size: 8px; line-height: 1.45;
+      color: var(--quiet);
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+    .start-theme-sun, .start-theme-moon { display: none; }
+    html[data-theme="dark"] .start-theme-sun { display: block; }
+    html[data-theme="light"] .start-theme-moon { display: block; }
+
+    /* The menu uses the live court as its hero. This is a static framing of
+       the canvas, not a camera move; gameplay uses the untouched projection. */
+    #top-hud.is-menu + main #table-canvas {
+      transform: translateY(-25%) scale(1.2);
+      transform-origin: 50% 0;
+    }
+    #top-hud.is-menu + main .court-session { opacity: 0; }
+    @media (min-width: 431px) {
+      #top-hud.is-menu + main #table-canvas {
+        transform: translateY(-14%) scale(1.08);
+      }
+    }
+
+    /* ── HUD broadcast strip ─────────────────────────────────────────── */
+    #top-hud {
+      position: relative;
+      z-index: 20;
+      flex: 0 0 auto;
+      padding: calc(env(safe-area-inset-top, 0px) + 10px) 12px 0;
+      background: linear-gradient(180deg, var(--page) 0%, color-mix(in srgb, var(--page) 86%, transparent) 72%, transparent 100%);
+    }
+    #top-hud.is-menu { opacity: 0; pointer-events: none; visibility: hidden; transform: translateY(-8px); }
+    .hud-scoreboard {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 7px;
+      min-height: 91px;
+      height: 91px;
+      padding: 9px 14px;
+      border-radius: 18px;
+      background: color-mix(in srgb, var(--surface) 90%, transparent);
+      border: 1px solid var(--hairline);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.04);
+      backdrop-filter: blur(20px) saturate(130%);
+      -webkit-backdrop-filter: blur(20px) saturate(130%);
+      overflow: visible;
+      pointer-events: none;
+    }
+    html[data-theme="light"] .hud-scoreboard { box-shadow: 0 14px 34px rgba(33, 60, 91, 0.10), inset 0 1px 0 rgba(255,255,255,0.7); }
+    .hud-score-side {
+      display: flex; align-items: center; gap: 9px;
+      min-width: 0; height: 100%;
+    }
+    .hud-score-side.player-side { justify-content: flex-start; }
+    .hud-score-side.opponent-side { justify-content: flex-end; }
+    .hud-team-block { display: flex; flex-direction: column; align-items: flex-start; min-width: 0; gap: 2px; }
+    .opponent-side .hud-team-block { align-items: flex-end; order: 2; }
+    .hud-ident { display: flex; align-items: center; gap: 5px; min-width: 0; }
+    .opponent-side .hud-ident { flex-direction: row-reverse; }
+    .team-dot { width: 6px; height: 6px; border-radius: 50%; flex: 0 0 6px; }
+    .player-side .team-dot { background: var(--player); box-shadow: 0 0 0 3px var(--player-wash); }
+    .opponent-side .team-dot { background: var(--opponent); box-shadow: 0 0 0 3px var(--opponent-wash); }
+    .team-name {
+      font-size: 10px; line-height: 1; font-weight: 800;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--text-strong);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 78px;
+    }
+    .hud-score-status {
+      font-size: 8px; line-height: 1.2; font-weight: 700;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 88px;
+    }
+    .score-slot {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 38px; min-height: 51px;
+      flex: 0 0 auto;
+    }
+    .opponent-side .score-slot { order: 1; }
+    .score-digits {
+      font-family: var(--font-display) !important;
+      font-variant-numeric: tabular-nums lining-nums;
+      font-size: 38px !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.055em;
+      line-height: 0.9 !important;
+      color: var(--text-strong) !important;
+      text-shadow: none !important;
+    }
+    .player-side .score-digits { color: var(--player) !important; }
+    .opponent-side .score-digits { color: var(--opponent) !important; }
+    .hud-score-center {
+      position: relative;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 4px;
+      min-width: 105px;
+      padding: 0 4px;
+      height: 100%;
+    }
+    .center-kicker {
+      display: flex; align-items: center; gap: 5px;
+      color: var(--muted);
+      font-size: 7.5px; line-height: 1.1;
+      font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .center-kicker .pill-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--online); }
+    #sets-strip { min-height: 6px; }
+    .set-pip { width: 4px; height: 4px; background: var(--hairline-strong) !important; }
+    .set-pip.won-player { background: var(--player) !important; transform: scale(1.25); }
+    .set-pip.won-ai { background: var(--opponent) !important; transform: scale(1.25); }
+    .serve-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      min-height: 19px; padding: 3px 7px;
+      border-radius: 6px;
+      background: var(--serve-wash);
+      border: 1px solid color-mix(in srgb, var(--serve) 28%, transparent);
+      color: var(--serve);
+      font-size: 7.5px; line-height: 1;
+      font-weight: 800; letter-spacing: 0.10em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .serve-chip .serve-ball { width: 5px; height: 5px; border-radius: 50%; background: var(--serve); box-shadow: 0 0 0 2px var(--serve-wash); }
+    .telemetry {
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      color: var(--muted);
+      font-size: 8px; line-height: 1.2; font-weight: 700;
+      letter-spacing: 0.045em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .telemetry-sep { color: var(--quiet); opacity: 0.6; }
+    #rally-count { color: var(--text); font-family: var(--font-ui) !important; font-size: 8px !important; font-weight: 800 !important; letter-spacing: 0.045em; }
+    #speed-readout {
+      pointer-events: auto;
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 44px; min-width: 44px; height: 44px; min-height: 44px;
+      margin: -12px -5px; padding: 0;
+      background: transparent; border: 0; border-radius: 10px;
+      color: var(--text); font-family: var(--font-ui); font-size: 8px; font-weight: 800;
+      letter-spacing: 0.045em; text-transform: uppercase;
+      cursor: pointer;
+    }
+    #speed-readout:active { transform: scale(0.96); }
+    .speed-low { color: var(--muted); }
+    .speed-med { color: var(--text); }
+    .speed-high { color: var(--serve); }
+    .speed-max { color: var(--opponent); }
+    .hud-meta {
+      position: absolute;
+      top: calc(100% + 7px);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      z-index: 3; white-space: nowrap; pointer-events: none;
+    }
+    #streak-badge, #online-badge {
+      padding: 4px 7px;
+      border-radius: 6px;
+      background: color-mix(in srgb, var(--surface) 94%, transparent);
+      border: 1px solid var(--hairline);
+      color: var(--muted);
+      font-size: 8px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+      line-height: 1.2;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    #online-badge { color: var(--online); }
+    #player-serve-badge, #ai-serve-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      flex: 0 0 47px; width: 47px; min-width: 47px;
+      height: 12px; padding: 0; overflow: hidden;
+      font-size: 0; line-height: 0; color: transparent;
+      border: 0 !important; background: none !important;
+      transition: opacity 180ms ease, transform 180ms var(--wtt-ease-out);
+    }
+    #player-serve-badge::before, #ai-serve-badge::before {
+      content: ""; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--serve); box-shadow: 0 0 0 2px var(--serve-wash);
+    }
+    #player-serve-badge.is-serve-hidden, #ai-serve-badge.is-serve-hidden {
+      visibility: hidden; opacity: 0; transform: translateY(-2px);
+    }
+    .hud-actions {
+      position: absolute;
+      top: calc(91px + env(safe-area-inset-top, 0px) + 10px + 8px);
+      right: 14px;
+      display: flex; align-items: center; gap: 7px;
+      z-index: 4;
+      pointer-events: auto;
+    }
+    .hud-btn {
+      width: 44px; height: 44px; min-width: 44px; min-height: 44px;
+      border-radius: 13px;
+      color: var(--text);
+      background: color-mix(in srgb, var(--surface) 82%, transparent);
+      border: 1px solid var(--hairline);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.14);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .hud-btn:hover { color: var(--text-strong); background: var(--surface-raised); border-color: var(--hairline-strong); }
+    .hud-btn > svg { width: 19px; height: 19px; stroke-width: 1.8; }
+
+    /* Court session tag, floating over the court. */
+    .court-session {
+      position: absolute;
+      top: 10px; left: 15px; z-index: 5;
+      display: inline-flex; align-items: center; gap: 5px;
+      color: var(--muted);
+      font-size: 8px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase;
+      pointer-events: none;
+      transition: opacity 180ms ease;
+    }
+    .court-session::before { content: ""; width: 4px; height: 4px; border-radius: 50%; background: var(--serve); }
+    #top-hud.is-menu + main .court-session { opacity: 0; }
+
+    /* Broadcast banner remains legible over both studio floors. */
+    #point-banner {
+      top: auto;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+      max-width: calc(100% - 32px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .hud-banner {
+      background: color-mix(in srgb, var(--surface) 92%, transparent) !important;
+      border: 1px solid var(--hairline) !important;
+      color: var(--text-strong);
+      border-radius: 8px !important;
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    #point-banner-text { color: var(--text-strong) !important; font-family: var(--font-ui); font-size: 9px !important; font-weight: 800 !important; letter-spacing: 0.13em !important; }
+
+    /* ── Settings sheet ──────────────────────────────────────────────── */
+    #modal-settings .modal-backdrop { background: var(--backdrop); }
+    .settings-sheet {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      max-width: none;
+      max-height: none;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border: 0;
+      border-radius: 0;
+      background: var(--surface);
+      box-shadow: none;
+      overflow: hidden;
+    }
+    .settings-header {
+      flex: 0 0 auto;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+      padding: calc(env(safe-area-inset-top, 0px) + 16px) 18px 14px;
+      border-bottom: 1px solid var(--hairline);
+      background: var(--surface);
+    }
+    .settings-heading { display: flex; align-items: flex-start; gap: 11px; min-width: 0; }
+    .settings-mark {
+      width: 38px; height: 38px; flex: 0 0 38px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      background: var(--action);
+      color: var(--action-ink);
+    }
+    .settings-mark svg { width: 23px; height: 23px; stroke-width: 1.8; }
+    .settings-kicker {
+      margin: 0 0 3px;
+      font-size: 8px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted);
+    }
+    #settings-modal-title {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: 25px; line-height: 1; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--text-strong); text-transform: none;
+    }
+    .settings-subtitle { margin: 4px 0 0; font-size: 10px; color: var(--muted); }
+    .settings-scroll {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      padding: 15px 16px calc(22px + env(safe-area-inset-bottom, 0px));
+      display: flex; flex-direction: column; gap: 15px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--hairline-strong) transparent;
+    }
+    .settings-group { display: flex; flex-direction: column; gap: 6px; }
+    .settings-group-head {
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 4px;
+      color: var(--muted);
+      font-size: 8px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .settings-group-head svg { width: 13px; height: 13px; stroke-width: 1.8; color: var(--quiet); }
+    .settings-card {
+      overflow: hidden;
+      border-radius: 17px;
+      background: var(--surface-raised);
+      border: 1px solid var(--hairline);
+    }
+    .settings-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      min-height: 56px;
+      padding: 11px 14px;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .settings-row:last-child { border-bottom: 0; }
+    .settings-row-stack { flex-direction: column; align-items: stretch; gap: 8px; }
+    .settings-difficulty { margin: 0; }
+    .settings-row .row-copy { min-width: 0; }
+    .settings-row .row-label { font-size: 11px; font-weight: 800; color: var(--text); letter-spacing: 0.005em; }
+    .settings-row .row-desc { margin-top: 2px; font-size: 9px; line-height: 1.35; color: var(--muted); }
+    .settings-row .row-value { font-size: 10px; font-weight: 800; color: var(--muted); white-space: nowrap; }
+    .settings-row-button {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      width: 100%; min-height: 52px;
+      padding: 11px 14px;
+      background: transparent; border: 0; border-bottom: 1px solid var(--hairline);
+      color: var(--text); text-align: left; cursor: pointer;
+    }
+    .settings-row-button:last-child { border-bottom: 0; }
+    .settings-row-button:hover { background: var(--surface-soft); }
+    .settings-row-button .row-chevron { color: var(--quiet); display: flex; }
+    .settings-row-button svg { width: 16px; height: 16px; stroke-width: 1.8; }
+    .setting-toggle {
+      min-height: 44px; min-width: 54px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-family: var(--font-ui);
+      font-size: 9px; font-weight: 800; letter-spacing: 0.08em;
+      border: 1px solid var(--hairline);
+      background: var(--surface-soft);
+      color: var(--muted);
+      cursor: pointer;
+    }
+    .setting-toggle.on {
+      background: var(--online-wash);
+      color: var(--online);
+      border-color: color-mix(in srgb, var(--online) 32%, transparent);
+    }
+    .setting-toggle.off {
+      background: var(--surface-soft);
+      color: var(--muted);
+      border-color: var(--hairline);
+    }
+    #setting-toggle-speed-unit { color: var(--text); }
+    .theme-seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface-sunken); border: 1px solid var(--hairline); }
+    .theme-btn {
+      min-height: 44px; padding: 0 5px;
+      border-radius: 9px; border: 1px solid transparent;
+      background: transparent; color: var(--muted);
+      font-size: 9px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;
+      cursor: pointer;
+    }
+    .theme-btn.active { background: var(--text-strong); color: var(--surface) !important; }
+    .settings-identity {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 14px;
+      border-radius: 17px;
+      background: var(--surface-soft);
+      border: 1px solid var(--hairline);
+    }
+    .settings-identity .brand-tile { width: 32px; height: 32px; flex-basis: 32px; border-radius: 10px; }
+    .settings-identity .brand-tile svg { width: 21px; height: 21px; }
+    .settings-identity strong { display: block; font-family: var(--font-display); font-size: 13px; font-weight: 700; color: var(--text-strong); }
+    .settings-identity span { display: block; margin-top: 1px; font-size: 9px; color: var(--muted); }
+    .settings-footer { flex: 0 0 auto; padding: 10px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--hairline); background: var(--surface); }
+    .settings-footer .btn-primary { min-height: 50px; font-size: 11px; }
+
+    /* ── Legacy modals, re-lit ───────────────────────────────────────── */
+    .score-box {
+      background: var(--surface-soft);
+      border-color: var(--hairline);
+    }
+    .score-side-value { color: var(--text-strong); font-family: var(--font-display); font-weight: 700; }
+    .score-side-label { font-size: 8px; letter-spacing: 0.12em; }
+    .score-divider { color: var(--quiet); }
+    .stat-card {
+      background: var(--surface-soft);
+      border-color: var(--hairline);
+      border-radius: 12px;
+    }
+    .stat-label { color: var(--muted); font-size: 8px; }
+    .stat-value { color: var(--text-strong); font-family: var(--font-display); }
+    .guide-icon { background: var(--surface-soft); border-color: var(--hairline); }
+    .guide-title { color: var(--text-strong); }
+    .guide-desc { color: var(--muted); }
+    .setting-label { color: var(--text); }
+    .setting-desc { color: var(--muted); }
+    .howto-more-btn {
+      border-color: color-mix(in srgb, var(--player) 36%, transparent);
+      background: var(--player-wash);
+      color: var(--player);
+    }
+    #rotate-overlay { background: var(--page); }
+    #rotate-overlay h2 { font-family: var(--font-display); text-transform: none; letter-spacing: -0.02em; color: var(--text-strong); }
+    #rotate-overlay p { color: var(--muted); }
+    #rotate-overlay .rotate-icon { color: var(--player); }
+
+    /* Legacy utility colours follow the resolved theme. */
+    html[data-theme="light"] .modal-card .text-white,
+    html[data-theme="light"] .modal-card .text-slate-100,
+    html[data-theme="light"] .modal-card .text-slate-200,
+    html[data-theme="light"] .modal-card .text-slate-300 { color: var(--text) !important; }
+    html[data-theme="light"] .modal-card .text-slate-400,
+    html[data-theme="light"] .modal-card .text-slate-500 { color: var(--muted) !important; }
+    html[data-theme="light"] .modal-card .border-slate-800,
+    html[data-theme="light"] .modal-card .border-slate-800\/80,
+    html[data-theme="light"] .modal-card .border-slate-700 { border-color: var(--hairline) !important; }
+    html[data-theme="light"] .modal-card .bg-slate-900,
+    html[data-theme="light"] .modal-card .bg-slate-900\/80,
+    html[data-theme="light"] .modal-card .bg-slate-900\/90,
+    html[data-theme="light"] .modal-card .bg-slate-950 { background-color: var(--surface-soft) !important; }
+    html[data-theme="light"] .modal-card .bg-slate-950\/90,
+    html[data-theme="light"] .modal-card .bg-slate-950\/92 { background-color: var(--backdrop) !important; }
+    html[data-theme="light"] .modal-card .text-sky-400 { color: var(--player) !important; }
+    html[data-theme="light"] .modal-card .bg-sky-500\/15 { background: var(--player-wash) !important; }
+    html[data-theme="light"] .modal-card .border-sky-500\/30 { border-color: color-mix(in srgb, var(--player) 28%, transparent) !important; }
+
+    /* ── Responsive refinement ───────────────────────────────────────── */
+    @media (max-width: 430px) {
+      .start-sheet { padding-left: 15px; padding-right: 15px; }
+      .start-topbar { padding-left: 15px; padding-right: 15px; }
+      .brand-lockup .brand-name { font-size: 14px; }
+      .settings-header { padding-left: 15px; padding-right: 15px; }
+      .settings-scroll { padding-left: 13px; padding-right: 13px; }
+      .hud-scoreboard { padding-left: 10px; padding-right: 10px; }
+      .hud-score-side { min-width: 0; }
+      #top-hud { padding-left: 9px; padding-right: 9px; }
+    }
+    @media (max-width: 360px) {
+      .start-topbar { padding-top: calc(env(safe-area-inset-top, 0px) + 12px); }
+      .brand-tile { width: 34px; height: 34px; flex-basis: 34px; border-radius: 10px; }
+      .brand-tile svg { width: 22px; height: 22px; }
+      .start-actions { gap: 5px; }
+      #menu-btn-sound, #menu-btn-fullscreen, #menu-btn-theme { width: 44px; height: 44px; min-width: 44px; min-height: 44px; border-radius: 12px; }
+      .start-sheet { max-height: 64dvh; padding-left: 13px; padding-right: 13px; }
+      #start-modal-title { font-size: 27px; }
+      .sheet-tagline { font-size: 10px; }
+      .solo-card { padding: 11px; border-radius: 17px; }
+      .start-tertiary button { min-height: 51px; font-size: 7px; }
+      .hud-scoreboard { min-height: 82px; height: 82px; padding: 7px 9px; gap: 3px; }
+      .score-digits { font-size: 32px !important; }
+      .score-slot { min-width: 31px; min-height: 46px; }
+      .hud-score-center { min-width: 83px; padding: 0 1px; }
+      .team-name { font-size: 9px; letter-spacing: 0.10em; max-width: 63px; }
+      .hud-score-status { font-size: 7.5px; max-width: 66px; }
+      .serve-chip { font-size: 7px; padding: 3px 5px; }
+      .telemetry { font-size: 7px; gap: 3px; }
+      .center-kicker { font-size: 7px; }
+      .hud-actions { top: calc(env(safe-area-inset-top, 0px) + 82px + 10px + 7px); right: 10px; }
+      .court-session { left: 12px; }
+    }
+    @media (max-width: 330px) {
+      .hud-score-status { display: none; }
+      .hud-score-center { min-width: 78px; }
+      .score-digits { font-size: 30px !important; }
+      .team-name { max-width: 54px; font-size: 8.5px; }
+      .start-online-copy span { font-size: 8px; }
+      .start-legal { font-size: 7.5px; }
+    }
+    @media (max-width: 520px) {
+      #player-serve-badge, #ai-serve-badge { display: none !important; }
+    }
+    @media (max-height: 690px) and (orientation: portrait) {
+      .start-sheet { max-height: 62dvh; }
+      .sheet-head { margin-bottom: 10px; }
+      .solo-head .solo-copy { display: none; }
+    }
+    @media (max-height: 640px) and (orientation: portrait) {
+      .start-sheet { max-height: 64dvh; }
+      .sheet-tagline, .start-legal { display: none; }
+      .start-sheet { padding-top: 8px; }
+      .solo-card { padding: 10px; }
+      .start-primary { min-height: 50px; }
+    }
+    @media (prefers-reduced-transparency: reduce) {
+      .glass-panel, .hud-scoreboard, .hud-btn, .start-actions .start-icon-btn,
+      #menu-btn-sound, #menu-btn-fullscreen, #menu-btn-theme, .start-sheet, .settings-sheet {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+      .hud-scoreboard { background: var(--surface); }
+    }
+    @media (prefers-contrast: more) {
+      .hud-scoreboard, .start-sheet, .settings-card, .settings-row, .modal-card { border-color: var(--hairline-strong); }
+      .hud-score-status, .sheet-tagline, .settings-subtitle { color: var(--text); }
+    }
   </style>
 </head>
-<body class="text-slate-100 antialiased selection:bg-sky-500 selection:text-white">
+<body class="antialiased">
 
   <div id="game-wrapper">
     <!-- TOP HUD: Scoreboard & Controls -->
-    <header id="top-hud" class="z-20 px-3 pt-2.5 pb-1.5 flex flex-col gap-1.5 shrink-0 select-none">
-      <!-- Broadcast Scoreboard -->
-      <div class="hud-scoreboard glass-panel rounded-xl px-3.5 py-2 flex items-center justify-between shadow-xl pointer-events-none">
-        <!-- Player Score -->
-        <div class="hud-score-side flex items-center gap-2.5 min-w-[104px]">
-          <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-slate-900 border border-rose-500/40 shadow-inner">
-            <span id="player-score" class="score-digits text-[26px] text-white leading-none">0</span>
-          </div>
-          <div class="flex flex-col">
-            <div class="flex items-center gap-1.5">
-              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-              <span class="text-[10px] font-bold uppercase tracking-widest text-slate-300">YOU</span>
-              <span id="player-serve-badge" class="rounded border border-amber-400/50 bg-amber-400/15 px-1 py-[1px] text-[9px] font-black uppercase tracking-wider text-amber-300" title="Player Serve">Serve</span>
+    <header id="top-hud" aria-label="Match broadcast" class="z-20 flex flex-col shrink-0 select-none">
+      <!-- Broadcast score strip: fixed slots keep the court from shifting. -->
+      <div class="hud-scoreboard pointer-events-none">
+        <div class="hud-score-side player-side">
+          <div class="hud-team-block">
+            <div class="hud-ident">
+              <span class="team-dot"></span>
+              <span class="team-name">YOU</span>
+              <span id="player-serve-badge" class="is-serve-hidden" title="Player Serve">Serve</span>
             </div>
-            <span id="player-spin-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[92px]">Ready</span>
+            <span id="player-spin-label" class="hud-score-status">Ready</span>
+          </div>
+          <div class="score-slot">
+            <span id="player-score" class="score-digits leading-none">0</span>
           </div>
         </div>
 
-        <!-- Center Telemetry -->
-        <div class="hud-score-center flex flex-col items-center justify-center px-3 border-x border-slate-800/90 min-w-[108px]">
-          <div id="sets-strip"></div>
-          <div class="flex items-center gap-1.5">
-            <span class="text-[9px] uppercase tracking-widest text-slate-400 font-bold" title="Shots in this rally">SHOTS</span>
-            <span id="rally-count" class="score-digits text-base text-slate-200">0</span>
+        <div class="hud-score-center">
+          <div class="center-kicker">
+            <span class="pill-dot"></span>
+            <span>STUDIO 01</span>
+            <span class="telemetry-sep">&middot;</span>
+            <span id="center-sets-label">SET 1</span>
           </div>
-          <div class="flex items-center gap-1 text-[11px] font-semibold">
-            <button type="button" id="speed-readout" aria-label="Toggle speed unit between KM/H and MPH" class="score-digits tracking-wider speed-med" title="Tap to toggle KM/H · MPH">0 KM/H</button>
+          <div id="sets-strip" aria-hidden="true"></div>
+          <span class="serve-chip"><span class="serve-ball"></span><span id="serve-state-label">YOUR SERVE</span></span>
+          <div class="telemetry">
+            <span><span id="rally-count">0</span> SHOTS</span>
+            <span class="telemetry-sep">&middot;</span>
+            <button type="button" id="speed-readout" aria-label="Toggle speed unit between KM/H and MPH" class="speed-med" title="Tap to toggle KM/H / MPH">0 KM/H</button>
           </div>
           <div id="hud-meta" class="hud-meta">
-            <span id="online-badge" class="hidden text-[9px] font-bold uppercase text-emerald-400 flex items-center gap-1">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="online-badge" class="hidden">
               <span id="online-ping-text">ONLINE</span>
             </span>
-            <span id="streak-badge" class="hidden text-[9px] font-bold uppercase text-amber-400"></span>
+            <span id="streak-badge" class="hidden"></span>
           </div>
         </div>
 
-        <!-- Opponent Score -->
-        <div class="hud-score-side flex items-center justify-end gap-2.5 min-w-[104px]">
-          <div class="flex flex-col items-end">
-            <div class="flex items-center gap-1.5">
-              <span id="ai-serve-badge" class="is-serve-hidden rounded border border-amber-400/50 bg-amber-400/15 px-1 py-[1px] text-[9px] font-black uppercase tracking-wider text-amber-300" title="Opponent Serve">Serve</span>
-              <span id="ai-name-label" class="text-[10px] font-bold uppercase tracking-widest text-slate-300">RELAXED</span>
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-            </div>
-            <span id="ai-status-label" class="hud-score-status text-[11px] text-slate-400 font-medium truncate max-w-[92px]">Standby</span>
+        <div class="hud-score-side opponent-side">
+          <div class="score-slot">
+            <span id="ai-score" class="score-digits leading-none">0</span>
           </div>
-          <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-slate-900 border border-sky-500/40 shadow-inner">
-            <span id="ai-score" class="score-digits text-[26px] text-white leading-none">0</span>
+          <div class="hud-team-block">
+            <div class="hud-ident">
+              <span class="team-dot"></span>
+              <span id="ai-name-label" class="team-name">RELAXED</span>
+              <span id="ai-serve-badge" class="is-serve-hidden" title="Opponent Serve">Serve</span>
+            </div>
+            <span id="ai-status-label" class="hud-score-status">Standby</span>
           </div>
         </div>
       </div>
 
-      <!-- Utility Controls: Pause is the hub for restart, exit and difficulty -->
-      <div class="hud-nav-row flex items-center justify-end gap-2">
+      <!-- Floating utility controls. Pause is the hub for restart, exit and difficulty. -->
+      <div class="hud-actions">
         <button type="button" id="btn-mute" aria-label="Toggle Audio" aria-pressed="false" class="hud-interactive hud-btn" title="Toggle Audio (M)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="icon-sound-on" class="w-5 h-5"><path d="M1 13.8571V10.1429C1 9.03829 1.89543 8.14286 3 8.14286H5.9C6.09569 8.14286 6.28708 8.08544 6.45046 7.97772L12.4495 4.02228C13.1144 3.5839 14 4.06075 14 4.85714V19.1429C14 19.9392 13.1144 20.4161 12.4495 19.9777L6.45046 16.0223C6.28708 15.9146 6.09569 15.8571 5.9 15.8571H3C1.89543 15.8571 1 14.9617 1 13.8571Z"/><path d="M17.5 7.5C17.5 7.5 19 9 19 11.5C19 14 17.5 15.5 17.5 15.5"/><path d="M20.5 4.5C20.5 4.5 23 7 23 11.5C23 16 20.5 18.5 20.5 18.5"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="icon-sound-off" class="hidden w-5 h-5 text-rose-400"><path d="M18 14L20.0005 12M22 10L20.0005 12M20.0005 12L18 10M20.0005 12L22 14"/><path d="M2 13.8571V10.1429C2 9.03829 2.89543 8.14286 4 8.14286H6.9C7.09569 8.14286 7.28708 8.08544 7.45046 7.97772L13.4495 4.02228C14.1144 3.5839 15 4.06075 15 4.85714V19.1429C15 19.9392 14.1144 20.4161 13.4495 19.9777L7.45046 16.0223C7.28708 15.9146 7.09569 15.8571 6.9 15.8571H4C2.89543 15.8571 2 14.9617 2 13.8571Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="icon-sound-on"><path d="M1 13.8571V10.1429C1 9.03829 1.89543 8.14286 3 8.14286H5.9C6.09569 8.14286 6.28708 8.08544 6.45046 7.97772L12.4495 4.02228C13.1144 3.5839 14 4.06075 14 4.85714V19.1429C14 19.9392 13.1144 20.4161 12.4495 19.9777L6.45046 16.0223C6.28708 15.9146 6.09569 15.8571 5.9 15.8571H3C1.89543 15.8571 1 14.9617 1 13.8571Z"/><path d="M17.5 7.5C17.5 7.5 19 9 19 11.5C19 14 17.5 15.5 17.5 15.5"/><path d="M20.5 4.5C20.5 4.5 23 7 23 11.5C23 16 20.5 18.5 20.5 18.5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" id="icon-sound-off" class="hidden"><path d="M18 14L20.0005 12M22 10L20.0005 12M20.0005 12L18 10M20.0005 12L22 14"/><path d="M2 13.8571V10.1429C2 9.03829 2.89543 8.14286 4 8.14286H6.9C7.09569 8.14286 7.28708 8.08544 7.45046 7.97772L13.4495 4.02228C14.1144 3.5839 15 4.06075 15 4.85714V19.1429C15 19.9392 14.1144 20.4161 13.4495 19.9777L7.45046 16.0223C7.28708 15.9146 7.09569 15.8571 6.9 15.8571H4C2.89543 15.8571 2 14.9617 2 13.8571Z"/></svg>
         </button>
         <button type="button" id="btn-hud-pause" aria-label="Pause Match" class="hud-interactive hud-btn" title="Pause Match (Esc / P)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M6 18.4V5.6C6 5.26863 6.26863 5 6.6 5H9.4C9.73137 5 10 5.26863 10 5.6V18.4C10 18.7314 9.73137 19 9.4 19H6.6C6.26863 19 6 18.7314 6 18.4Z"/><path d="M14 18.4V5.6C14 5.26863 14.2686 5 14.6 5H17.4C17.7314 5 18 5.26863 18 5.6V18.4C18 18.7314 17.7314 19 17.4 19H14.6C14.2686 19 14 18.7314 14 18.4Z"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18.4V5.6C6 5.26863 6.26863 5 6.6 5H9.4C9.73137 5 10 5.26863 10 5.6V18.4C10 18.7314 9.73137 19 9.4 19H6.6C6.26863 19 6 18.7314 6 18.4Z"/><path d="M14 18.4V5.6C14 5.26863 14.2686 5 14.6 5H17.4C17.7314 5 18 5.26863 18 5.6V18.4C18 18.7314 17.7314 19 17.4 19H14.6C14.2686 19 14 18.7314 14 18.4Z"/></svg>
         </button>
       </div>
     </header>
 
-    <!-- MAIN INTERACTIVE 3D COURT CANVAS -->
+    <!-- MAIN INTERACTIVE COURT -->
     <main class="relative flex-1 w-full overflow-hidden">
       <canvas id="table-canvas"></canvas>
+      <div class="court-session" aria-hidden="true">STUDIO 01 / MATCH</div>
 
       <!-- Broadcast Status Banner -->
-      <div id="point-banner" role="status" aria-live="polite" class="hud-banner absolute left-1/2 top-2.5 z-10 px-4 py-1 rounded-md bg-slate-950/90 border border-slate-700/80 shadow-xl flex items-center gap-2 whitespace-nowrap pointer-events-none">
+      <div id="point-banner" role="status" aria-live="polite" class="hud-banner absolute left-1/2 top-2.5 z-10 px-4 py-1 rounded-md shadow-xl flex items-center gap-2 whitespace-nowrap pointer-events-none">
         <span id="point-banner-text" class="font-arcade font-bold text-xs tracking-widest uppercase text-slate-100">POINT PLAYER</span>
       </div>
     </main>
 
     <!-- START MATCH / MAIN MENU SCREEN OVERLAY -->
-    <div id="start-modal" role="dialog" aria-modal="true" aria-labelledby="start-modal-title" class="modal-backdrop is-open absolute inset-0 z-40 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3.5 sm:p-5">
-      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full p-4 sm:p-5 border border-slate-800 shadow-2xl space-y-3.5 text-center">
-        <!-- Top Menu Quick Bar -->
-        <div class="flex items-center justify-between pb-0.5">
-          <div class="wtt-badge inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-900 border border-amber-500/30 text-[9px] font-bold uppercase tracking-widest text-amber-400 shadow-sm">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 text-amber-400"><path fill="currentColor" d="M8.58737 8.23597L11.1849 3.00376C11.5183 2.33208 12.4817 2.33208 12.8151 3.00376L15.4126 8.23597L21.2215 9.08017C21.9668 9.18848 22.2638 10.0994 21.7243 10.6219L17.5217 14.6918L18.5135 20.4414C18.6409 21.1798 17.8614 21.7428 17.1945 21.3941L12 18.678L6.80547 21.3941C6.1386 21.7428 5.35909 21.1798 5.48645 20.4414L6.47825 14.6918L2.27575 10.6219C1.73617 10.0994 2.03322 9.18848 2.77852 9.08017L8.58737 8.23597Z"/></svg>
-            <span class="wtt-badge-long">WTT Championship Pro</span>
-            <span class="wtt-badge-short">WTT Arena Pro</span>
-          </div>
-          <div class="flex items-center gap-1">
-            <button type="button" id="menu-btn-sound" aria-label="Toggle sound" aria-pressed="false" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Toggle Sound">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 menu-sound-on"><path d="M1 13.8571V10.1429C1 9.03829 1.89543 8.14286 3 8.14286H5.9C6.09569 8.14286 6.28708 8.08544 6.45046 7.97772L12.4495 4.02228C13.1144 3.5839 14 4.06075 14 4.85714V19.1429C14 19.9392 13.1144 20.4161 12.4495 19.9777L6.45046 16.0223C6.28708 15.9146 6.09569 15.8571 5.9 15.8571H3C1.89543 15.8571 1 14.9617 1 13.8571Z"/><path d="M17.5 7.5C17.5 7.5 19 9 19 11.5C19 14 17.5 15.5 17.5 15.5"/><path d="M20.5 4.5C20.5 4.5 23 7 23 11.5C23 16 20.5 18.5 20.5 18.5"/></svg>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 menu-sound-off hidden text-rose-400"><path d="M18 14L20.0005 12M22 10L20.0005 12M20.0005 12L18 10M20.0005 12L22 14"/><path d="M2 13.8571V10.1429C2 9.03829 2.89543 8.14286 4 8.14286H6.9C7.09569 8.14286 7.28708 8.08544 7.45046 7.97772L13.4495 4.02228C14.1144 3.5839 15 4.06075 15 4.85714V19.1429C15 19.9392 14.1144 20.4161 13.4495 19.9777L7.45046 16.0223C7.28708 15.9146 7.09569 15.8571 6.9 15.8571H4C2.89543 15.8571 2 14.9617 2 13.8571Z"/></svg>
-            </button>
-            <button type="button" id="menu-btn-fullscreen" aria-label="Enter fullscreen" aria-pressed="false" class="hud-interactive p-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition" title="Enter Fullscreen">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 menu-fullscreen-enter"><path d="M9 9L4 4M4 4V8M4 4H8"/><path d="M15 9L20 4M20 4V8M20 4H16"/><path d="M9 15L4 20M4 20V16M4 20H8"/><path d="M15 15L20 20M20 20V16M20 20H16"/></svg>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="hidden w-3.5 h-3.5 menu-fullscreen-exit"><path d="M20 20L15 15M15 15V19M15 15H19"/><path d="M4 20L9 15M9 15V19M9 15H5"/><path d="M20 4L15 9M15 9V5M15 9H19"/><path d="M4 4L9 9M9 9V5M9 9H5"/></svg>
-            </button>
-          </div>
+    <div id="start-modal" role="dialog" aria-modal="true" aria-labelledby="start-modal-title" class="modal-backdrop start-screen is-open absolute inset-0 z-40">
+      <div class="start-topbar">
+        <div class="brand-lockup">
+          <span class="brand-tile" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(12 11.3) rotate(-34)" fill="currentColor" stroke="none"><ellipse cx="0" cy="-2.5" rx="4.1" ry="5.0"/><path d="M-1.4 1.7 -2 6c-.1.7.4 1.3 1.1 1.3h1.8c.7 0 1.2-.6 1.1-1.3L1.4 1.7Z"/></g><circle cx="19" cy="17" r="1.9" fill="#f3c266" stroke="none"/></svg>
+          </span>
+          <span>
+            <span class="brand-kicker">POCKET</span>
+            <span class="brand-name">Table Tennis</span>
+          </span>
         </div>
-
-        <!-- Title Brand -->
-        <div class="space-y-1">
-          <div class="brand-mark inline-flex items-center justify-center w-12 h-12 mb-0.5">
-            <img src="icon-192.png" width="48" height="48" alt="" decoding="async" fetchpriority="high" class="w-full h-full rounded-[14px] shadow-lg shadow-sky-950/60" />
-          </div>
-          <h1 id="start-modal-title" class="font-arcade text-2xl sm:text-3xl font-extrabold tracking-wider text-white uppercase drop-shadow-md">WTT ARENA PRO</h1>
-          <p class="text-[11px] text-sky-400 font-medium">3D Table Tennis Championship</p>
-        </div>
-
-        <!-- Mode Selection Cards -->
-        <div class="space-y-2 text-left">
-          <!-- SOLO MATCH CARD -->
-          <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Solo Match (vs AI)</span>
-              <span class="text-[9px] font-semibold text-sky-400">11 Points</span>
-            </div>
-            <!-- Division Selector Inside Solo Card -->
-            <div role="group" aria-label="AI difficulty" class="bg-slate-950 border border-slate-800 rounded-lg p-0.5 flex items-center gap-1">
-              <button type="button" data-diff="rookie" aria-pressed="true" class="difficulty-btn hud-interactive active flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition">
-                Relaxed
-              </button>
-              <button type="button" data-diff="pro" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition">
-                Casual
-              </button>
-              <button type="button" data-diff="grandmaster" aria-pressed="false" class="difficulty-btn hud-interactive flex-1 py-1 px-1 rounded-md text-[10px] font-bold uppercase tracking-wider text-slate-400 border border-transparent transition">
-                Pro
-              </button>
-            </div>
-            <button type="button" id="btn-start-match" class="hud-interactive w-full py-2.5 rounded-xl bg-white hover:bg-slate-100 font-extrabold text-[13px] text-slate-950 tracking-[0.08em] uppercase shadow-md active:scale-95 transition flex items-center justify-center gap-2 border border-white">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-slate-900"><path d="M5 20V19C5 15.134 8.13401 12 12 12V12C15.866 12 19 15.134 19 19V20"/><path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"/></svg>
-              <span>PLAY SOLO MATCH</span>
-            </button>
-          </div>
-
-          <!-- ONLINE MULTIPLAYER CARD -->
-          <div class="p-3 rounded-xl bg-slate-900/80 border border-emerald-500/30 space-y-2">
-            <div class="flex items-center justify-between">
-              <span class="text-[10px] font-bold uppercase tracking-widest text-emerald-400">Online Multiplayer</span>
-              <span class="text-[9px] font-semibold text-emerald-300">Peer-to-peer</span>
-            </div>
-            <button type="button" id="btn-open-online" class="hud-interactive w-full py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 font-extrabold text-[13px] text-slate-950 tracking-[0.08em] uppercase shadow-lg shadow-emerald-500/25 active:scale-95 transition flex items-center justify-center gap-2 border border-emerald-400">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-slate-950"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M2.5 12.5L8 14.5L7 18L8 21"/><path d="M17 20.5L16.5 18L14 17V13.5L17 12.5L21.5 13"/><path d="M19 5.5L18.5 7L15 7.5V10.5L17.5 9.5H19.5L21.5 10.5"/><path d="M2.5 10.5L5 8.5L7.5 8L9.5 5L8.5 3"/></svg>
-              <span>PLAY ONLINE WITH CODE</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Secondary Navigation Grid: Practice, How to Play, Settings -->
-        <div class="grid grid-cols-3 gap-1.5 pt-0.5">
-          <button type="button" id="menu-btn-practice" class="hud-interactive py-2 px-1 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white flex flex-col items-center justify-center gap-1 transition">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-amber-400"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/><path d="M18.5716 4.46234C15.905 8.99175 15.9049 14.1847 18.5716 19.5377"/><path d="M5.42834 4.46234C8.09501 8.99175 8.09513 14.1847 5.42834 19.5377"/></svg>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Practice</span>
+        <div class="start-actions">
+          <button type="button" id="menu-btn-sound" aria-label="Toggle sound" aria-pressed="false" title="Toggle Sound">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="menu-sound-on"><path d="M1 13.8571V10.1429C1 9.03829 1.89543 8.14286 3 8.14286H5.9C6.09569 8.14286 6.28708 8.08544 6.45046 7.97772L12.4495 4.02228C13.1144 3.5839 14 4.06075 14 4.85714V19.1429C14 19.9392 13.1144 20.4161 12.4495 19.9777L6.45046 16.0223C6.28708 15.9146 6.09569 15.8571 5.9 15.8571H3C1.89543 15.8571 1 14.9617 1 13.8571Z"/><path d="M17.5 7.5C17.5 7.5 19 9 19 11.5C19 14 17.5 15.5 17.5 15.5"/><path d="M20.5 4.5C20.5 4.5 23 7 23 11.5C23 16 20.5 18.5 20.5 18.5"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="menu-sound-off hidden"><path d="M18 14L20.0005 12M22 10L20.0005 12M20.0005 12L18 10M20.0005 12L22 14"/><path d="M2 13.8571V10.1429C2 9.03829 2.89543 8.14286 4 8.14286H6.9C7.09569 8.14286 7.28708 8.08544 7.45046 7.97772L13.4495 4.02228C14.1144 3.5839 15 4.06075 15 4.85714V19.1429C15 19.9392 14.1144 20.4161 13.4495 19.9777L7.45046 16.0223C7.28708 15.9146 7.09569 15.8571 6.9 15.8571H4C2.89543 15.8571 2 14.9617 2 13.8571Z"/></svg>
           </button>
-          <button type="button" id="menu-btn-how-to-play" class="hud-interactive py-2 px-1 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white flex flex-col items-center justify-center gap-1 transition">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-sky-400"><path d="M4 19V5C4 3.89543 4.89543 3 6 3H19.4C19.7314 3 20 3.26863 20 3.6V16.7143"/><path d="M6 17L20 17"/><path d="M6 21L20 21"/><path d="M6 21C4.89543 21 4 20.1046 4 19C4 17.8954 4.89543 17 6 17"/><path d="M9 7L15 7"/></svg>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Controls</span>
+          <button type="button" id="menu-btn-theme" aria-label="Switch theme" title="Switch theme">
+            <svg class="start-theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2V3M12 21V22M4.93 4.93L5.64 5.64M18.36 18.36L19.07 19.07M2 12H3M21 12H22M4.93 19.07L5.64 18.36M18.36 5.64L19.07 4.93"/></svg>
+            <svg class="start-theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A8.5 8.5 0 0 1 11.21 3 8.5 8.5 0 1 0 21 12.79Z"/></svg>
           </button>
-          <button type="button" id="menu-btn-settings" class="hud-interactive py-2 px-1 rounded-xl bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-slate-300 hover:text-white flex flex-col items-center justify-center gap-1 transition">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="text-slate-400"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/><path d="M19.6224 10.3954L18.5247 7.7448L20 6L18 4L16.2647 5.48295L13.5578 4.36974L12.9353 2H10.981L10.3491 4.40113L7.70441 5.51596L6 4L4 6L5.45337 7.78885L4.3725 10.4463L2 11V13L4.40111 13.6555L5.51575 16.2997L4 18L6 20L7.79116 18.5403L10.397 19.6123L11 22H13L13.6045 19.6132L16.2551 18.5155C16.6969 18.8313 18 20 18 20L20 18L18.5159 16.2494L19.6139 13.598L21.9999 12.9772L22 11L19.6224 10.3954Z"/></svg>
-            <span class="text-[9px] font-bold uppercase tracking-wider">Settings</span>
+          <button type="button" id="menu-btn-fullscreen" aria-label="Enter fullscreen" aria-pressed="false" title="Enter Fullscreen">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="menu-fullscreen-enter"><path d="M9 9L4 4M4 4V8M4 4H8"/><path d="M15 9L20 4M20 4V8M20 4H16"/><path d="M9 15L4 20M4 20V16M4 20H8"/><path d="M15 15L20 20M20 20V16M20 20H16"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="menu-fullscreen-exit hidden"><path d="M20 20L15 15M15 15V19M15 15H19"/><path d="M4 20L9 15M9 15V19M9 15H5"/><path d="M20 4L15 9M15 9V5M15 9H19"/><path d="M4 4L9 9M9 9V5M9 9H5"/></svg>
           </button>
         </div>
-        <p class="text-[9px] leading-snug text-slate-400 pt-0.5">Unofficial fan project · Not affiliated with World Table Tennis</p>
       </div>
+
+      <section class="start-sheet" aria-label="Start a match">
+        <div class="sheet-grabber" aria-hidden="true"></div>
+        <div class="sheet-head">
+          <div>
+            <p class="sheet-kicker">Pocket Table Tennis &middot; Studio 01</p>
+            <h1 id="start-modal-title">Ready to play?</h1>
+            <p class="sheet-tagline">Fast hands. Small table. Pick up a paddle and step onto the court.</p>
+          </div>
+          <span class="match-pill"><span class="pill-dot"></span>11 points</span>
+        </div>
+
+        <div class="solo-card">
+          <div class="solo-head">
+            <div>
+              <h2 class="solo-title">Play solo</h2>
+              <p class="solo-copy">Meet the house AI. No account, no waiting, just the next rally.</p>
+            </div>
+            <span class="solo-rank">Quick start</span>
+          </div>
+          <div role="group" aria-label="AI difficulty" class="difficulty-seg">
+            <button type="button" data-diff="rookie" aria-pressed="true" class="difficulty-btn hud-interactive active">Relaxed</button>
+            <button type="button" data-diff="pro" aria-pressed="false" class="difficulty-btn hud-interactive">Casual</button>
+            <button type="button" data-diff="grandmaster" aria-pressed="false" class="difficulty-btn hud-interactive">Pro</button>
+          </div>
+          <button type="button" id="btn-start-match" class="start-primary hud-interactive" aria-label="Play Solo Match">
+            <span class="start-primary-main">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V19C5 15.134 8.13401 12 12 12C15.866 12 19 15.134 19 19V20"/><path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z"/></svg>
+              <span>Play Solo</span>
+            </span>
+            <span class="start-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12H19M19 12L13 6M19 12L13 18"/></svg>
+            </span>
+          </button>
+        </div>
+
+        <button type="button" id="btn-open-online" class="start-online hud-interactive">
+          <span class="start-online-main">
+            <span class="start-online-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12H21M12 3C14.5 5.5 16 8.6 16 12C16 15.4 14.5 18.5 12 21C9.5 18.5 8 15.4 8 12C8 8.6 9.5 5.5 12 3Z"/></svg>
+            </span>
+            <span class="start-online-copy">
+              <strong>Play online</strong>
+              <span>Private peer-to-peer &middot; 6-character code</span>
+            </span>
+          </span>
+          <span class="start-arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12H19M19 12L13 6M19 12L13 18"/></svg>
+          </span>
+        </button>
+
+        <div class="start-tertiary">
+          <button type="button" id="menu-btn-practice" class="hud-interactive">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M18.57 4.46C15.91 8.99 15.91 14.18 18.57 19.54"/><path d="M5.43 4.46C8.1 8.99 8.1 14.18 5.43 19.54"/></svg>
+            <span>Practice</span>
+          </button>
+          <button type="button" id="menu-btn-how-to-play" class="hud-interactive">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5C4 3.89543 4.89543 3 6 3H19.4C19.7314 3 20 3.26863 20 3.6V16.7143"/><path d="M6 17H20"/><path d="M6 21H20"/><path d="M6 21C4.89543 21 4 20.1046 4 19C4 17.8954 4.89543 17 6 17"/><path d="M9 7H15"/></svg>
+            <span>Controls</span>
+          </button>
+          <button type="button" id="menu-btn-settings" class="hud-interactive">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.62 10.4L18.52 7.74L20 6L18 4L16.26 5.48L13.56 4.37L12.94 2H10.98L10.35 4.4L7.7 5.52L6 4L4 6L5.45 7.79L4.37 10.45L2 11V13L4.4 13.66L5.52 16.3L4 18L6 20L7.79 18.54L10.4 19.61L11 22H13L13.6 19.61L16.26 18.52L18 20L20 18L18.52 16.25L19.61 13.6L22 12.98V11L19.62 10.4Z"/></svg>
+            <span>Settings</span>
+          </button>
+        </div>
+
+        <p class="start-legal">An independent fan project. Not affiliated with any professional tour or federation.</p>
+      </section>
     </div>
 
     <!-- POST-MATCH SUMMARY MODAL -->
@@ -2633,12 +3444,12 @@
           <!-- Final Score -->
           <div class="score-box">
             <div class="score-side">
-              <span class="score-side-label" style="color:#fb7185">YOU</span>
+              <span class="score-side-label" style="color:var(--player)">YOU</span>
               <span id="final-player-score" class="score-side-value">11</span>
             </div>
             <span class="score-divider">FINAL</span>
             <div class="score-side">
-              <span id="final-ai-label" class="score-side-label" style="color:#38bdf8">RELAXED</span>
+              <span id="final-ai-label" class="score-side-label" style="color:var(--opponent)">RELAXED</span>
               <span id="final-ai-score" class="score-side-value">8</span>
             </div>
           </div>
@@ -2651,12 +3462,12 @@
               <div id="stat-max-speed" class="stat-value">0 km/h</div>
             </div>
             <div class="stat-card">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" style="color:#fb7185"><path d="M6.74534 4H17.3132C17.3132 4 16.4326 17.2571 12.0293 17.2571C9.87826 17.2571 8.56786 14.0935 7.79011 10.8571C6.97574 7.46844 6.74534 4 6.74534 4Z"/><path d="M17.3132 4C17.3132 4 18.2344 3.01733 19 2.99999C20.5 2.96603 20.7773 4 20.7773 4C21.0709 4.60953 21.3057 6.19429 19.8967 7.65715C18.4876 9.12 16.9103 10.4 16.2684 10.8571"/><path d="M6.74527 4.00001C6.74527 4.00001 5.78547 3.00614 4.99995 3.00001C3.49995 2.9883 3.22264 4.00001 3.22264 4.00001C2.92908 4.60953 2.69424 6.19429 4.1033 7.65715C5.51235 9.12001 7.14823 10.4 7.79004 10.8572"/><path d="M8.50662 20C8.50662 18.1714 12.0292 17.2571 12.0292 17.2571C12.0292 17.2571 15.5519 18.1714 15.5519 20H8.50662Z"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" style="color:var(--player)"><path d="M6.74534 4H17.3132C17.3132 4 16.4326 17.2571 12.0293 17.2571C9.87826 17.2571 8.56786 14.0935 7.79011 10.8571C6.97574 7.46844 6.74534 4 6.74534 4Z"/><path d="M17.3132 4C17.3132 4 18.2344 3.01733 19 2.99999C20.5 2.96603 20.7773 4 20.7773 4C21.0709 4.60953 21.3057 6.19429 19.8967 7.65715C18.4876 9.12 16.9103 10.4 16.2684 10.8571"/><path d="M6.74527 4.00001C6.74527 4.00001 5.78547 3.00614 4.99995 3.00001C3.49995 2.9883 3.22264 4.00001 3.22264 4.00001C2.92908 4.60953 2.69424 6.19429 4.1033 7.65715C5.51235 9.12001 7.14823 10.4 7.79004 10.8572"/><path d="M8.50662 20C8.50662 18.1714 12.0292 17.2571 12.0292 17.2571C12.0292 17.2571 15.5519 18.1714 15.5519 20H8.50662Z"/></svg>
               <div class="stat-label">Winners</div>
               <div id="stat-smashes" class="stat-value">0</div>
             </div>
             <div class="stat-card">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" style="color:#38bdf8"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" style="color:var(--opponent)"><path d="M3 12L21 12M21 12L12.5 3.5M21 12L12.5 20.5"/></svg>
               <div class="stat-label">Max Rally</div>
               <div id="stat-longest-rally" class="stat-value">0</div>
             </div>
@@ -2715,12 +3526,12 @@
           <!-- Live Score -->
           <div class="score-box">
             <div class="score-side">
-              <span class="score-side-label" style="color:#fb7185">YOU</span>
+              <span class="score-side-label" style="color:var(--player)">YOU</span>
               <span id="pause-player-score" class="score-side-value">0</span>
             </div>
             <span class="score-divider">VS</span>
             <div class="score-side">
-              <span id="pause-ai-label" class="score-side-label" style="color:#38bdf8">OPPONENT</span>
+              <span id="pause-ai-label" class="score-side-label" style="color:var(--opponent)">OPPONENT</span>
               <span id="pause-ai-score" class="score-side-value">0</span>
             </div>
           </div>
@@ -2830,68 +3641,173 @@
     </div>
 
     <!-- SETTINGS MODAL -->
-    <div id="modal-settings" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4">
-      <div class="modal-card glass-panel rounded-2xl max-w-sm w-full border border-slate-800/60 shadow-2xl overflow-hidden">
-
-        <!-- Header -->
-        <div class="modal-header px-5 pt-5" style="border-bottom-color:rgba(255,255,255,0.06)">
-          <div class="modal-header-left">
-            <div class="modal-icon" style="background:rgba(100,116,139,0.15);border:1px solid rgba(100,116,139,0.25);color:#94a3b8">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"/><path d="M19.6224 10.3954L18.5247 7.7448L20 6L18 4L16.2647 5.48295L13.5578 4.36974L12.9353 2H10.981L10.3491 4.40113L7.70441 5.51596L6 4L4 6L5.45337 7.78885L4.3725 10.4463L2 11V13L4.40111 13.6555L5.51575 16.2997L4 18L6 20L7.79116 18.5403L10.397 19.6123L11 22H13L13.6045 19.6132L16.2551 18.5155C16.6969 18.8313 18 20 18 20L20 18L18.5159 16.2494L19.6139 13.598L21.9999 12.9772L22 11L19.6224 10.3954Z"/></svg>
+    <div id="modal-settings" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title" class="modal-backdrop absolute inset-0 z-50">
+      <div class="modal-card settings-sheet">
+        <div class="settings-header">
+          <div class="settings-heading">
+            <div class="settings-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(12 11.3) rotate(-34)" fill="currentColor"><ellipse cx="0" cy="-2.5" rx="4.1" ry="5.0"/><path d="M-1.4 1.7 -2 6c-.1.7.4 1.3 1.1 1.3h1.8c.7 0 1.2-.6 1.1-1.3L1.4 1.7Z"/></g><circle cx="19" cy="17" r="1.9" fill="#f3c266" stroke="none"/></svg>
             </div>
             <div>
-              <h2 id="settings-modal-title" class="modal-title">SETTINGS</h2>
-              <p class="modal-subtitle">Audio, Haptics &amp; Gameplay</p>
+              <p class="settings-kicker">Pocket Table Tennis</p>
+              <h2 id="settings-modal-title">Settings</h2>
+              <p class="settings-subtitle">Tune the studio to your hands.</p>
             </div>
           </div>
           <button type="button" class="btn-close-settings btn-icon" aria-label="Close settings">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"/></svg>
           </button>
         </div>
 
-        <div class="px-5 pb-5 pt-4 space-y-2">
-          <div class="setting-row">
+        <div class="settings-scroll">
+          <div class="settings-identity">
+            <span class="brand-tile" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(12 11.3) rotate(-34)" fill="currentColor"><ellipse cx="0" cy="-2.5" rx="4.1" ry="5.0"/><path d="M-1.4 1.7 -2 6c-.1.7.4 1.3 1.1 1.3h1.8c.7 0 1.2-.6 1.1-1.3L1.4 1.7Z"/></g><circle cx="19" cy="17" r="1.9" fill="#f3c266" stroke="none"/></svg>
+            </span>
             <div>
-              <div class="setting-label">Sound Effects</div>
-              <div class="setting-desc">Paddle hits and crowd ambience</div>
+              <strong>Pocket Table Tennis</strong>
+              <span>Courtlight Broadcast &middot; v1.0</span>
             </div>
-            <button type="button" id="setting-toggle-sound" class="setting-toggle on hud-interactive" aria-label="Sound effects" aria-pressed="true">ON</button>
-          </div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Haptic Feedback</div>
-              <div class="setting-desc">Vibrate on hits (mobile)</div>
-            </div>
-            <button type="button" id="setting-toggle-haptics" class="setting-toggle on hud-interactive" aria-label="Haptic feedback" aria-pressed="true">ON</button>
-          </div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Speed Unit</div>
-              <div class="setting-desc">Speedometer unit display</div>
-            </div>
-            <button type="button" id="setting-toggle-speed-unit" class="setting-toggle off hud-interactive" aria-label="Speed unit">KM/H</button>
-          </div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Reduced Motion</div>
-              <div class="setting-desc">Reduce screen shake and tilt</div>
-            </div>
-            <button type="button" id="setting-toggle-motion" class="setting-toggle off hud-interactive" aria-label="Reduced motion" aria-pressed="false">OFF</button>
-          </div>
-          <div class="setting-row">
-            <div>
-              <div class="setting-label">Practice Mode</div>
-              <div class="setting-desc">Rally continues without a match point</div>
-            </div>
-            <button type="button" id="setting-toggle-practice" class="setting-toggle off hud-interactive" aria-label="Practice mode" aria-pressed="false">OFF</button>
+            <span class="match-pill" style="margin-left:auto"><span class="pill-dot"></span>Studio</span>
           </div>
 
-          <button type="button" class="btn-close-settings btn-primary hud-interactive mt-1">
-            DONE
-          </button>
+          <section class="settings-group" aria-labelledby="settings-gameplay">
+            <div class="settings-group-head" id="settings-gameplay">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12H16M12 8V16"/></svg>
+              <span>Gameplay</span>
+            </div>
+            <div class="settings-card">
+              <div class="settings-row settings-row-stack">
+                <div class="row-copy">
+                  <div class="row-label">AI difficulty</div>
+                  <div class="row-desc">Choose the pace of the house player.</div>
+                </div>
+                <div role="group" aria-label="AI difficulty" class="difficulty-seg settings-difficulty">
+                  <button type="button" data-diff="rookie" aria-pressed="true" class="difficulty-btn hud-interactive active">Relaxed</button>
+                  <button type="button" data-diff="pro" aria-pressed="false" class="difficulty-btn hud-interactive">Casual</button>
+                  <button type="button" data-diff="grandmaster" aria-pressed="false" class="difficulty-btn hud-interactive">Pro</button>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Practice mode</div>
+                  <div class="row-desc">Keep the rally alive without match point.</div>
+                </div>
+                <button type="button" id="setting-toggle-practice" class="setting-toggle off hud-interactive" aria-label="Practice mode" aria-pressed="false">OFF</button>
+              </div>
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Reduced motion</div>
+                  <div class="row-desc">Quiet screen shake and decorative tilt.</div>
+                </div>
+                <button type="button" id="setting-toggle-motion" class="setting-toggle off hud-interactive" aria-label="Reduced motion" aria-pressed="false">OFF</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-group" aria-labelledby="settings-display">
+            <div class="settings-group-head" id="settings-display">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2V3M12 21V22M4.93 4.93L5.64 5.64M18.36 18.36L19.07 19.07M2 12H3M21 12H22M4.93 19.07L5.64 18.36M18.36 5.64L19.07 4.93"/></svg>
+              <span>Display &amp; Sound</span>
+            </div>
+            <div class="settings-card">
+              <div class="settings-row settings-row-stack">
+                <div class="row-copy">
+                  <div class="row-label">Court lighting</div>
+                  <div class="row-desc">System follows your phone's appearance.</div>
+                </div>
+                <div class="theme-seg" role="group" aria-label="Theme">
+                  <button type="button" id="theme-system" class="theme-btn active" aria-pressed="true">System</button>
+                  <button type="button" id="theme-light" class="theme-btn" aria-pressed="false">Light</button>
+                  <button type="button" id="theme-dark" class="theme-btn" aria-pressed="false">Dark</button>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Sound effects</div>
+                  <div class="row-desc">Paddle hits and room ambience.</div>
+                </div>
+                <button type="button" id="setting-toggle-sound" class="setting-toggle on hud-interactive" aria-label="Sound effects" aria-pressed="true">ON</button>
+              </div>
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Haptic feedback</div>
+                  <div class="row-desc">A small tap on contact (mobile).</div>
+                </div>
+                <button type="button" id="setting-toggle-haptics" class="setting-toggle on hud-interactive" aria-label="Haptic feedback" aria-pressed="true">ON</button>
+              </div>
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Speed unit</div>
+                  <div class="row-desc">Broadcast telemetry readout.</div>
+                </div>
+                <button type="button" id="setting-toggle-speed-unit" class="setting-toggle off hud-interactive" aria-label="Speed unit">KM/H</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="settings-group" aria-labelledby="settings-online">
+            <div class="settings-group-head" id="settings-online">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12H21M12 3C14.5 5.5 16 8.6 16 12C16 15.4 14.5 18.5 12 21C9.5 18.5 8 15.4 8 12C8 8.6 9.5 5.5 12 3Z"/></svg>
+              <span>Online</span>
+            </div>
+            <div class="settings-card">
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Connection</div>
+                  <div class="row-desc">Private peer-to-peer matches.</div>
+                </div>
+                <span id="settings-online-status" class="row-value">Offline</span>
+              </div>
+              <button type="button" id="settings-open-online" class="settings-row-button hud-interactive">
+                <span class="row-copy">
+                  <span class="row-label" style="display:block">Open online lobby</span>
+                  <span class="row-desc" style="display:block">Host or join with a 6-character code.</span>
+                </span>
+                <span class="row-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg></span>
+              </button>
+            </div>
+          </section>
+
+          <section class="settings-group" aria-labelledby="settings-about">
+            <div class="settings-group-head" id="settings-about">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11V17M12 7.01L12.01 6.999"/></svg>
+              <span>About</span>
+            </div>
+            <div class="settings-card">
+              <button type="button" id="settings-open-howto" class="settings-row-button hud-interactive">
+                <span class="row-copy">
+                  <span class="row-label" style="display:block">How to play</span>
+                  <span class="row-desc" style="display:block">Controls, spin and scoring.</span>
+                </span>
+                <span class="row-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6L15 12L9 18"/></svg></span>
+              </button>
+              <button type="button" id="btn-reset-preferences" class="settings-row-button hud-interactive">
+                <span class="row-copy">
+                  <span class="row-label" style="display:block">Reset preferences</span>
+                  <span class="row-desc" style="display:block">Restore sound, motion, theme and difficulty.</span>
+                </span>
+                <span class="row-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4V9H9"/><path d="M4.6 15A8 8 0 1 0 6 6.3L4 9"/></svg></span>
+              </button>
+              <div class="settings-row">
+                <div class="row-copy">
+                  <div class="row-label">Pocket Table Tennis</div>
+                  <div class="row-desc">Independent fan project. Not affiliated with any tour or federation.</div>
+                </div>
+                <span class="row-value">v1.0</span>
+              </div>
+            </div>
+          </section>
         </div>
+
+        <footer class="settings-footer">
+          <button type="button" class="btn-close-settings btn-primary hud-interactive">
+            Done
+          </button>
+        </footer>
       </div>
     </div>
+
     <!-- ONLINE MULTIPLAYER MODAL -->
     <div id="online-modal" role="dialog" aria-modal="true" aria-labelledby="online-modal-title" class="modal-backdrop absolute inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4">
       <div class="modal-card glass-panel rounded-2xl max-w-xs w-full border border-slate-800/60 shadow-2xl overflow-hidden">
@@ -3524,6 +4440,18 @@
         try { return localStorage.getItem('wtt-practice') === '1'; } catch (_) { return false; }
       })();
 
+      let themePreference = (() => {
+        try {
+          const saved = localStorage.getItem('wtt-theme');
+          return saved === 'light' || saved === 'dark' ? saved : 'system';
+        } catch (_) { return 'system'; }
+      })();
+      const systemThemeQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+      let resolvedTheme = (() => {
+        if (themePreference === 'light' || themePreference === 'dark') return themePreference;
+        return systemThemeQuery && systemThemeQuery.matches ? 'dark' : 'light';
+      })();
+
       const matchStats = {
         playerScore: 0,
         aiScore: 0,
@@ -3750,6 +4678,71 @@
       const _p3 = { x: 0, y: 0, scale: 1 };
       const _p4 = { x: 0, y: 0, scale: 1 };
 
+      const CANVAS_PALETTES = {
+        dark: {
+          page: '#03060c',
+          floorCenter: '#101b2c',
+          floorMid: '#0a111d',
+          floorEdge: '#03060c',
+          floorLine: 'rgba(150, 195, 245, 0.10)',
+          floorRing: 'rgba(88, 159, 235, 0.20)',
+          floorRingSoft: 'rgba(88, 159, 235, 0.07)',
+          bannerBg: '#101d2e',
+          bannerEdge: 'rgba(120, 185, 245, 0.36)',
+          bannerText: 'rgba(214, 236, 255, 0.55)',
+          tableFar: '#1348a8',
+          tableMid: '#1e62d4',
+          tableNear: '#164fae',
+          tableSpec: 'rgba(232, 246, 255, 0.16)',
+          line: 'rgba(246, 251, 255, 0.94)',
+          netTape: '#eef6ff',
+          apronTop: '#0b1524',
+          apronMid: '#17283e',
+          apronBottom: '#050a12',
+          apronLine: 'rgba(83, 197, 218, 0.58)',
+          apronText: 'rgba(220, 238, 252, 0.58)',
+          legHi: '#9fb4ca',
+          legMid: '#344a63',
+          legLow: '#060b13',
+          shadow: 'rgba(0, 0, 0, 0.54)',
+          bannerTitle: 'POCKET TABLE TENNIS',
+          bannerSub: 'STUDIO 01'
+        },
+        light: {
+          page: '#e9f1fa',
+          floorCenter: '#ffffff',
+          floorMid: '#e7f0fb',
+          floorEdge: '#dce8f6',
+          floorLine: 'rgba(38, 83, 132, 0.13)',
+          floorRing: 'rgba(35, 104, 184, 0.18)',
+          floorRingSoft: 'rgba(35, 104, 184, 0.07)',
+          bannerBg: '#f4f9ff',
+          bannerEdge: 'rgba(44, 101, 158, 0.20)',
+          bannerText: 'rgba(28, 63, 101, 0.55)',
+          tableFar: '#154bb0',
+          tableMid: '#1e62d4',
+          tableNear: '#164fae',
+          tableSpec: 'rgba(255, 255, 255, 0.24)',
+          line: 'rgba(255, 255, 255, 0.98)',
+          netTape: '#ffffff',
+          apronTop: '#10243a',
+          apronMid: '#1b3853',
+          apronBottom: '#081422',
+          apronLine: 'rgba(52, 177, 204, 0.72)',
+          apronText: 'rgba(235, 247, 255, 0.66)',
+          legHi: '#d7e5f4',
+          legMid: '#96afc7',
+          legLow: '#314a64',
+          shadow: 'rgba(30, 56, 85, 0.22)',
+          bannerTitle: 'POCKET TABLE TENNIS',
+          bannerSub: 'STUDIO 01'
+        }
+      };
+
+      function getCanvasPalette() {
+        return CANVAS_PALETTES[resolvedTheme === 'light' ? 'light' : 'dark'];
+      }
+
       function rebuildStaticSceneCache() {
         if (!bgOffscreenCanvas) {
           bgOffscreenCanvas = document.createElement('canvas');
@@ -3757,21 +4750,38 @@
         bgOffscreenCanvas.width = canvas.width;
         bgOffscreenCanvas.height = canvas.height;
         const bCtx = bgOffscreenCanvas.getContext('2d', { alpha: false });
+        const pal = getCanvasPalette();
 
-        bCtx.fillStyle = '#030509';
+        bCtx.fillStyle = pal.page;
         bCtx.fillRect(0, 0, canvas.width, canvas.height);
 
         bCtx.save();
         bCtx.translate(offsetX, offsetY);
         bCtx.scale(renderScale, renderScale);
 
-        const floorGrad = bCtx.createRadialGradient(VW * 0.5, 310, 30, VW * 0.5, 340, 480);
-        floorGrad.addColorStop(0, '#192235');
-        floorGrad.addColorStop(0.45, '#0c101b');
-        floorGrad.addColorStop(0.82, '#060810');
-        floorGrad.addColorStop(1, '#030509');
+        const floorGrad = bCtx.createRadialGradient(VW * 0.5, 290, 24, VW * 0.5, 340, 500);
+        floorGrad.addColorStop(0, pal.floorCenter);
+        floorGrad.addColorStop(0.45, pal.floorMid);
+        floorGrad.addColorStop(0.82, pal.floorEdge);
+        floorGrad.addColorStop(1, pal.page);
         bCtx.fillStyle = floorGrad;
         bCtx.fillRect(-120, -120, VW + 240, VH + 240);
+
+        // Studio floor: a soft halo and a measured court ring keep the table
+        // visually anchored without competing with the ball.
+        const ring = project3D(TABLE.centerX, TABLE.netY + 28, -70, _p1);
+        bCtx.save();
+        bCtx.strokeStyle = pal.floorRingSoft;
+        bCtx.lineWidth = 26;
+        bCtx.beginPath();
+        bCtx.ellipse(ring.x, ring.y + 18, 178, 78, 0, 0, Math.PI * 2);
+        bCtx.stroke();
+        bCtx.strokeStyle = pal.floorRing;
+        bCtx.lineWidth = 1.2;
+        bCtx.beginPath();
+        bCtx.ellipse(ring.x, ring.y + 18, 168, 70, 0, 0, Math.PI * 2);
+        bCtx.stroke();
+        bCtx.restore();
 
         const FLOOR_Z = -58;
         const cFL = project3D(TABLE.x - 64, TABLE.y - 28, FLOOR_Z, _p1);
@@ -3779,7 +4789,7 @@
         const cNR = project3D(TABLE.right + 64, TABLE.bottom + 54, FLOOR_Z, _p3);
         const cNL = project3D(TABLE.x - 64, TABLE.bottom + 54, FLOOR_Z, _p4);
 
-        bCtx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        bCtx.strokeStyle = pal.floorLine;
         bCtx.lineWidth = 1.4;
         bCtx.beginPath();
         bCtx.moveTo(cFL.x, cFL.y);
@@ -3789,35 +4799,8 @@
         bCtx.closePath();
         bCtx.stroke();
 
-        const bTL = project3D(TABLE.x - 56, TABLE.y - 42, -12, _p1);
-        const bTR = project3D(TABLE.right + 56, TABLE.y - 42, -12, _p2);
-        const bBR = project3D(TABLE.right + 56, TABLE.y - 42, FLOOR_Z, _p3);
-        const bBL = project3D(TABLE.x - 56, TABLE.y - 42, FLOOR_Z, _p4);
+        // The court remains clean behind the live broadcast HUD.
 
-        const ledGrad = bCtx.createLinearGradient(bTL.x, bTL.y, bTR.x, bBR.y);
-        ledGrad.addColorStop(0, '#04070e');
-        ledGrad.addColorStop(0.5, '#0a101f');
-        ledGrad.addColorStop(1, '#04070e');
-        bCtx.fillStyle = ledGrad;
-        bCtx.beginPath();
-        bCtx.moveTo(bTL.x, bTL.y);
-        bCtx.lineTo(bTR.x, bTR.y);
-        bCtx.lineTo(bBR.x, bBR.y);
-        bCtx.lineTo(bBL.x, bBL.y);
-        bCtx.closePath();
-        bCtx.fill();
-
-        bCtx.strokeStyle = '#38bdf8';
-        bCtx.lineWidth = 1.6;
-        bCtx.beginPath();
-        bCtx.moveTo(bTL.x, bTL.y);
-        bCtx.lineTo(bTR.x, bTR.y);
-        bCtx.stroke();
-
-        bCtx.fillStyle = 'rgba(226, 232, 240, 0.26)';
-        bCtx.font = '700 10px system-ui, -apple-system, sans-serif';
-        bCtx.textAlign = 'center';
-        bCtx.fillText('WTT CHAMPIONSHIP SERIES   •   ARENA COURT', VW * 0.5, (bTL.y + bBL.y) * 0.5 + 3);
 
         project3D(TABLE.x, TABLE.y, 0, _tFL);
         project3D(TABLE.right, TABLE.y, 0, _tFR);
@@ -3829,7 +4812,11 @@
         project3D(TABLE.right - 10, TABLE.bottom - 6, FLOOR_Z, _gNR);
         project3D(TABLE.x + 10, TABLE.bottom - 6, FLOOR_Z, _gNL);
 
-        bCtx.fillStyle = 'rgba(2, 4, 10, 0.88)';
+        const tableShadow = bCtx.createLinearGradient(0, _gFL.y, 0, _gNR.y);
+        tableShadow.addColorStop(0, pal.shadow);
+        tableShadow.addColorStop(0.62, pal.shadow);
+        tableShadow.addColorStop(1, 'rgba(0,0,0,0)');
+        bCtx.fillStyle = tableShadow;
         bCtx.beginPath();
         bCtx.moveTo(_gFL.x, _gFL.y);
         bCtx.lineTo(_gFR.x, _gFR.y);
@@ -3837,6 +4824,13 @@
         bCtx.lineTo(_gNL.x, _gNL.y);
         bCtx.closePath();
         bCtx.fill();
+        bCtx.save();
+        bCtx.filter = 'blur(18px)';
+        bCtx.fillStyle = pal.shadow;
+        bCtx.beginPath();
+        bCtx.ellipse(VW * 0.5, project3D(TABLE.centerX, TABLE.bottom + 18, FLOOR_Z, _p1).y, 150, 26, 0, 0, Math.PI * 2);
+        bCtx.fill();
+        bCtx.restore();
 
         const apronH = 13;
         const farApronH = 7;
@@ -3845,21 +4839,21 @@
           const left = xCenter - w * 0.5;
           const h = Math.max(10, botY - topY);
 
-          bCtx.fillStyle = '#020408';
+          bCtx.fillStyle = pal.legLow;
           bCtx.beginPath();
           bCtx.ellipse(xCenter, botY + 2, w * 0.85, 3.0, 0, 0, Math.PI * 2);
           bCtx.fill();
 
-          bCtx.fillStyle = darkness < 1 ? '#334155' : '#94a3b8';
+          bCtx.fillStyle = darkness < 1 ? pal.legMid : pal.legHi;
           bCtx.beginPath();
           bCtx.ellipse(xCenter, botY, w * 0.7, 2.2, 0, 0, Math.PI * 2);
           bCtx.fill();
 
           const legGrad = bCtx.createLinearGradient(left, topY, left + w, topY);
-          legGrad.addColorStop(0, '#070b16');
-          legGrad.addColorStop(0.4, darkness < 1 ? '#334155' : '#94a3b8');
-          legGrad.addColorStop(0.75, '#1e293b');
-          legGrad.addColorStop(1, '#050811');
+          legGrad.addColorStop(0, pal.legLow);
+          legGrad.addColorStop(0.4, darkness < 1 ? pal.legMid : pal.legHi);
+          legGrad.addColorStop(0.75, pal.legMid);
+          legGrad.addColorStop(1, pal.legLow);
           bCtx.fillStyle = legGrad;
           bCtx.beginPath();
           bCtx.roundRect(left, topY, w, h, 2);
@@ -3879,7 +4873,7 @@
         const nearLegBotY = _gNL.y - 4;
         const legWidth = 9.5;
 
-        bCtx.strokeStyle = '#1e293b';
+        bCtx.strokeStyle = pal.legMid;
         bCtx.lineWidth = 5;
         bCtx.beginPath();
         bCtx.moveTo(nearLegLeftX + 6, nearLegBotY - 12);
@@ -3888,17 +4882,17 @@
         bCtx.lineTo(VW * 0.5 + 18, nearLegTopY + 2);
         bCtx.stroke();
 
-        bCtx.fillStyle = '#070b14';
+        bCtx.fillStyle = pal.legLow;
         bCtx.fillRect(nearLegLeftX, nearLegTopY, nearLegRightX - nearLegLeftX, 9);
 
         const braceY = nearLegTopY + (nearLegBotY - nearLegTopY) * 0.52;
-        bCtx.fillStyle = '#1e293b';
+        bCtx.fillStyle = pal.legMid;
         bCtx.fillRect(nearLegLeftX + 2, braceY, (nearLegRightX - nearLegLeftX) - 4, 4.5);
 
         drawSupportLeg(nearLegLeftX + legWidth * 0.5, nearLegTopY, nearLegBotY, legWidth, 1);
         drawSupportLeg(nearLegRightX - legWidth * 0.5, nearLegTopY, nearLegBotY, legWidth, 1);
 
-        bCtx.fillStyle = '#0b1325';
+        bCtx.fillStyle = pal.apronTop;
         bCtx.beginPath();
         bCtx.moveTo(_tFL.x, _tFL.y);
         bCtx.lineTo(_tNL.x, _tNL.y);
@@ -3916,10 +4910,10 @@
         bCtx.fill();
 
         const tableTopGrad = bCtx.createLinearGradient(0, _tFL.y, 0, _tNL.y);
-        tableTopGrad.addColorStop(0, '#172554');
-        tableTopGrad.addColorStop(0.46, '#1d4ed8');
-        tableTopGrad.addColorStop(0.50, '#1e40af');
-        tableTopGrad.addColorStop(1, '#1e3a8a');
+        tableTopGrad.addColorStop(0, pal.tableFar);
+        tableTopGrad.addColorStop(0.46, pal.tableMid);
+        tableTopGrad.addColorStop(0.50, pal.tableMid);
+        tableTopGrad.addColorStop(1, pal.tableNear);
 
         bCtx.fillStyle = tableTopGrad;
         bCtx.beginPath();
@@ -3962,8 +4956,8 @@
 
         const cFar = project3D(TABLE.centerX, TABLE.y, 0, _p1);
         const cNear = project3D(TABLE.centerX, TABLE.bottom, 0, _p2);
-        bCtx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
-        bCtx.lineWidth = 2.0;
+        bCtx.strokeStyle = pal.line;
+        bCtx.lineWidth = 1.8;
         bCtx.beginPath();
         bCtx.moveTo(cFar.x, cFar.y);
         bCtx.lineTo(cNear.x, cNear.y);
@@ -3974,8 +4968,8 @@
         const inNR = project3D(TABLE.right - 2.4, TABLE.bottom - 2.4, 0, _p3);
         const inNL = project3D(TABLE.x + 2.4, TABLE.bottom - 2.4, 0, _p4);
 
-        bCtx.strokeStyle = '#ffffff';
-        bCtx.lineWidth = 3.0;
+        bCtx.strokeStyle = pal.line;
+        bCtx.lineWidth = 2.6;
         bCtx.lineJoin = 'miter';
         bCtx.beginPath();
         bCtx.moveTo(inFL.x, inFL.y);
@@ -3987,9 +4981,9 @@
         bCtx.restore();
 
         const frontApronGrad = bCtx.createLinearGradient(0, _tNL.y, 0, _tNL.y + apronH);
-        frontApronGrad.addColorStop(0, '#090e1a');
-        frontApronGrad.addColorStop(0.55, '#1e293b');
-        frontApronGrad.addColorStop(1, '#020408');
+        frontApronGrad.addColorStop(0, pal.apronTop);
+        frontApronGrad.addColorStop(0.55, pal.apronMid);
+        frontApronGrad.addColorStop(1, pal.apronBottom);
 
         bCtx.fillStyle = frontApronGrad;
         bCtx.beginPath();
@@ -4000,17 +4994,17 @@
         bCtx.closePath();
         bCtx.fill();
 
-        bCtx.strokeStyle = 'rgba(34, 211, 238, 0.78)';
-        bCtx.lineWidth = 1.4;
+        bCtx.strokeStyle = pal.apronLine;
+        bCtx.lineWidth = 1.2;
         bCtx.beginPath();
         bCtx.moveTo(_tNL.x, _tNL.y + apronH);
         bCtx.lineTo(_tNR.x, _tNR.y + apronH);
         bCtx.stroke();
 
-        bCtx.fillStyle = 'rgba(241, 245, 249, 0.5)';
-        bCtx.font = '700 8.5px system-ui, -apple-system, sans-serif';
+        bCtx.fillStyle = pal.apronText;
+        bCtx.font = '800 7.5px "Manrope", system-ui, sans-serif';
         bCtx.textAlign = 'center';
-        bCtx.fillText('WTT ARENA PRO   •   MATCH GRADE 25MM', VW * 0.5, _tNL.y + apronH * 0.74);
+        bCtx.fillText('POCKET TABLE TENNIS   /   MATCH GRADE 25MM', VW * 0.5, _tNL.y + apronH * 0.74);
 
         bCtx.restore();
       }
@@ -4079,7 +5073,7 @@
         const kmh = Math.round(ball.speedKmh);
         const displaySpd = speedUnitKmh ? `${kmh} KM/H` : `${Math.round(kmh * 0.621)} MPH`;
         elSpeedReadout.textContent = displaySpd;
-        elSpeedReadout.className = 'score-digits tracking-wider ' +
+        elSpeedReadout.className = 'tracking-wider ' +
           (kmh < 60 ? 'speed-low' : kmh < 100 ? 'speed-med' : kmh < 130 ? 'speed-high' : 'speed-max');
 
         if (!isOnline || isHost) {
@@ -4092,6 +5086,14 @@
           elPlayerServeBadge.classList.add('is-serve-hidden');
           elAiServeBadge.classList.remove('is-serve-hidden');
         }
+        const serveStateLabel = document.getElementById('serve-state-label');
+        if (serveStateLabel) {
+          serveStateLabel.textContent = matchStats.server === 'player'
+            ? 'YOUR SERVE'
+            : (isOnline ? 'OPPONENT SERVE' : 'AI SERVE');
+        }
+        const centerSetsLabel = document.getElementById('center-sets-label');
+        if (centerSetsLabel) centerSetsLabel.textContent = totalSets > 1 ? `SET ${setsTracker.player + setsTracker.ai + 1}` : 'SET 1';
 
         if (isOnline) {
           elAiNameLabel.textContent = isHost ? 'GUEST' : 'HOST';
@@ -4106,7 +5108,7 @@
         if (streak.count >= 3) {
           const labels = { 3: '3★ HAT TRICK', 4: '4★ ON FIRE', 5: '5★ DOMINATING' };
           elStreakBadge.textContent = labels[Math.min(5, streak.count)] || `${streak.count}★ STREAK`;
-          elStreakBadge.style.color = streak.winner === 'player' ? 'var(--color-amber-400)' : 'var(--color-sky-400)';
+          elStreakBadge.style.color = streak.winner === 'player' ? 'var(--player)' : 'var(--serve)';
           elStreakBadge.classList.remove('hidden');
         } else {
           elStreakBadge.classList.add('hidden');
@@ -4199,7 +5201,7 @@
           if (specialStatus) {
             showBanner(specialStatus.text, specialStatus.border, specialStatus.color);
           } else {
-            showBanner('YOUR SERVE — SWIPE UP TO LAUNCH', 'rgba(56, 189, 248, 0.45)', '#38bdf8');
+            showBanner('YOUR SERVE', 'rgba(57, 214, 233, 0.45)', '#39d6e9');
           }
         } else {
           stateTimer = 52;
@@ -5470,6 +6472,7 @@
       }
 
       function draw3DNet() {
+        const pal = getCanvasPalette();
         if (netVibration > 0.05) {
           netVibration *= 0.88;
           netVibrationPhase += 0.85;
@@ -5496,7 +6499,7 @@
 
         ctx.save();
 
-        ctx.fillStyle = 'rgba(10, 14, 23, 0.78)';
+        ctx.fillStyle = 'rgba(8, 13, 21, 0.82)';
         ctx.beginPath();
         ctx.moveTo(baseL.x, baseL.y);
         ctx.lineTo(baseR.x, baseR.y);
@@ -5514,7 +6517,7 @@
         ctx.quadraticCurveTo(baseC.x, topCY, baseL.x, topLY);
         ctx.closePath();
         ctx.clip();
-        ctx.strokeStyle = 'rgba(255,255,255,0.10)';
+        ctx.strokeStyle = 'rgba(228, 244, 255, 0.13)';
         ctx.lineWidth = 0.8 * netScale;
         const netSpans = 6;
         for (let s = 1; s < netSpans; s++) {
@@ -5538,7 +6541,7 @@
         }
         ctx.restore();
 
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = pal.netTape;
         ctx.lineWidth = 3.2 * netScale;
         ctx.beginPath();
         ctx.moveTo(baseL.x, topLY);
@@ -5547,8 +6550,8 @@
 
         function drawPost(postX, baseY, topY) {
           const postW = 4.5 * netScale;
-          ctx.fillStyle = '#0a101f';
-          ctx.strokeStyle = '#94a3b8';
+          ctx.fillStyle = '#08101b';
+          ctx.strokeStyle = '#8ea3b8';
           ctx.beginPath();
           ctx.roundRect(postX - postW * 0.5, topY - 2, postW, (baseY - topY) + 4, 2);
           ctx.fill();
@@ -5657,15 +6660,15 @@
         ctx.save();
         ctx.translate(extX, extY);
         traceBladeHeadPath(ctx, rx + 0.8 * s, ry + 0.8 * s, handleDir);
-        ctx.fillStyle = '#78350f';
+        ctx.fillStyle = '#0a121d';
         ctx.fill();
         ctx.restore();
 
         traceBladeHeadPath(ctx, rx, ry, handleDir);
         const woodGrad = ctx.createLinearGradient(-rx, 0, rx, 0);
-        woodGrad.addColorStop(0, '#b45309');
-        woodGrad.addColorStop(0.5, '#fde68a');
-        woodGrad.addColorStop(1, '#b45309');
+        woodGrad.addColorStop(0, '#1e293b');
+        woodGrad.addColorStop(0.5, '#64748b');
+        woodGrad.addColorStop(1, '#1e293b');
         ctx.fillStyle = woodGrad;
         ctx.fill();
 
@@ -5690,27 +6693,27 @@
 
         if (isPlayer) {
           if (isForehand) {
-            rubberGrad.addColorStop(0, '#fb7185');
-            rubberGrad.addColorStop(0.28, '#e11d48');
-            rubberGrad.addColorStop(0.75, '#9f1239');
-            rubberGrad.addColorStop(1, '#4c0519');
+            rubberGrad.addColorStop(0, '#a5f3fc');
+            rubberGrad.addColorStop(0.28, '#39d6e9');
+            rubberGrad.addColorStop(0.75, '#0891a7');
+            rubberGrad.addColorStop(1, '#064653');
           } else {
-            rubberGrad.addColorStop(0, '#94a3b8');
-            rubberGrad.addColorStop(0.30, '#1e293b');
-            rubberGrad.addColorStop(0.78, '#0f172a');
-            rubberGrad.addColorStop(1, '#020408');
+            rubberGrad.addColorStop(0, '#67e8f9');
+            rubberGrad.addColorStop(0.30, '#0e7490');
+            rubberGrad.addColorStop(0.78, '#083b49');
+            rubberGrad.addColorStop(1, '#03181f');
           }
         } else {
           if (isForehand) {
-            rubberGrad.addColorStop(0, '#f43f5e');
-            rubberGrad.addColorStop(0.35, '#be123c');
-            rubberGrad.addColorStop(0.85, '#881337');
-            rubberGrad.addColorStop(1, '#4c0519');
+            rubberGrad.addColorStop(0, '#fecdd3');
+            rubberGrad.addColorStop(0.30, '#fb7185');
+            rubberGrad.addColorStop(0.75, '#be123c');
+            rubberGrad.addColorStop(1, '#580c22');
           } else {
-            rubberGrad.addColorStop(0, '#334155');
-            rubberGrad.addColorStop(0.38, '#1e293b');
-            rubberGrad.addColorStop(0.82, '#090d16');
-            rubberGrad.addColorStop(1, '#020408');
+            rubberGrad.addColorStop(0, '#fda4af');
+            rubberGrad.addColorStop(0.34, '#9f1239');
+            rubberGrad.addColorStop(0.82, '#4c0519');
+            rubberGrad.addColorStop(1, '#26030c');
           }
         }
 
@@ -5736,7 +6739,7 @@
         ctx.restore();
 
         traceBladeHeadPath(ctx, rx, ry, handleDir);
-        ctx.strokeStyle = isPlayer ? 'rgba(248, 250, 252, 0.45)' : 'rgba(56, 189, 248, 0.45)';
+        ctx.strokeStyle = isPlayer ? 'rgba(57, 214, 233, 0.62)' : 'rgba(251, 113, 133, 0.60)';
         ctx.lineWidth = 1.5 * s;
         ctx.stroke();
 
@@ -5744,8 +6747,8 @@
         ctx.save();
         const edgeGrad = ctx.createLinearGradient(-rx, -ry * handleDir, rx, -ry * handleDir);
         edgeGrad.addColorStop(0, 'rgba(255,255,255,0)');
-        edgeGrad.addColorStop(0.35, isPlayer ? 'rgba(255,200,200,0.55)' : 'rgba(100,210,255,0.55)');
-        edgeGrad.addColorStop(0.65, isPlayer ? 'rgba(255,200,200,0.55)' : 'rgba(100,210,255,0.55)');
+        edgeGrad.addColorStop(0.35, isPlayer ? 'rgba(139, 241, 255, 0.72)' : 'rgba(255, 180, 193, 0.72)');
+        edgeGrad.addColorStop(0.65, isPlayer ? 'rgba(139, 241, 255, 0.72)' : 'rgba(255, 180, 193, 0.72)');
         edgeGrad.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.strokeStyle = edgeGrad;
         ctx.lineWidth = 2.0 * s;
@@ -5759,11 +6762,11 @@
         ctx.translate(extX * 0.85, extY * 0.95);
         traceFlaredHandlePath(ctx, rx, ry, s, handleDir);
         const hGrad = ctx.createLinearGradient(-7 * s, 0, 7 * s, 0);
-        hGrad.addColorStop(0, '#5c2d16');
-        hGrad.addColorStop(0.22, '#9a5b32');
-        hGrad.addColorStop(0.50, '#d4945a');
-        hGrad.addColorStop(0.78, '#9a5b32');
-        hGrad.addColorStop(1, '#431e0d');
+        hGrad.addColorStop(0, '#0a1019');
+        hGrad.addColorStop(0.22, '#26364a');
+        hGrad.addColorStop(0.50, '#54677d');
+        hGrad.addColorStop(0.78, '#26364a');
+        hGrad.addColorStop(1, '#060b12');
         ctx.fillStyle = hGrad;
         ctx.fill();
         ctx.restore();
@@ -5785,13 +6788,13 @@
 
           ctx.save();
           ctx.globalAlpha = 0.62 * bAlpha;
-          ctx.strokeStyle = '#38bdf8';
+          ctx.strokeStyle = '#f3c266';
           ctx.lineWidth = 1.6 * _pC.scale;
           ctx.beginPath();
           ctx.ellipse(_pC.x, _pC.y, rx, ry, 0, 0, Math.PI * 2);
           ctx.stroke();
 
-          ctx.fillStyle = 'rgba(56, 189, 248, 0.22)';
+          ctx.fillStyle = 'rgba(243, 194, 102, 0.20)';
           ctx.beginPath();
           ctx.ellipse(_pC.x, _pC.y, rx * 0.42, ry * 0.42, 0, 0, Math.PI * 2);
           ctx.fill();
@@ -5817,7 +6820,7 @@
               ctx.strokeStyle = `rgba(251, 146, 60, ${ratio * 0.84})`;
               ctx.lineWidth = ratio * 10.5 * speedWidthMult * _pB.scale;
             } else if (Math.abs(currNode.spin) >= 0.85) {
-              const spinColor = currNode.spin > 0 ? '34, 211, 238' : '232, 121, 249';
+              const spinColor = currNode.spin > 0 ? '57, 214, 233' : '251, 113, 133';
               ctx.strokeStyle = `rgba(${spinColor}, ${ratio * 0.78})`;
               ctx.lineWidth = ratio * 8.5 * speedWidthMult * _pB.scale;
             } else {
@@ -5845,8 +6848,8 @@
         if (shadowPlaneZ === 0 && gameState === 'PLAYING') {
           ctx.save();
           ctx.strokeStyle = ball.lastHitter === 'ai'
-            ? `rgba(56, 189, 248, ${0.52 * bAlpha})`
-            : `rgba(251, 113, 133, ${0.42 * bAlpha})`;
+            ? `rgba(251, 113, 133, ${0.52 * bAlpha})`
+            : `rgba(57, 214, 233, ${0.42 * bAlpha})`;
           ctx.lineWidth = 1.3 * _pA.scale;
           ctx.beginPath();
           ctx.ellipse(_pA.x, _pA.y, shRx, shRy, 0, 0, Math.PI * 2);
@@ -5906,7 +6909,7 @@
         if (gameState === 'PLAYING' && ball.lastHitter === 'ai' && ball.z > 28 && ball.bouncesOnTargetSide >= 1) {
           const pulse = 0.5 + Math.abs(Math.sin(performance.now() * 0.012)) * 0.5;
           ctx.save();
-          ctx.strokeStyle = `rgba(251, 146, 60, ${pulse * 0.65})`;
+          ctx.strokeStyle = `rgba(57, 214, 233, ${pulse * 0.65})`;
           ctx.lineWidth = 1.8 * _pB.scale;
           ctx.beginPath();
           ctx.arc(0, 0, visualRadius * (1.55 + pulse * 0.3), 0, Math.PI * 2);
@@ -6539,7 +7542,7 @@
                   if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Your Serve';
                   if (elAiStatusLabel) elAiStatusLabel.textContent = 'Receiving';
                   maybeShowOnboarding();
-                  showBanner('YOUR SERVE — SWIPE UP TO LAUNCH', 'rgba(56, 189, 248, 0.45)', '#38bdf8');
+                  showBanner('YOUR SERVE', 'rgba(57, 214, 233, 0.45)', '#39d6e9');
                 } else {
                   if (elPlayerSpinLabel) elPlayerSpinLabel.textContent = 'Receiving';
                   if (elAiStatusLabel) elAiStatusLabel.textContent = 'Service';
@@ -7020,6 +8023,59 @@
         if (elModalHowToPlay) elModalHowToPlay.classList.remove('is-open');
       }
 
+      function renderThemeUI() {
+        const themeButtons = {
+          system: document.getElementById('theme-system'),
+          light: document.getElementById('theme-light'),
+          dark: document.getElementById('theme-dark')
+        };
+        Object.keys(themeButtons).forEach(key => {
+          const button = themeButtons[key];
+          if (!button) return;
+          const active = themePreference === key;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        const themeToggle = document.getElementById('menu-btn-theme');
+        if (themeToggle) {
+          const nextTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+          themeToggle.setAttribute('aria-label', `Switch to ${nextTheme} theme`);
+          themeToggle.title = `Switch to ${nextTheme} theme`;
+        }
+      }
+
+      function applyResolvedTheme(theme, persist = false) {
+        resolvedTheme = theme === 'light' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = resolvedTheme;
+        document.documentElement.style.colorScheme = resolvedTheme;
+        const themeMeta = document.querySelector('meta[name="theme-color"]');
+        if (themeMeta) themeMeta.setAttribute('content', resolvedTheme === 'dark' ? '#080d16' : '#eaf1fa');
+        if (persist) {
+          try { localStorage.setItem('wtt-theme', themePreference); } catch (_) {}
+        }
+        renderThemeUI();
+        // The studio floor, table apron and rim are cached per theme.
+        if (typeof rebuildStaticSceneCache === 'function') rebuildStaticSceneCache();
+      }
+
+      function setThemePreference(preference) {
+        themePreference = preference === 'light' || preference === 'dark' ? preference : 'system';
+        const next = themePreference === 'system'
+          ? (systemThemeQuery && systemThemeQuery.matches ? 'dark' : 'light')
+          : themePreference;
+        applyResolvedTheme(next, true);
+      }
+
+      if (systemThemeQuery) {
+        const onSystemThemeChange = () => {
+          if (themePreference === 'system') {
+            applyResolvedTheme(systemThemeQuery.matches ? 'dark' : 'light', false);
+          }
+        };
+        if (systemThemeQuery.addEventListener) systemThemeQuery.addEventListener('change', onSystemThemeChange);
+        else if (systemThemeQuery.addListener) systemThemeQuery.addListener(onSystemThemeChange);
+      }
+
       function syncSettingsUI() {
         if (elSettingToggleSound) {
           elSettingToggleSound.textContent = audioMuted ? 'OFF' : 'ON';
@@ -7050,6 +8106,13 @@
           elSettingTogglePractice.setAttribute('aria-disabled', String(isOnline));
           elSettingTogglePractice.title = isOnline ? 'Unavailable during online matches' : '';
         }
+        const settingsOnlineStatus = document.getElementById('settings-online-status');
+        if (settingsOnlineStatus) {
+          if (isOnline) settingsOnlineStatus.textContent = netPingMs > 0 ? `Online · ${netPingMs} ms` : 'Online';
+          else if (netPeer || netConn) settingsOnlineStatus.textContent = 'Lobby open';
+          else settingsOnlineStatus.textContent = 'Offline';
+        }
+        renderThemeUI();
       }
 
       function focusModal(modal) {
@@ -7060,7 +8123,7 @@
         setTimeout(() => {
           if (!modal.isConnected || !modal.classList.contains('is-open')) return;
           void modal.offsetWidth;
-          const card = modal.querySelector('.modal-card');
+          const card = modal.querySelector('.modal-card, .start-sheet');
           if (card) {
             card.setAttribute('tabindex', '-1');
             card.focus({ preventScroll: true });
@@ -7318,6 +8381,66 @@
         });
       }
 
+      const elMenuBtnTheme = document.getElementById('menu-btn-theme');
+      if (elMenuBtnTheme) {
+        elMenuBtnTheme.addEventListener('click', e => {
+          e.stopPropagation();
+          setThemePreference(resolvedTheme === 'dark' ? 'light' : 'dark');
+        });
+      }
+
+      ['system', 'light', 'dark'].forEach(preference => {
+        const button = document.getElementById('theme-' + preference);
+        if (!button) return;
+        button.addEventListener('click', e => {
+          e.stopPropagation();
+          setThemePreference(preference);
+        });
+      });
+
+      const elSettingsOpenOnline = document.getElementById('settings-open-online');
+      if (elSettingsOpenOnline) {
+        elSettingsOpenOnline.addEventListener('click', e => {
+          e.stopPropagation();
+          closeSettings();
+          openOnlineModal('host');
+        });
+      }
+
+      const elSettingsOpenHowTo = document.getElementById('settings-open-howto');
+      if (elSettingsOpenHowTo) {
+        elSettingsOpenHowTo.addEventListener('click', e => {
+          e.stopPropagation();
+          closeSettings();
+          openHowToPlay();
+        });
+      }
+
+      const elBtnResetPreferences = document.getElementById('btn-reset-preferences');
+      if (elBtnResetPreferences) {
+        elBtnResetPreferences.addEventListener('click', e => {
+          e.stopPropagation();
+          audioMuted = false;
+          hapticsEnabled = true;
+          speedUnitKmh = true;
+          reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          practiceMode = false;
+          difficultyKey = 'rookie';
+          aiConfig = DIFFICULTIES[difficultyKey];
+          themePreference = 'system';
+          ['wtt-arena-muted', 'wtt-arena-haptics', 'wtt-arena-speed-kmh',
+            'wtt-arena-reduced-motion', 'wtt-arena-difficulty', 'wtt-practice', 'wtt-theme'
+          ].forEach(key => { try { localStorage.removeItem(key); } catch (_) {} });
+          syncDifficultySelection('rookie', false);
+          setThemePreference('system');
+          renderAudioState();
+          renderHapticsState();
+          renderMotionState();
+          syncSettingsUI();
+          showBanner('PREFERENCES RESET', 'rgba(57, 214, 233, 0.45)', '#39d6e9');
+        });
+      }
+
       if (elBtnMatchMenu) {
         elBtnMatchMenu.addEventListener('click', e => {
           e.stopPropagation();
@@ -7404,6 +8527,7 @@
       });
 
       window.onload = function () {
+        applyResolvedTheme(resolvedTheme);
         resizeCanvas();
         renderAudioState();
         renderHapticsState();
@@ -7495,7 +8619,7 @@
         if (!focusables.length) return;
         const first = focusables[0];
         const last = focusables[focusables.length - 1];
-        const card = modal.querySelector('.modal-card');
+        const card = modal.querySelector('.modal-card, .start-sheet');
         const active = document.activeElement;
         if (!modal.contains(active)) {
           e.preventDefault();
