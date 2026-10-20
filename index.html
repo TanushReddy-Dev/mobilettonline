@@ -3927,10 +3927,12 @@
 
       const CAM = {
         cx: VW * 0.5,
-        nearY: 548,
-        farY: 136,
-        farScale: 0.68,
-        nearScale: 1.04,
+        // A slightly pulled-back lens keeps the near return zone visible
+        // without changing the fixed top-down camera or the table geometry.
+        nearY: 520,
+        farY: 120,
+        farScale: 0.66,
+        nearScale: 1.00,
         heightFactor: 0.88
       };
 
@@ -5962,7 +5964,9 @@
       function clampPlayerPosition(x, y) {
         return {
           x: Math.max(22, Math.min(VW - 22, x)),
-          y: Math.max(TABLE.netY + 34, Math.min(TABLE.bottom + 56, y))
+          // Extra room behind the baseline lets the player step back for a
+          // deep rebound before the point is lost.
+          y: Math.max(TABLE.netY + 34, Math.min(TABLE.bottom + 96, y))
         };
       }
 
@@ -6693,27 +6697,27 @@
 
         if (isPlayer) {
           if (isForehand) {
-            rubberGrad.addColorStop(0, '#a5f3fc');
-            rubberGrad.addColorStop(0.28, '#39d6e9');
-            rubberGrad.addColorStop(0.75, '#0891a7');
-            rubberGrad.addColorStop(1, '#064653');
+            rubberGrad.addColorStop(0, '#fb7185');
+            rubberGrad.addColorStop(0.28, '#e11d48');
+            rubberGrad.addColorStop(0.75, '#9f1239');
+            rubberGrad.addColorStop(1, '#4c0519');
           } else {
-            rubberGrad.addColorStop(0, '#67e8f9');
-            rubberGrad.addColorStop(0.30, '#0e7490');
-            rubberGrad.addColorStop(0.78, '#083b49');
-            rubberGrad.addColorStop(1, '#03181f');
+            rubberGrad.addColorStop(0, '#94a3b8');
+            rubberGrad.addColorStop(0.30, '#1e293b');
+            rubberGrad.addColorStop(0.78, '#0f172a');
+            rubberGrad.addColorStop(1, '#020408');
           }
         } else {
           if (isForehand) {
-            rubberGrad.addColorStop(0, '#fecdd3');
-            rubberGrad.addColorStop(0.30, '#fb7185');
-            rubberGrad.addColorStop(0.75, '#be123c');
-            rubberGrad.addColorStop(1, '#580c22');
+            rubberGrad.addColorStop(0, '#f43f5e');
+            rubberGrad.addColorStop(0.35, '#be123c');
+            rubberGrad.addColorStop(0.85, '#881337');
+            rubberGrad.addColorStop(1, '#4c0519');
           } else {
-            rubberGrad.addColorStop(0, '#fda4af');
-            rubberGrad.addColorStop(0.34, '#9f1239');
-            rubberGrad.addColorStop(0.82, '#4c0519');
-            rubberGrad.addColorStop(1, '#26030c');
+            rubberGrad.addColorStop(0, '#334155');
+            rubberGrad.addColorStop(0.38, '#1e293b');
+            rubberGrad.addColorStop(0.82, '#090d16');
+            rubberGrad.addColorStop(1, '#020408');
           }
         }
 
@@ -6739,16 +6743,16 @@
         ctx.restore();
 
         traceBladeHeadPath(ctx, rx, ry, handleDir);
-        ctx.strokeStyle = isPlayer ? 'rgba(57, 214, 233, 0.62)' : 'rgba(251, 113, 133, 0.60)';
+        ctx.strokeStyle = 'rgba(248, 250, 252, 0.42)';
         ctx.lineWidth = 1.5 * s;
         ctx.stroke();
 
-        // #36 Edge lighting — thin bright line on the leading edge (simulates arena LED strip)
+        // #36 Edge lighting - a neutral studio highlight keeps the rubber readable.
         ctx.save();
         const edgeGrad = ctx.createLinearGradient(-rx, -ry * handleDir, rx, -ry * handleDir);
         edgeGrad.addColorStop(0, 'rgba(255,255,255,0)');
-        edgeGrad.addColorStop(0.35, isPlayer ? 'rgba(139, 241, 255, 0.72)' : 'rgba(255, 180, 193, 0.72)');
-        edgeGrad.addColorStop(0.65, isPlayer ? 'rgba(139, 241, 255, 0.72)' : 'rgba(255, 180, 193, 0.72)');
+        edgeGrad.addColorStop(0.35, 'rgba(255, 225, 205, 0.58)');
+        edgeGrad.addColorStop(0.65, 'rgba(255, 225, 205, 0.58)');
         edgeGrad.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.strokeStyle = edgeGrad;
         ctx.lineWidth = 2.0 * s;
@@ -6762,11 +6766,11 @@
         ctx.translate(extX * 0.85, extY * 0.95);
         traceFlaredHandlePath(ctx, rx, ry, s, handleDir);
         const hGrad = ctx.createLinearGradient(-7 * s, 0, 7 * s, 0);
-        hGrad.addColorStop(0, '#0a1019');
-        hGrad.addColorStop(0.22, '#26364a');
-        hGrad.addColorStop(0.50, '#54677d');
-        hGrad.addColorStop(0.78, '#26364a');
-        hGrad.addColorStop(1, '#060b12');
+        hGrad.addColorStop(0, '#5c2d16');
+        hGrad.addColorStop(0.22, '#9a5b32');
+        hGrad.addColorStop(0.50, '#d4945a');
+        hGrad.addColorStop(0.78, '#9a5b32');
+        hGrad.addColorStop(1, '#431e0d');
         ctx.fillStyle = hGrad;
         ctx.fill();
         ctx.restore();
@@ -8673,7 +8677,7 @@
           case 'ArrowLeft':  player.targetX = Math.max(TABLE.x + 12, player.targetX - step); break;
           case 'ArrowRight': player.targetX = Math.min(TABLE.right - 12, player.targetX + step); break;
           case 'ArrowUp':    player.targetY = Math.max(TABLE.netY + 34, player.targetY - step); break;
-          case 'ArrowDown':  player.targetY = Math.min(TABLE.bottom + 56, player.targetY + step); break;
+          case 'ArrowDown':  player.targetY = Math.min(TABLE.bottom + 96, player.targetY + step); break;
           case ' ':
             if (playerMayServe()) {
               hasSwipedToServe = true;

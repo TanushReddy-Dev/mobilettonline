@@ -174,9 +174,9 @@ States: default, hover (pointer devices only), focus-visible ring, pressed scale
 
 ### Court and equipment
 
-- **Camera:** top-down, unchanged. No perspective tilt, no camera movement.
+- **Camera:** fixed top-down; no perspective tilt and no camera movement. A slightly pulled-back static lens keeps the near return zone visible behind the baseline.
 - **Table:** ITTF-style blue top, white boundary and center lines, graphite net with a white tape edge, slim dark legs/apron. Small `POCKET / STUDIO 01` apron text replaces WTT branding.
-- **Paddles:** top-down silhouettes. Player rubber cyan with a lighter edge; opponent rubber rose. Charcoal blade edge and dark handle. Subtle rubber grain, not photorealistic.
+- **Paddles:** top-down silhouettes with classic red forehand and black backhand rubber, a warm wood handle, and a charcoal blade edge. Player and opponent remain identified by the HUD's cyan/rose accents. Subtle rubber grain, not photorealistic.
 - **Ball:** warm white, small specular highlight, soft contact shadow, thin white trail. Impact ring uses the hitter's accent color.
 - **Studio:** same set in both themes. Dark is a deep arena with controlled light pools and faint vertical banners; light is a bright neutral hall with soft floor shadows. No crowd faces, no busy scenery, no extra text.
 - **Court floor:** subtle seams and a soft circular light pool. Keep the ball and paddles the highest-contrast objects.
