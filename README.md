@@ -85,7 +85,8 @@ $env:RUN_ONLINE_TESTS="1"; npm test
 | `src/tailwind.css` | Tailwind source used to generate the inline utility bundle. |
 | `scripts/inject-tailwind.mjs` | Injects generated CSS into `index.html`. |
 | `tests/` | Playwright smoke, modal-structure, preference and server tests. |
-| `icon.svg`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`, `favicon.ico`, `og-image.png` | Brand mark, installable web-app icons, and the social share card. |
+| `assets/brand/pocket-table-tennis-logo.png` | Canonical transparent brand mark source. |
+| `icon.svg`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`, `favicon.ico`, `og-image.png` | Generated brand mark, installable web-app icons, and the social share card. |
 | `manifest.webmanifest` | PWA name, colours, orientation, and installed-app icon set. |
 | `AUDIT.md` | Prioritized defect/improvement audit, including remaining online and accessibility risks. |
 

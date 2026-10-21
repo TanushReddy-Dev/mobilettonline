@@ -22,6 +22,9 @@ test('loads the menu with valid, non-nested modals', async ({ page }) => {
 
   await expect(page).toHaveTitle(/Pocket Table Tennis/);
   await expect(page.locator('#start-modal')).toHaveClass(/is-open/);
+  const brandLogo = page.locator('#start-modal .brand-tile img');
+  await expect(brandLogo).toBeVisible();
+  await expect.poll(() => brandLogo.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
   await expect(page.locator('#modal-settings')).not.toHaveClass(/is-open/);
   await expect(page.locator('#pause-remote-request')).toHaveClass(/hidden/);
   await expect(page.locator('#match-remote-request')).toHaveClass(/hidden/);

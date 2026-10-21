@@ -9,6 +9,7 @@ test('serves the app and rejects traversal/non-public files', async ({ request }
     '/index.html',
     '/icon.svg',
     '/manifest.webmanifest',
+    '/assets/brand/pocket-table-tennis-logo.png',
     '/assets/fonts/manrope-latin-var.woff2',
     '/assets/fonts/outfit-latin-var.woff2'
   ]) {

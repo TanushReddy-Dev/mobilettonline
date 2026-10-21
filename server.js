@@ -29,6 +29,7 @@ const PUBLIC_FILES = new Set([
   'favicon-32.png',
   'og-image.png',
   'manifest.webmanifest',
+  'assets/brand/pocket-table-tennis-logo.png',
   'assets/fonts/manrope-latin-var.woff2',
   'assets/fonts/outfit-latin-var.woff2'
 ]);

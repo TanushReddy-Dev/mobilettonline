@@ -28,12 +28,12 @@ This is a **visual overhaul**:
 
 - **Name:** Pocket Table Tennis
 - **Tagline:** Fast hands. Small table.
-- **Mark:** Refined paddle-and-ball monogram inside a soft-cornered court tile. The paddle handle forms the stem of a geometric **P**; the ball becomes the counter. Must read at 24 px and work in one color.
+- **Mark:** Supplied full-color “pocket court” app icon: glossy blue rounded tile, green table, coral paddle, white ball and orbit. It is the canonical mark for the start screen, Settings, favicons, installed app icons, and share card. Do not recolor or flatten it in the UI.
 - **Wordmark:** Title case, geometric, confident. `Pocket` can carry more weight than `Table Tennis`.
 - **Remove:** WTT references from the start screen, HUD, court apron, metadata, and share copy.
 - **Tone:** Inviting competition. Short, human labels. No hype copy.
 
-The current `icon-192.png` is the reference asset, not the final mark. The replacement will be a vector asset under `assets/brand/`.
+The canonical source is `assets/brand/pocket-table-tennis-logo.png` (1024 px, transparent). App icons, favicons, and the social card are generated from it.
 
 ## 3. Design Tokens
 
