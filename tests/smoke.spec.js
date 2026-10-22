@@ -118,6 +118,7 @@ test('starts a solo match and shows the in-game HUD', async ({ page }) => {
   await expect(page.locator('#top-hud')).not.toHaveClass(/is-menu/);
   await expect(page.locator('#table-canvas')).toBeVisible();
   await expect(page.locator('#btn-hud-pause')).toBeVisible();
+  await expect(page.locator('#serve-action')).toBeVisible();
   await expect(page.locator('#player-score')).toHaveText('0');
 });
 

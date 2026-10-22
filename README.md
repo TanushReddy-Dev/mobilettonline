@@ -2,9 +2,17 @@
 
 > ### 🎮 **Play Live Now**: [https://TanushReddy-Dev.github.io/mobilettonline/](https://TanushReddy-Dev.github.io/mobilettonline/)
 
-A fast, mobile-first 3D table tennis game. Play solo against the AI or challenge a friend to a private peer-to-peer match over WebRTC. No account and no game server: the entire game is a static site.
+A fast, mobile-first 3D table tennis game. Play solo against the AI or challenge a friend to a private peer-to-peer match over WebRTC. No account and no game server: the entire game is a static site (`index.html` plus the small `progression.js` module).
 
 > **Disclaimer:** This is an independent fan project. It is not affiliated with, endorsed by, or sponsored by any professional tour or federation.
+
+## 🎮 Local Progression and Controls
+
+- **Win record** — the start screen tracks your current win streak, best streak, and total wins. The record is stored per device in `localStorage`; practice rallies and disconnected matches never count.
+- **Paddle skins** — five player paddles unlock by wins: **Classic** (default), **Ink** (2 wins), **Sage** (4), **Rust** (7), and **Gold** (12). Skins are cosmetic only and there are no ads, purchases, or premium unlocks. The opponent always keeps the classic blade.
+- **Drag style** — choose **Direct** (the original 1:1 finger mapping) or **Relative** (an invisible trackpad in the lower 30% of the court that mirrors thumb deltas) in **Settings → Gameplay**. Keyboard and online play work identically in both modes.
+- **Deliberate serve** — the game waits while it is your serve. Swipe up on the court to choose a fast or spin serve, or use the on-screen **Serve** button for a safe short serve. Taps that only reposition the paddle never launch the ball, and a swipe carried over from the previous point cannot auto-serve.
+- **Progress module** — skin definitions, unlock thresholds, sanitizing, and persistence live in `progression.js` (`window.PocketProgression`). Corrupt or unavailable storage falls back to Classic and a clean record instead of breaking the game.
 
 ## 🌐 Online Multiplayer
 
@@ -13,7 +21,7 @@ A fast, mobile-first 3D table tennis game. Play solo against the AI or challenge
 - **Reliable transport** — all online messages use a single reliable, ordered DataChannel; snapshots and paddle updates are throttled to 60 Hz so critical events are not silently dropped.
 - **Symmetrical 3D perspective** — both players play from behind their own paddle at the bottom baseline.
 - **Physics** — spin, topspin, backspin, sidespin/Magnus, net cords, smashes and drop shots.
-- **Zero server setup** — the game is a single static `index.html`.
+- **Zero server setup** — the game is a static site served from any host or GitHub Pages.
 
 ### Network requirements
 
@@ -53,9 +61,9 @@ The local server only serves the app's public files and rejects path traversal a
 
 ```bash
 npm run build:css      # regenerate the inline Tailwind bundle from src/tailwind.css
-npm run validate       # validate index.html and the inline JavaScript
+npm run validate       # validate index.html, progression.js syntax, and the inline JavaScript
 npx playwright install chromium   # first run only
-npm test               # Playwright smoke tests + server security tests
+npm test               # Playwright UI, progression, controls, serve-state and server security tests
 ```
 
 Tailwind classes are scanned from `index.html`. After adding or removing utility classes, rerun `npm run build:css`; the generated CSS is injected into the `<style id="tailwind-bundle">` block so the game stays a single portable file.
@@ -81,10 +89,11 @@ $env:RUN_ONLINE_TESTS="1"; npm test
 | Path | Purpose |
 | --- | --- |
 | `index.html` | The complete game: markup, design system CSS, and game/network logic. |
+| `progression.js` | Dependency-free local progression module: win record, skin definitions, sanitizing, and `localStorage` persistence. |
 | `server.js` | Dependency-free local development server. |
 | `src/tailwind.css` | Tailwind source used to generate the inline utility bundle. |
 | `scripts/inject-tailwind.mjs` | Injects generated CSS into `index.html`. |
-| `tests/` | Playwright smoke, modal-structure, preference and server tests. |
+| `tests/` | Playwright smoke, progression, drag-control, serve-state and server security tests. |
 | `assets/brand/pocket-table-tennis-logo.png` | Canonical transparent brand mark source. |
 | `icon.svg`, `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, `apple-touch-icon.png`, `favicon.ico`, `og-image.png` | Generated brand mark, installable web-app icons, and the social share card. |
 | `manifest.webmanifest` | PWA name, colours, orientation, and installed-app icon set. |

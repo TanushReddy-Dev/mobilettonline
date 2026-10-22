@@ -19,6 +19,7 @@ const START_PORT = Number(process.env.PORT) || 3000;
 // prevents accidentally exposing .git, node_modules, source files, etc.
 const PUBLIC_FILES = new Set([
   'index.html',
+  'progression.js',
   'icon.svg',
   'icon-192.png',
   'icon-512.png',

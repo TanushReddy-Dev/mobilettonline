@@ -2637,6 +2637,102 @@
       white-space: nowrap;
     }
     .match-pill .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--online); }
+    .start-meta { display: flex; flex-direction: column; gap: 8px; margin: -3px 0 11px; }
+    .record-strip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 0 2px;
+      color: var(--muted);
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.015em;
+      white-space: nowrap;
+    }
+    .record-stat { display: inline-flex; align-items: baseline; gap: 4px; min-width: 0; }
+    .record-stat strong {
+      font-family: var(--font-display);
+      font-size: 14px; font-weight: 700; line-height: 1;
+      color: var(--text-strong);
+      font-variant-numeric: tabular-nums;
+    }
+    .record-streak { color: var(--text); }
+    .record-streak strong { color: var(--serve); }
+    .record-streak svg { width: 12px; height: 12px; color: var(--serve); align-self: center; flex: 0 0 auto; }
+    .record-divider { width: 1px; height: 11px; background: var(--hairline-strong); }
+    .paddle-locker {
+      display: flex; align-items: center; justify-content: space-between; gap: 7px;
+      min-height: 58px;
+      padding: 7px 7px 7px 11px;
+      border-radius: 15px;
+      background: var(--surface-soft);
+      border: 1px solid var(--hairline);
+    }
+    .paddle-locker-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
+    .paddle-locker-label {
+      font-size: 7px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--quiet);
+    }
+    #paddle-skin-name {
+      font-family: var(--font-display);
+      font-size: 12px; font-weight: 700; line-height: 1.1;
+      color: var(--text-strong);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .paddle-skin-hint {
+      font-size: 8px; line-height: 1.25; color: var(--muted);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      max-width: 100%;
+    }
+    .paddle-skin-hint.is-alert { color: var(--serve); }
+    .paddle-skin-list { display: flex; align-items: center; gap: 1px; flex: 0 0 auto; }
+    .skin-option {
+      position: relative;
+      display: grid; place-items: center;
+      width: 44px; height: 44px;
+      padding: 0;
+      border: 0; border-radius: 12px;
+      background: transparent;
+      cursor: pointer;
+      transition: background-color 160ms ease, transform 120ms var(--wtt-ease-out);
+    }
+    .skin-option:hover { background: var(--surface-raised); }
+    .skin-option:active { transform: scale(0.96); }
+    .skin-option.is-selected {
+      background: var(--player-wash);
+      box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--player) 34%, transparent);
+    }
+    .skin-option.is-locked { cursor: not-allowed; }
+    .skin-option.is-locked .skin-swatch { opacity: 0.46; filter: saturate(0.45); }
+    .skin-swatch {
+      position: relative;
+      display: block;
+      width: 24px; height: 30px;
+      transform: rotate(-16deg);
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.28));
+    }
+    .skin-blade {
+      position: absolute; left: 0; top: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--skin-fh, #e11d48) 0 49%, var(--skin-bh, #1e293b) 50% 100%);
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.24);
+    }
+    .skin-handle {
+      position: absolute; left: 9px; bottom: 0;
+      width: 6px; height: 9px;
+      border-radius: 0 0 3px 3px;
+      background: linear-gradient(90deg, var(--skin-wood-dark, #5c2d16), var(--skin-wood, #d4945a), var(--skin-wood-dark, #5c2d16));
+    }
+    .skin-lock {
+      position: absolute; right: 1px; bottom: 1px;
+      display: none; place-items: center;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid var(--hairline-strong);
+      color: var(--muted);
+    }
+    .skin-lock svg { width: 9px; height: 9px; stroke-width: 2; }
+    .skin-option.is-locked .skin-lock { display: grid; }
     .solo-card {
       padding: 13px;
       border-radius: 20px;
@@ -2974,6 +3070,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    /* The explicit Serve button takes over the bottom slot while the player
+       is serving, so the two prompts never stack on a short phone. */
+    #point-banner.is-serve-control { opacity: 0; }
     .hud-banner {
       background: color-mix(in srgb, var(--surface) 92%, transparent) !important;
       border: 1px solid var(--hairline) !important;
@@ -2984,6 +3083,50 @@
       -webkit-backdrop-filter: blur(16px);
     }
     #point-banner-text { color: var(--text-strong) !important; font-family: var(--font-ui); font-size: 9px !important; font-weight: 800 !important; letter-spacing: 0.13em !important; }
+
+    /* Explicit serve control. It waits for a deliberate tap; a fresh upward
+       swipe on the court remains the gesture for spin / fast serves. */
+    .serve-action {
+      position: absolute;
+      left: 50%;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 18px);
+      transform: translateX(-50%);
+      z-index: 15;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 48px;
+      padding: 6px 16px 6px 13px;
+      border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--player) 30%, var(--hairline));
+      background: color-mix(in srgb, var(--surface) 92%, transparent);
+      color: var(--text-strong);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      cursor: pointer;
+      transition: transform 120ms var(--wtt-ease-out), background-color 160ms ease, opacity 160ms ease;
+    }
+    .serve-action.hidden { display: none; }
+    .serve-action:hover { background: var(--surface-raised); }
+    .serve-action:active { transform: translateX(-50%) scale(0.97); }
+    .serve-action svg {
+      width: 18px; height: 18px; flex: 0 0 auto;
+      color: var(--player);
+      animation: serve-ready-arrow 1.4s ease-in-out infinite;
+    }
+    .serve-action.is-motion-reduced svg { animation: none; }
+    .serve-action-copy { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; }
+    .serve-action-title { font-size: 10px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.1; }
+    .serve-action-sub { font-size: 7px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); line-height: 1.1; }
+    @keyframes serve-ready-arrow {
+      0%, 100% { transform: translateY(2px); opacity: 0.65; }
+      50% { transform: translateY(-3px); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .serve-action { transition: none; }
+      .serve-action svg { animation: none; }
+    }
 
     /* ── Settings sheet ──────────────────────────────────────────────── */
     #modal-settings .modal-backdrop { background: var(--backdrop); }
@@ -3113,6 +3256,25 @@
       cursor: pointer;
     }
     .theme-btn.active { background: var(--text-strong); color: var(--surface) !important; }
+    .control-seg {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px; padding: 4px;
+      border-radius: 12px;
+      background: var(--surface-sunken);
+      border: 1px solid var(--hairline);
+    }
+    .control-btn {
+      min-height: 44px; padding: 0 6px;
+      border-radius: 9px; border: 1px solid transparent;
+      background: transparent; color: var(--muted);
+      font-family: var(--font-ui);
+      font-size: 9px; font-weight: 800; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 160ms ease, color 160ms ease, transform 120ms var(--wtt-ease-out);
+    }
+    .control-btn.active { background: var(--text-strong); color: var(--surface) !important; }
+    .settings-control { margin: 0; }
     .settings-identity {
       display: flex; align-items: center; gap: 10px;
       padding: 12px 14px;
@@ -3141,6 +3303,36 @@
     }
     .stat-label { color: var(--muted); font-size: 8px; }
     .stat-value { color: var(--text-strong); font-family: var(--font-display); }
+    .match-progress {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 11px;
+      border-radius: 13px;
+      background: var(--surface-soft);
+      border: 1px solid var(--hairline);
+    }
+    .match-progress.is-unlock {
+      background: var(--serve-wash);
+      border-color: color-mix(in srgb, var(--serve) 30%, transparent);
+    }
+    .match-progress-icon {
+      display: grid; place-items: center;
+      width: 28px; height: 28px; flex: 0 0 28px;
+      border-radius: 9px;
+      background: var(--surface);
+      border: 1px solid var(--hairline);
+      color: var(--serve);
+    }
+    .match-progress-icon svg { width: 14px; height: 14px; stroke-width: 1.8; }
+    .match-progress-copy { display: block; min-width: 0; }
+    .match-progress-title {
+      display: block;
+      font-size: 9px; font-weight: 800; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--text-strong);
+    }
+    .match-progress-detail {
+      display: block; margin-top: 1px;
+      font-size: 9px; line-height: 1.35; color: var(--muted);
+    }
     .guide-icon { background: var(--surface-soft); border-color: var(--hairline); }
     .guide-title { color: var(--text-strong); }
     .guide-desc { color: var(--muted); }
@@ -3193,6 +3385,9 @@
       .start-actions { gap: 5px; }
       #menu-btn-sound, #menu-btn-fullscreen, #menu-btn-theme { width: 44px; height: 44px; min-width: 44px; min-height: 44px; border-radius: 12px; }
       .start-sheet { max-height: 64dvh; padding-left: 13px; padding-right: 13px; }
+      /* Reclaim a few pixels for the locker hint while keeping all five
+         44x44 swatches and no horizontal overflow. */
+      .paddle-locker { gap: 5px; padding-right: 4px; }
       #start-modal-title { font-size: 27px; }
       .sheet-tagline { font-size: 10px; }
       .solo-card { padding: 11px; border-radius: 17px; }
@@ -3325,6 +3520,16 @@
       <div id="point-banner" role="status" aria-live="polite" class="hud-banner absolute left-1/2 top-2.5 z-10 px-4 py-1 rounded-md shadow-xl flex items-center gap-2 whitespace-nowrap pointer-events-none">
         <span id="point-banner-text" class="font-arcade font-bold text-xs tracking-widest uppercase text-slate-100">POINT PLAYER</span>
       </div>
+
+      <!-- Explicit serve control. Shown only while the player may serve, so a
+           tap to reposition the paddle never launches the ball by accident. -->
+      <button type="button" id="serve-action" class="serve-action hud-interactive hidden" aria-label="Serve the ball. Swipe up on the court for a fast or spin serve.">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20V4"/><path d="M12 4L5.5 10.5"/><path d="M12 4L18.5 10.5"/></svg>
+        <span class="serve-action-copy">
+          <span class="serve-action-title">Serve</span>
+          <span id="serve-action-hint" class="serve-action-sub">Swipe up or tap</span>
+        </span>
+      </button>
     </main>
 
     <!-- START MATCH / MAIN MENU SCREEN OVERLAY -->
@@ -3364,6 +3569,29 @@
             <p class="sheet-tagline">Fast hands. Small table. Pick up a paddle and step onto the court.</p>
           </div>
           <span class="match-pill"><span class="pill-dot"></span>11 points</span>
+        </div>
+
+        <div class="start-meta">
+          <div class="record-strip" id="record-strip" role="group" aria-label="Your win record">
+            <span class="record-stat record-streak">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C16.9706 21 21 17.5 21 13C21 8.5 17.5 5 15 2C14.5 5.5 12.5 7 10.5 8C8.5 9 7 10.5 7 13C7 15 8 16.5 9 17.5C9.5 18 10 18.5 10 19.5C10 20.5 9 21 9 21"/></svg>
+              <strong id="record-streak">0</strong>
+              <span>win streak</span>
+            </span>
+            <span class="record-divider" aria-hidden="true"></span>
+            <span class="record-stat"><strong id="record-best">0</strong><span>best</span></span>
+            <span class="record-divider" aria-hidden="true"></span>
+            <span class="record-stat"><strong id="record-wins">0</strong><span>wins</span></span>
+          </div>
+
+          <div class="paddle-locker">
+            <div class="paddle-locker-copy">
+              <span class="paddle-locker-label">Paddle</span>
+              <strong id="paddle-skin-name">Classic</strong>
+              <span id="paddle-skin-hint" class="paddle-skin-hint" aria-live="polite">Next: 2 wins</span>
+            </div>
+            <div id="paddle-skin-list" class="paddle-skin-list" role="group" aria-label="Paddle skins"></div>
+          </div>
         </div>
 
         <div class="solo-card">
@@ -3489,6 +3717,17 @@
             </div>
           </div>
 
+          <div id="match-progress" class="match-progress hidden" role="status" aria-live="polite">
+            <span class="match-progress-icon" aria-hidden="true">
+              <svg class="match-progress-streak-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21C16.9706 21 21 17.5 21 13C21 8.5 17.5 5 15 2C14.5 5.5 12.5 7 10.5 8C8.5 9 7 10.5 7 13C7 15 8 16.5 9 17.5C9.5 18 10 18.5 10 19.5C10 20.5 9 21 9 21"/></svg>
+              <svg class="match-progress-unlock-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.5 9.5L22 12L14.5 14.5L12 22L9.5 14.5L2 12L9.5 9.5L12 2Z"/></svg>
+            </span>
+            <span class="match-progress-copy">
+              <strong id="match-progress-title" class="match-progress-title"></strong>
+              <span id="match-progress-detail" class="match-progress-detail"></span>
+            </span>
+          </div>
+
           <p id="match-remote-request" role="status" aria-live="polite" class="hidden" style="font-size:10px;font-weight:800;letter-spacing:0.08em;color:#38bdf8;text-align:center;padding:2px 0">OPPONENT REQUESTS A REMATCH</p>
 
           <!-- Actions -->
@@ -3595,7 +3834,7 @@
             </div>
             <div class="space-y-0.5">
               <h4 class="text-xs font-bold text-sky-400 uppercase tracking-wide">1. Serving</h4>
-              <p class="text-[11px] text-slate-300 leading-snug">When it's your turn to serve, pull paddle down and swipe upward across the ball to launch across the net.</p>
+              <p class="text-[11px] text-slate-300 leading-snug">When it's your turn to serve, the game waits for you. Swipe upward across the ball for a fast serve, swipe across for a pendulum serve, or tap the Serve button for a safe short serve.</p>
             </div>
           </div>
 
@@ -3695,6 +3934,16 @@
                   <div class="row-desc">Keep the rally alive without match point.</div>
                 </div>
                 <button type="button" id="setting-toggle-practice" class="setting-toggle off hud-interactive" aria-label="Practice mode" aria-pressed="false">OFF</button>
+              </div>
+              <div class="settings-row settings-row-stack">
+                <div class="row-copy">
+                  <div class="row-label">Drag style</div>
+                  <div class="row-desc">Direct maps your finger to the paddle. Relative drags from the lower court.</div>
+                </div>
+                <div role="group" aria-label="Drag style" class="control-seg settings-control">
+                  <button type="button" id="setting-control-direct" data-control-mode="direct" aria-pressed="true" class="control-btn hud-interactive active">Direct</button>
+                  <button type="button" id="setting-control-relative" data-control-mode="relative" aria-pressed="false" class="control-btn hud-interactive">Relative</button>
+                </div>
               </div>
               <div class="settings-row">
                 <div class="row-copy">
@@ -3894,7 +4143,7 @@
         <div class="onboard-hand" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8"><path d="M12 21L12 3M12 3L20.5 11.5M12 3L3.5 11.5"/></svg>
         </div>
-        <p class="onboard-label">Swipe Up to Serve</p>
+        <p class="onboard-label">Swipe Up or Tap Serve</p>
       </div>
     </div>
 
@@ -3909,6 +4158,7 @@
     </div>
   </div>
 
+  <script src="progression.js"></script>
   <script>
     (function () {
       const VW = 420;
@@ -4334,9 +4584,12 @@
       const elAiStatusLabel = document.getElementById('ai-status-label');
       const elPointBanner = document.getElementById('point-banner');
       const elPointBannerText = document.getElementById('point-banner-text');
+      const elServeAction = document.getElementById('serve-action');
+      const elServeActionHint = document.getElementById('serve-action-hint');
       const elStreakBadge = document.getElementById('streak-badge');     // #13
       const elSetsStrip = document.getElementById('sets-strip');         // #12
       const elOnboardOverlay = document.getElementById('onboard-overlay'); // #19
+      const elOnboardLabel = elOnboardOverlay ? elOnboardOverlay.querySelector('.onboard-label') : null;
 
       const elTopHud = document.getElementById('top-hud');
       const elBtnHudHome = document.getElementById('btn-hud-home');
@@ -4369,6 +4622,19 @@
       const elSettingToggleSpeedUnit = document.getElementById('setting-toggle-speed-unit');
       const elSettingToggleMotion = document.getElementById('setting-toggle-motion');
       const elSettingTogglePractice = document.getElementById('setting-toggle-practice');
+
+      // Progression / paddle locker surfaces (see progression.js).
+      const elRecordStreak = document.getElementById('record-streak');
+      const elRecordBest = document.getElementById('record-best');
+      const elRecordWins = document.getElementById('record-wins');
+      const elPaddleSkinName = document.getElementById('paddle-skin-name');
+      const elPaddleSkinList = document.getElementById('paddle-skin-list');
+      const elPaddleSkinHint = document.getElementById('paddle-skin-hint');
+      const elMatchProgress = document.getElementById('match-progress');
+      const elMatchProgressTitle = document.getElementById('match-progress-title');
+      const elMatchProgressDetail = document.getElementById('match-progress-detail');
+      const elMatchProgressStreakIcon = document.querySelector('.match-progress-streak-icon');
+      const elMatchProgressUnlockIcon = document.querySelector('.match-progress-unlock-icon');
 
       let isGamePaused = false;
 
@@ -4442,6 +4708,29 @@
       let practiceMode = (() => {
         try { return localStorage.getItem('wtt-practice') === '1'; } catch (_) { return false; }
       })();
+
+      // ── Local progression (win record + unlocked paddle skins) ───────────
+      // progression.js is a classic script loaded immediately before this one;
+      // fail loudly if it is missing so the game never runs without record data.
+      const pocketProgression = window.PocketProgression;
+      if (!pocketProgression) {
+        throw new Error('PocketProgression module failed to load');
+      }
+      const progressStore = pocketProgression.createStore((() => {
+        try { return window.localStorage; } catch (_) { return null; }
+      })());
+      let progressState = progressStore.getState();
+      let matchOutcomeRecorded = false;   // one record per match, even across rematches
+      let matchProgressResult = null;     // last { state, newlyUnlocked, nextSkin }
+
+      // ── Drag style: direct (finger maps 1:1) or relative (lower-court pad) ─
+      const CONTROL_MODE_KEY = 'wtt-control-mode';
+      const RELATIVE_CONTROL_ZONE_TOP = VH * 0.70;
+      function readControlMode() {
+        try { return localStorage.getItem(CONTROL_MODE_KEY) === 'relative' ? 'relative' : 'direct'; }
+        catch (_) { return 'direct'; }
+      }
+      let controlMode = readControlMode();
 
       let themePreference = (() => {
         try {
@@ -5129,6 +5418,8 @@
         } else {
           elSetsStrip.innerHTML = '';
         }
+
+        syncServeAction();
       }
 
       function enterServeState() {
@@ -5165,6 +5456,7 @@
         // A new service turn must accept a keyboard Space serve even if the
         // previous serve was launched without another canvas pointerdown.
         hasSwipedToServe = false;
+        serveGestureArmed = false;
 
         const p = matchStats.playerScore;
         const a = matchStats.aiScore;
@@ -5318,6 +5610,7 @@
             if (setsTracker.player >= setsNeeded || setsTracker.ai >= setsNeeded) {
               matchStats.matchOver = true;
               const playerWon = setsTracker.player > setsTracker.ai;
+              if (!isOnline || isHost) recordMatchOutcome(playerWon);
               sound.playMatchEnd(playerWon);
               sound.playCrowdCheer(1.0);
               gameState = 'POINT_PAUSE';
@@ -5340,6 +5633,7 @@
           }
           matchStats.matchOver = true;
           const playerWon = p > a;
+          if (!isOnline || isHost) recordMatchOutcome(playerWon);
           sound.playMatchEnd(playerWon);
           sound.playCrowdCheer(1.0);
           gameState = 'POINT_PAUSE';
@@ -5415,6 +5709,176 @@
 
         elMatchModal.classList.add('is-open');
         focusModal(elMatchModal);
+        renderMatchProgress(matchOutcomeRecorded ? matchProgressResult : null, playerWon, {
+          disconnected,
+          online
+        });
+      }
+
+      // ── Progress + paddle locker UI ──────────────────────────────────────
+      const skinButtons = new Map();
+      let skinHintTimer = 0;
+
+      function currentPaddleSkin() {
+        return pocketProgression.getSkin(progressState.selectedSkin)
+          || pocketProgression.getSkin(pocketProgression.DEFAULT_SKIN_ID);
+      }
+
+      function renderSkinLockerHint() {
+        if (!elPaddleSkinHint) return;
+        elPaddleSkinHint.classList.remove('is-alert');
+        const next = pocketProgression.getNextSkin(progressState.wins);
+        const compact = Boolean(window.matchMedia && window.matchMedia('(max-width: 360px)').matches);
+        if (next) {
+          elPaddleSkinHint.textContent = compact
+            ? `Next: ${next.unlockWins}`
+            : `Next: ${next.unlockWins} wins`;
+          elPaddleSkinHint.title = `Next paddle unlocks at ${next.unlockWins} wins`;
+        } else {
+          elPaddleSkinHint.textContent = compact ? 'All unlocked' : 'All paddles unlocked';
+          elPaddleSkinHint.title = 'All paddles unlocked';
+        }
+      }
+
+      function setSkinHint(text, alert = false) {
+        if (!elPaddleSkinHint) return;
+        if (skinHintTimer) clearTimeout(skinHintTimer);
+        elPaddleSkinHint.textContent = text;
+        elPaddleSkinHint.title = text;
+        elPaddleSkinHint.classList.toggle('is-alert', alert);
+        skinHintTimer = window.setTimeout(() => {
+          skinHintTimer = 0;
+          renderSkinLockerHint();
+        }, 2600);
+      }
+
+      function buildSkinButtons() {
+        if (!elPaddleSkinList || skinButtons.size > 0) return;
+        pocketProgression.SKINS.forEach(skin => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'skin-option hud-interactive';
+          btn.dataset.skin = skin.id;
+          btn.style.setProperty('--skin-fh', skin.swatch.forehand);
+          btn.style.setProperty('--skin-bh', skin.swatch.backhand);
+          btn.style.setProperty('--skin-wood', skin.swatch.wood);
+          btn.style.setProperty('--skin-wood-dark', skin.swatch.woodDark);
+
+          const swatch = document.createElement('span');
+          swatch.className = 'skin-swatch';
+          swatch.setAttribute('aria-hidden', 'true');
+          const blade = document.createElement('span');
+          blade.className = 'skin-blade';
+          const handle = document.createElement('span');
+          handle.className = 'skin-handle';
+          swatch.append(blade, handle);
+
+          const lock = document.createElement('span');
+          lock.className = 'skin-lock';
+          lock.setAttribute('aria-hidden', 'true');
+          lock.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+
+          btn.append(swatch, lock);
+          btn.addEventListener('click', e => {
+            e.stopPropagation();
+            sound.init();
+            handleSkinChoice(skin.id);
+          });
+          skinButtons.set(skin.id, btn);
+          elPaddleSkinList.append(btn);
+        });
+      }
+
+      function renderSkinLocker() {
+        buildSkinButtons();
+        const selectedId = progressState.selectedSkin;
+        skinButtons.forEach((btn, id) => {
+          const skin = pocketProgression.getSkin(id);
+          const unlocked = pocketProgression.isUnlocked(skin, progressState.wins);
+          const selected = id === selectedId;
+          btn.classList.toggle('is-locked', !unlocked);
+          btn.classList.toggle('is-selected', selected);
+          btn.setAttribute('aria-pressed', String(selected));
+          btn.setAttribute('aria-disabled', String(!unlocked));
+          btn.title = unlocked
+            ? `${skin.name} paddle${selected ? ' (selected)' : ''}`
+            : `${skin.name} unlocks at ${skin.unlockWins} wins`;
+          btn.setAttribute('aria-label', unlocked
+            ? `${skin.name} paddle${selected ? ', selected' : ', unlocked'}`
+            : `${skin.name} paddle, locked. Win ${skin.unlockWins} matches to unlock.`);
+        });
+        if (elPaddleSkinName) elPaddleSkinName.textContent = currentPaddleSkin().name;
+        renderSkinLockerHint();
+      }
+
+      function renderStartProgress() {
+        progressState = progressStore.getState();
+        if (elRecordStreak) elRecordStreak.textContent = progressState.currentStreak;
+        if (elRecordBest) elRecordBest.textContent = progressState.bestStreak;
+        if (elRecordWins) elRecordWins.textContent = progressState.wins;
+        renderSkinLocker();
+      }
+
+      function handleSkinChoice(id) {
+        const skin = pocketProgression.getSkin(id);
+        if (!skin) return;
+        if (!pocketProgression.isUnlocked(skin, progressState.wins)) {
+          const remaining = Math.max(1, skin.unlockWins - progressState.wins);
+          setSkinHint(`${skin.name} unlocks at ${skin.unlockWins} wins · ${remaining} to go`, true);
+          triggerHaptic([8]);
+          return;
+        }
+        const result = progressStore.selectSkin(id);
+        if (!result.ok) return;
+        progressState = result.state;
+        renderStartProgress();
+        triggerHaptic([10]);
+      }
+
+      // Called exactly once per completed match (solo + online host at
+      // awardPoint, online guest on the authoritative GAME_OVER snapshot).
+      // Practice rallies and disconnects never call this.
+      function recordMatchOutcome(playerWon) {
+        if (matchOutcomeRecorded) return matchProgressResult;
+        matchOutcomeRecorded = true;
+        matchProgressResult = progressStore.recordMatch(Boolean(playerWon));
+        progressState = matchProgressResult.state;
+        renderStartProgress();
+        return matchProgressResult;
+      }
+
+      function renderMatchProgress(result, playerWon, options = {}) {
+        if (!elMatchProgress) return;
+        if (options.disconnected || !result) {
+          elMatchProgress.classList.add('hidden');
+          return;
+        }
+        const state = result.state;
+        const unlocked = result.newlyUnlocked && result.newlyUnlocked[0];
+        const isUnlock = Boolean(unlocked);
+
+        elMatchProgress.classList.remove('hidden');
+        elMatchProgress.classList.toggle('is-unlock', isUnlock);
+        if (elMatchProgressStreakIcon) elMatchProgressStreakIcon.classList.toggle('hidden', isUnlock);
+        if (elMatchProgressUnlockIcon) elMatchProgressUnlockIcon.classList.toggle('hidden', !isUnlock);
+
+        if (isUnlock) {
+          elMatchProgressTitle.textContent = `NEW PADDLE · ${unlocked.name.toUpperCase()}`;
+          elMatchProgressDetail.textContent = `Unlocked at ${state.wins} wins · Current streak ${state.currentStreak}`;
+          return;
+        }
+
+        if (playerWon) {
+          elMatchProgressTitle.textContent = state.currentStreak > 1
+            ? `${state.currentStreak}-WIN STREAK`
+            : 'WIN STREAK STARTED';
+        } else {
+          elMatchProgressTitle.textContent = 'STREAK RESET';
+        }
+        const next = result.nextSkin;
+        elMatchProgressDetail.textContent = next
+          ? `Best streak ${state.bestStreak} · Next paddle at ${next.unlockWins} wins`
+          : `Best streak ${state.bestStreak} · All paddles unlocked`;
       }
 
       function maybeShowOnboarding() {
@@ -5423,6 +5887,11 @@
         // never says "swipe" while the opponent is serving.
         if (matchStats.server !== 'player') return;
         if (isOnline && !isHost && lastGuestSnapshotSeq < 0) return;
+        if (elOnboardLabel) {
+          elOnboardLabel.textContent = controlMode === 'relative'
+            ? 'Drag Up or Tap Serve'
+            : 'Swipe Up or Tap Serve';
+        }
         try {
           if (!localStorage.getItem('wtt-onboarded')) {
             elOnboardOverlay.classList.remove('hidden');
@@ -5460,6 +5929,10 @@
         matchStats.aces = 0;   // #16
         matchStats.faults = 0; // #16
         matchStats.matchOver = false;
+        matchOutcomeRecorded = false;
+        matchProgressResult = null;
+        relativeDrag = null;
+        serveGestureArmed = false;
         pendingLetReplay = false;
         setsTracker = { player: 0, ai: 0 }; // #12
         streak = { winner: null, count: 0 }; // #13
@@ -5952,13 +6425,57 @@
       let gestureStartX = 0;
       let gestureStartY = 0;
       let hasSwipedToServe = false;
+      // A serve must begin with a fresh touch after the ball is placed. This
+      // prevents a swipe that was already in progress when a point ended from
+      // launching the next serve by itself.
+      let serveGestureArmed = false;
+      // Relative drag mode anchors the paddle to the thumb's starting point
+      // instead of teleporting it under the finger.
+      let relativeDrag = null;
 
       // The guest must wait for the host's authoritative snapshot before
       // serving. Otherwise a quick swipe on a rematch can start a local serve
       // while the host still has the ball in its serve state.
       function playerMayServe() {
+        if (isGamePaused) return false;
         if (gameState !== 'SERVE' || matchStats.server !== 'player' || hasSwipedToServe) return false;
         if (isOnline && !isHost && lastGuestSnapshotSeq < 0) return false;
+        return true;
+      }
+
+      // Keep the explicit serve control in sync with the actual serve state.
+      // It is the only tap target that launches a serve; taps on the court are
+      // reserved for positioning the paddle.
+      function syncServeAction() {
+        if (!elServeAction) return;
+        const available = playerMayServe()
+          && !matchStats.matchOver
+          && gameState === 'SERVE';
+        elServeAction.classList.toggle('hidden', !available);
+        elServeAction.classList.toggle('is-motion-reduced', reducedMotion);
+        if (elPointBanner) elPointBanner.classList.toggle('is-serve-control', available);
+        if (available && elServeActionHint) {
+          elServeActionHint.textContent = controlMode === 'relative'
+            ? 'Drag up or tap'
+            : 'Swipe up or tap';
+        }
+      }
+
+      function servePlayerBall(useNeutralInput = false) {
+        if (!playerMayServe()) return false;
+        if (useNeutralInput) {
+          // The Serve button always produces the safe short serve instead of
+          // inheriting stale velocity from a recent paddle drag.
+          player.velocityHistory.length = 0;
+          player.vx = 0;
+          player.vy = 0;
+        }
+        hasSwipedToServe = true;
+        serveGestureArmed = false;
+        hideBanner();
+        gameState = 'PLAYING';
+        strikeBallWithPlayerPaddle(true);
+        syncServeAction();
         return true;
       }
 
@@ -5973,8 +6490,31 @@
 
       function sampleFingerToLogical(clientX, clientY, isStart = false) {
         const vPt = clientToVirtual(clientX, clientY);
-        const unproj = unprojectToLogical(vPt.x, vPt.y - 18, 14);
-        const clamped = clampPlayerPosition(unproj.x, unproj.y);
+        let clamped;
+
+        if (controlMode === 'relative') {
+          if (isStart) {
+            // Anchor to the paddle's current target so the blade never jumps
+            // under the thumb. Deltas from this anchor drive the paddle 1:1.
+            relativeDrag = {
+              paddleX: player.targetX,
+              paddleY: player.targetY,
+              originX: vPt.x,
+              originY: vPt.y
+            };
+            clamped = clampPlayerPosition(relativeDrag.paddleX, relativeDrag.paddleY);
+          } else if (relativeDrag) {
+            clamped = clampPlayerPosition(
+              relativeDrag.paddleX + (vPt.x - relativeDrag.originX),
+              relativeDrag.paddleY + (vPt.y - relativeDrag.originY)
+            );
+          } else {
+            return;
+          }
+        } else {
+          const unproj = unprojectToLogical(vPt.x, vPt.y - 18, 14);
+          clamped = clampPlayerPosition(unproj.x, unproj.y);
+        }
 
         const now = performance.now();
         const dtMs = Math.max(4, Math.min(50, now - lastInputTime));
@@ -5989,16 +6529,13 @@
             }
           }
 
-          if (playerMayServe()) {
+          if (playerMayServe() && serveGestureArmed) {
             const dyFromStart = clamped.y - gestureStartY;
             const dtSwipe = now - gestureStartTime;
             // #8 serve proximity — finger must be near the ball to avoid accidental fires
             const fingerDistToBall = Math.hypot(clamped.x - ball.x, clamped.y - ball.y);
             if (fingerDistToBall < 90 && (dyFromStart < -18 || instVy < -3.2 || (dtSwipe < 350 && dyFromStart < -10))) {
-              hasSwipedToServe = true;
-              hideBanner();
-              gameState = 'PLAYING';
-              strikeBallWithPlayerPaddle(true);
+              servePlayerBall(false);
             }
           }
         } else {
@@ -6018,35 +6555,45 @@
       }
 
       function handlePointerRelease() {
-        if (playerMayServe()) {
-          const tapDuration = performance.now() - gestureStartTime;
-          const moveDist = Math.hypot(lastInputX - gestureStartX, lastInputY - gestureStartY);
-          if (tapDuration < 320 && moveDist < 35) {
-            hasSwipedToServe = true;
-            hideBanner();
-            gameState = 'PLAYING';
-            strikeBallWithPlayerPaddle(true);
-          }
-        }
+        if (!pointerActive) return;
+        // Taps only position the paddle. Serving requires a deliberate upward
+        // swipe (handled in pointermove) or the explicit Serve control, so a
+        // quick tap can never launch a short serve by accident.
         pointerActive = false;
         activePointerId = null;
+        relativeDrag = null;
+        serveGestureArmed = false;
       }
 
       canvas.addEventListener('pointerdown', (e) => {
         if (gameState === 'MENU' || gameState === 'GAME_OVER') return;
+        updateCanvasMetrics();
+        // Relative mode only accepts inputs that begin in the lower court;
+        // touches above it stay free for HUD/menus and never grab the paddle.
+        if (controlMode === 'relative') {
+          const vPt = clientToVirtual(e.clientX, e.clientY);
+          if (vPt.y < RELATIVE_CONTROL_ZONE_TOP) return;
+        }
         e.preventDefault();
         sound.init();
-        updateCanvasMetrics();
         pointerActive = true;
         activePointerId = e.pointerId;
         if (canvas.setPointerCapture) {
           try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
         }
         sampleFingerToLogical(e.clientX, e.clientY, true);
+        // Only a gesture that starts after the serve state is allowed to
+        // launch. This also stops a swipe carried over from the previous rally.
+        serveGestureArmed = gameState === 'SERVE'
+          && matchStats.server === 'player'
+          && playerMayServe();
       }, { passive: false });
 
       canvas.addEventListener('pointermove', (e) => {
         if (gameState === 'MENU' || gameState === 'GAME_OVER') return;
+        // Direct mode follows mouse hover; relative mode only tracks an active
+        // drag, so hovering never moves the paddle.
+        if (controlMode === 'relative' && !pointerActive) return;
         e.preventDefault();
         if (pointerActive && activePointerId !== null && e.pointerId !== activePointerId) return;
 
@@ -6067,6 +6614,14 @@
 
       canvas.addEventListener('pointerup', endPointerTracking, { passive: true });
       canvas.addEventListener('pointercancel', endPointerTracking, { passive: true });
+
+      if (elServeAction) {
+        elServeAction.addEventListener('click', (e) => {
+          e.stopPropagation();
+          sound.init();
+          servePlayerBall(true);
+        });
+      }
 
       function updatePlayerPaddle() {
         player.prevX = player.x;
@@ -6630,6 +7185,9 @@
         const shadowPt = project3D(p.x, p.y + lungeY, 0.2, _pA);
         const padPt = project3D(p.x, p.y + lungeY, hoverZ, _pB);
         const s = padPt.scale;
+        // The opponent always keeps the classic studio blade so the two
+        // paddles stay readable; only the player's unlocked skin changes.
+        const skin = isPlayer ? currentPaddleSkin() : null;
 
         ctx.save();
 
@@ -6696,17 +7254,10 @@
         const specY = -handleDir * ry * 0.26 + (p.pitch || 0) * 12 * s;
         const rubberGrad = ctx.createRadialGradient(specX, specY, 2 * s, 0, 0, rx * 1.25);
 
-        if (isPlayer) {
-          if (isForehand) {
-            rubberGrad.addColorStop(0, '#fb7185');
-            rubberGrad.addColorStop(0.28, '#e11d48');
-            rubberGrad.addColorStop(0.75, '#9f1239');
-            rubberGrad.addColorStop(1, '#4c0519');
-          } else {
-            rubberGrad.addColorStop(0, '#94a3b8');
-            rubberGrad.addColorStop(0.30, '#1e293b');
-            rubberGrad.addColorStop(0.78, '#0f172a');
-            rubberGrad.addColorStop(1, '#020408');
+        if (skin) {
+          const stops = isForehand ? skin.palette.forehand : skin.palette.backhand;
+          for (let i = 0; i < stops.length; i++) {
+            rubberGrad.addColorStop(stops[i][0], stops[i][1]);
           }
         } else {
           if (isForehand) {
@@ -6750,10 +7301,11 @@
 
         // #36 Edge lighting - a neutral studio highlight keeps the rubber readable.
         ctx.save();
+        const edgeColor = skin ? skin.palette.edge : 'rgba(255, 225, 205, 0.58)';
         const edgeGrad = ctx.createLinearGradient(-rx, -ry * handleDir, rx, -ry * handleDir);
         edgeGrad.addColorStop(0, 'rgba(255,255,255,0)');
-        edgeGrad.addColorStop(0.35, 'rgba(255, 225, 205, 0.58)');
-        edgeGrad.addColorStop(0.65, 'rgba(255, 225, 205, 0.58)');
+        edgeGrad.addColorStop(0.35, edgeColor);
+        edgeGrad.addColorStop(0.65, edgeColor);
         edgeGrad.addColorStop(1, 'rgba(255,255,255,0)');
         ctx.strokeStyle = edgeGrad;
         ctx.lineWidth = 2.0 * s;
@@ -6767,11 +7319,18 @@
         ctx.translate(extX * 0.85, extY * 0.95);
         traceFlaredHandlePath(ctx, rx, ry, s, handleDir);
         const hGrad = ctx.createLinearGradient(-7 * s, 0, 7 * s, 0);
-        hGrad.addColorStop(0, '#5c2d16');
-        hGrad.addColorStop(0.22, '#9a5b32');
-        hGrad.addColorStop(0.50, '#d4945a');
-        hGrad.addColorStop(0.78, '#9a5b32');
-        hGrad.addColorStop(1, '#431e0d');
+        const handleStops = skin
+          ? skin.palette.handle
+          : [
+              [0, '#5c2d16'],
+              [0.22, '#9a5b32'],
+              [0.50, '#d4945a'],
+              [0.78, '#9a5b32'],
+              [1, '#431e0d']
+            ];
+        for (let i = 0; i < handleStops.length; i++) {
+          hGrad.addColorStop(handleStops[i][0], handleStops[i][1]);
+        }
         ctx.fillStyle = hGrad;
         ctx.fill();
         ctx.restore();
@@ -6909,6 +7468,19 @@
         ctx.beginPath();
         ctx.arc(0, 0, visualRadius, 0, Math.PI * 2);
         ctx.fill();
+
+        // Serve-ready pulse — the ball breathes while the player is in control
+        // of the serve, so the waiting state reads on the court itself.
+        if (gameState === 'SERVE' && matchStats.server === 'player' && !hasSwipedToServe) {
+          const servePulse = reducedMotion ? 0.6 : 0.5 + Math.abs(Math.sin(performance.now() * 0.0042)) * 0.5;
+          ctx.save();
+          ctx.strokeStyle = `rgba(57, 214, 233, ${0.32 + servePulse * 0.38})`;
+          ctx.lineWidth = 1.6 * _pB.scale;
+          ctx.beginPath();
+          ctx.arc(0, 0, visualRadius * (1.65 + servePulse * 0.45), 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.restore();
+        }
 
         // #6 Smash-ready indicator — pulsing orange ring when ball is high and hittable
         if (gameState === 'PLAYING' && ball.lastHitter === 'ai' && ball.z > 28 && ball.bouncesOnTargetSide >= 1) {
@@ -7571,6 +8143,10 @@
                 // authoritative snapshot. Correct an already-open result if
                 // its winner no longer matches the host's score.
                 const guestWon = matchStats.playerScore > matchStats.aiScore;
+                // Record only on the host's authoritative snapshot; a local
+                // prediction can never move the guest's persistent record.
+                const outcome = recordMatchOutcome(guestWon);
+                renderMatchProgress(outcome, guestWon, { online: true });
                 const titleEl = document.getElementById('match-result-title');
                 const expectedTitle = guestWon ? 'MATCH VICTORY' : 'MATCH COMPLETE';
                 if (!elMatchModal.classList.contains('is-open') || titleEl.textContent !== expectedTitle) {
@@ -7971,6 +8547,10 @@
         ball.vz = 0;
         ball.z = 24;
 
+        pointerActive = false;
+        activePointerId = null;
+        relativeDrag = null;
+        renderStartProgress();
         updateHUD();
       }
 
@@ -8015,6 +8595,8 @@
             document.activeElement.blur();
           }
         }
+
+        syncServeAction();
       }
 
       function openHowToPlay() {
@@ -8111,6 +8693,11 @@
           elSettingTogglePractice.setAttribute('aria-disabled', String(isOnline));
           elSettingTogglePractice.title = isOnline ? 'Unavailable during online matches' : '';
         }
+        document.querySelectorAll('[data-control-mode]').forEach(button => {
+          const active = button.dataset.controlMode === controlMode;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
         const settingsOnlineStatus = document.getElementById('settings-online-status');
         if (settingsOnlineStatus) {
           if (isOnline) settingsOnlineStatus.textContent = netPingMs > 0 ? `Online · ${netPingMs} ms` : 'Online';
@@ -8226,6 +8813,15 @@
         persistBool('wtt-arena-speed-kmh', speedUnitKmh);
         syncSettingsUI();
         updateHUD();
+      }
+
+      function setControlMode(mode) {
+        controlMode = mode === 'relative' ? 'relative' : 'direct';
+        try { localStorage.setItem(CONTROL_MODE_KEY, controlMode); } catch (_) {}
+        // Never carry a stale anchor across a mode change.
+        relativeDrag = null;
+        syncSettingsUI();
+        triggerHaptic([6]);
       }
 
       function currentFullscreenElement() {
@@ -8433,8 +9029,11 @@
           difficultyKey = 'rookie';
           aiConfig = DIFFICULTIES[difficultyKey];
           themePreference = 'system';
+          controlMode = 'direct';
+          relativeDrag = null;
           ['wtt-arena-muted', 'wtt-arena-haptics', 'wtt-arena-speed-kmh',
-            'wtt-arena-reduced-motion', 'wtt-arena-difficulty', 'wtt-practice', 'wtt-theme'
+            'wtt-arena-reduced-motion', 'wtt-arena-difficulty', 'wtt-practice', 'wtt-theme',
+            CONTROL_MODE_KEY
           ].forEach(key => { try { localStorage.removeItem(key); } catch (_) {} });
           syncDifficultySelection('rookie', false);
           setThemePreference('system');
@@ -8507,6 +9106,13 @@
         });
       }
 
+      document.querySelectorAll('[data-control-mode]').forEach(button => {
+        button.addEventListener('click', e => {
+          e.stopPropagation();
+          setControlMode(button.dataset.controlMode);
+        });
+      });
+
       document.getElementById('btn-play-again').addEventListener('click', (e) => {
         e.stopPropagation();
         sound.init();
@@ -8531,12 +9137,42 @@
         }
       });
 
+      // Optional integration-test hook, present only with ?e2e=1. It finishes
+      // a solo match (or an online host's authoritative match) through the
+      // normal awardPoint → match-end path so tests can cover record/streak/
+      // unlock wiring without rallying to 11 points. Guests must never use it;
+      // their record is written from the host's GAME_OVER snapshot instead.
+      try {
+        if (new URLSearchParams(window.location.search).get('e2e') === '1') {
+          window.__WTT_E2E__ = Object.freeze({
+            finishMatch(playerWon) {
+              if (isGamePaused) return false;
+              if (isOnline && !isHost) return false;
+              if (gameState === 'MENU' || gameState === 'GAME_OVER') return false;
+              const target = Math.max(0, winningScore - 1);
+              matchStats.playerScore = playerWon ? target : 0;
+              matchStats.aiScore = playerWon ? 0 : target;
+              matchStats.matchOver = false;
+              streak = { winner: null, count: 0 };
+              updateHUD();
+              awardPoint(
+                playerWon ? 'player' : 'ai',
+                playerWon ? 'POINT PLAYER' : 'POINT AI',
+                false
+              );
+              return true;
+            }
+          });
+        }
+      } catch (_) {}
+
       window.onload = function () {
         applyResolvedTheme(resolvedTheme);
         resizeCanvas();
         renderAudioState();
         renderHapticsState();
         renderMotionState();
+        renderStartProgress();
         updateFullscreenUI();
         syncSettingsUI();
 
@@ -8681,10 +9317,7 @@
           case 'ArrowDown':  player.targetY = Math.min(TABLE.bottom + 96, player.targetY + step); break;
           case ' ':
             if (playerMayServe()) {
-              hasSwipedToServe = true;
-              hideBanner();
-              gameState = 'PLAYING';
-              strikeBallWithPlayerPaddle(true);
+              servePlayerBall(false);
             } else if (gameState === 'PLAYING') {
               // Space is a convenience for desktop players, but it should only
               // work when the ball is actually reachable on the player's side.

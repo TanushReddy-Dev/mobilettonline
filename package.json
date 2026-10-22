@@ -11,7 +11,7 @@
   "scripts": {
     "build:css": "tailwindcss -i src/tailwind.css -o .tailwind.generated.css && node scripts/inject-tailwind.mjs",
     "serve": "node server.js",
-    "validate": "html-validate index.html && node scripts/check-inline-js.mjs",
+    "validate": "html-validate index.html && node --check progression.js && node scripts/check-inline-js.mjs",
     "test": "playwright test"
   },
   "devDependencies": {

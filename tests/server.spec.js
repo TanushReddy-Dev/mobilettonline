@@ -7,6 +7,7 @@ test('serves the app and rejects traversal/non-public files', async ({ request }
 
   for (const path of [
     '/index.html',
+    '/progression.js',
     '/icon.svg',
     '/manifest.webmanifest',
     '/assets/brand/pocket-table-tennis-logo.png',

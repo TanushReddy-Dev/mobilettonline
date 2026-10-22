@@ -9,6 +9,9 @@ This is a **visual overhaul**:
 - Physics, scoring, serve rules, online play, 60 Hz networking, and game logic stay intact.
 - All UI icons remain Iconoir at `1.8` stroke width.
 - The same studio set is used in dark and light modes; only lighting and surrounding surfaces change.
+- The start screen also carries a compact local record strip and paddle locker. These are local-only additions: win record, best streak, and win-unlocked paddle skins persist in `localStorage` through `progression.js`.
+- Gameplay gains one optional input preference, **Drag style** (`Direct` / `Relative`). Direct is the original absolute mapping; Relative uses an invisible lower-court start zone and mirrors thumb deltas. Physics, hit assists, and online networking are unchanged.
+- Serve is an explicit beat. While the player may serve, the court waits, the ball carries a slow readiness pulse, and a bottom-slot **Serve** control replaces the “YOUR SERVE” status banner. A fresh upward swipe or the Serve button launches; taps that only reposition the paddle never do.
 
 ### Design Read
 
@@ -17,7 +20,7 @@ This is a **visual overhaul**:
 | Artifact | Mobile-first game UI + court concept | Portrait phone is primary; tablet/desktop stays centered |
 | Audience | Casual players, quick solo or private online matches | One-thumb use, fast entry, clear scoring |
 | Visual language | Friendly geometric broadcast | Rounded type, disciplined grid, studio court |
-| Mode | Overhaul · preserve mechanics | No gameplay or networking changes |
+| Mode | Overhaul · preserve mechanics | No physics or networking changes; additive local progression + optional input mode |
 | Visual variance | 6/10 | Characterful but not chaotic |
 | Motion intensity | 3/10 | Restrained fades, sweeps, and sheet transitions |
 | Information density | 6/10 | Full broadcast telemetry, adapted on narrow phones |
@@ -122,11 +125,14 @@ Rules:
 - Full-bleed studio court as the hero; table positioned in the upper-middle of the screen.
 - Top bar: new Pocket mark and wordmark on the left; sound, theme, and fullscreen icon controls on the right. All 44 px.
 - Bottom sheet: soft-rounded top corners, solid/translucent studio surface, with a clear hierarchy:
-  1. **Play Solo** — dominant primary action, with a Relaxed / Casual / Pro segmented control.
-  2. **Play Online** — secondary row with room code / join action.
-  3. **Practice**, **How to Play**, **Settings** — three tertiary icon-plus-label controls.
-  4. Small legal line: `Unofficial fan project. Not affiliated with World Table Tennis.`
-- The court must remain visible above the sheet on 390×844 and still show a recognizable table on 320×568. The sheet may scroll internally on short screens; the primary action must remain first.
+  1. **Record strip** — current win streak, best streak, and total wins, with a small flame mark on the streak. Read-only, one line.
+  2. **Paddle locker** — the active paddle name, the next unlock threshold, and five 44 px skin swatches in one row. Swatches show both rubber faces and a wood handle; locked skins carry a small lock badge and explain their threshold when tapped.
+  3. **Play Solo** — dominant primary action, with a Relaxed / Casual / Pro segmented control.
+  4. **Play Online** — secondary row with room code / join action.
+  5. **Practice**, **How to Play**, **Settings** — three tertiary icon-plus-label controls.
+  6. Small legal line: `Unofficial fan project. Not affiliated with World Table Tennis.`
+- Record and locker stay compact at 320 px: the hint may ellipsize, but all five swatches keep 44 px targets and the sheet never scrolls sideways.
+- The court must remain visible above the sheet on 390×844 and still show a recognizable table on 320×568. The sheet may scroll internally on short screens; the primary action must remain reachable without horizontal scrolling.
 - Dark mode: arena lighting, cyan/rose rim light, deep navy floor.
 - Light mode: same set with bright neutral studio light, soft shadows, and a white sheet. Table stays blue.
 
@@ -138,6 +144,7 @@ A single fixed-height rail, not a row of cards.
 - **Telemetry line:** shots, speed, and online status/ping in a quieter second line inside the same rail.
 - Player side uses a cyan dot and small accent rule; opponent uses rose. Scores are the largest elements.
 - Serve state uses an amber ball icon and text; no bulky serve badge.
+- While the player may serve, the bottom banner slot becomes a 48 px **Serve** control with an upward arrow. It disappears after launch, replaces the status banner instead of stacking with it, and never appears for the receiving guest. The ball pulses while the game waits.
 - Online state uses an emerald dot. Offline hides it without shifting layout.
 - Sound and pause live in a separate floating 44 px control rail at the top-right of the court, not inside the score data.
 - At ≤360 px: score, serve, and sets remain visible; telemetry condenses into compact icon/value chips. The strip reserves its height so the court never moves.
@@ -149,10 +156,12 @@ A full-screen sheet over a dimmed studio.
 
 - Top app bar with back/close, title, and a small icon.
 - Four content groups:
-  1. **Gameplay** — Practice Mode and current match preferences.
+  1. **Gameplay** — Practice Mode, Drag style (`Direct` / `Relative`), and current match preferences.
   2. **Display & Sound** — Theme (System / Light / Dark), Sound Effects, Haptic Feedback, Speed Unit, Reduced Motion.
   3. **Online** — Connection status, how online play works, and a link to the online lobby. Read-only informational rows; no new networking behavior.
   4. **About** — Version, How to Play, reset preferences, and the disclaimer.
+- Drag style is a two-state segmented control. Direct maps the finger to the paddle anywhere on the canvas. Relative anchors the paddle and mirrors thumb deltas; drags must begin in the lower 30% of the virtual court. Keyboard controls are identical in both modes.
+- Reset preferences restores Direct and clears the stored choice, but never touches the win record or unlocked skins.
 - Grouped surfaces with dividers, not a separate card per row.
 - Rows are at least 56 px tall; all controls have 44 px targets.
 - Theme selector is a three-state segmented control. The start-screen sun/moon button is a quick light/dark switch and sets an explicit preference.
@@ -166,7 +175,7 @@ A full-screen sheet over a dimmed studio.
 | Secondary | 48 px, surface + hairline | Play Online, Restart, Settings |
 | Tertiary | 44 px icon + label | Practice, How to Play, Settings |
 | Icon | 44 px circular/rounded square | Sound, theme, fullscreen, pause |
-| Segmented | 44 px, radius 12 | Difficulty, theme mode |
+| Segmented | 44 px, radius 12 | Difficulty, theme mode, drag style |
 | Toggle | pill, 44 px | On/off preferences |
 | Danger | secondary shape, rose text/border | Exit match, destructive actions |
 
@@ -177,6 +186,9 @@ States: default, hover (pointer devices only), focus-visible ring, pressed scale
 - **Camera:** fixed top-down; no perspective tilt and no camera movement. A slightly pulled-back static lens keeps the near return zone visible behind the baseline.
 - **Table:** ITTF-style blue top, white boundary and center lines, graphite net with a white tape edge, slim dark legs/apron. Small `POCKET / STUDIO 01` apron text replaces WTT branding.
 - **Paddles:** top-down silhouettes with classic red forehand and black backhand rubber, a warm wood handle, and a charcoal blade edge. Player and opponent remain identified by the HUD's cyan/rose accents. Subtle rubber grain, not photorealistic.
+  - The player paddle starts on **Classic** (the original red/black palette) and can wear four more win-unlocked skins: **Ink** (2 wins), **Sage** (4 wins), **Rust** (7 wins), and **Gold** (12 wins). Each skin defines its own forehand, backhand, handle, and edge lighting. The opponent always keeps the classic studio blade.
+  - Skins are pure cosmetics. They never change physics, hitboxes, spin, or online behavior, and there are no ads, purchases, or premium-only skins.
+  - Skins are selected from the start-screen paddle locker and persist per device.
 - **Ball:** warm white, small specular highlight, soft contact shadow, thin white trail. Impact ring uses the hitter's accent color.
 - **Studio:** same set in both themes. Dark is a deep arena with controlled light pools and faint vertical banners; light is a bright neutral hall with soft floor shadows. No crowd faces, no busy scenery, no extra text.
 - **Court floor:** subtle seams and a soft circular light pool. Keep the ball and paddles the highest-contrast objects.
@@ -186,7 +198,7 @@ States: default, hover (pointer devices only), focus-visible ring, pressed scale
 
 | Viewport | Behavior |
 |---|---|
-| 320×568 | 16 px inset; smaller display type; compact telemetry; bottom sheet scrolls internally; primary action first; no horizontal overflow |
+| 320×568 | 16 px inset; smaller display type; compact telemetry; record strip and five 44 px skin swatches in one row; hint ellipsizes; bottom sheet scrolls internally; primary action reachable; no horizontal overflow |
 | 390×844 | Reference composition; 20 px inset; full broadcast strip; hero court visible above sheet |
 | 430×932 | More breathing room; same hierarchy |
 | ≥521 px | Centered app frame max 520 px with ambient studio backdrop; no separate desktop layout |
@@ -200,7 +212,10 @@ States: default, hover (pointer devices only), focus-visible ring, pressed scale
 - Theme preference: System by default, with explicit Light/Dark overrides. Persist it.
 - Keep Iconoir for every UI icon. No emoji as icons.
 - Preserve fullscreen feature detection, reduced motion, haptics, and sound preferences.
-- No changes to gameplay physics, scoring, serves, networking, or the 60 Hz loop.
+- Keep physics, scoring, serves, networking, and the 60 Hz loop unchanged. Drag style only re-maps pointer input; it does not alter hit detection, assist, or authority.
+- The explicit serve control is a 48 px button in the bottom banner slot. It appears only when the player may serve — not for the receiving guest, pause menu, start menu, or game over — and hides immediately after launch. The serve gesture must begin after the ball is placed, so a swipe left over from the previous rally cannot serve the next point.
+- Keep progression local and honest: record and unlocked skins persist in `localStorage` (`wtt-progress-v1`), practice rallies and disconnects never count, and online guests record only from the host's authoritative `GAME_OVER` snapshot. No ads, sponsorships, or paid progression.
+- The drag-style segmented control is a labelled `role="group"`; locked skin buttons stay focusable, use `aria-disabled`, and announce their unlock threshold instead of being removed.
 - The concept is static. Production implementation starts only after the visual concept is approved.
 
 ## 7. Concept Deliverable
