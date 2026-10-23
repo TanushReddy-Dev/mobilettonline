@@ -125,13 +125,13 @@ Rules:
 - Full-bleed studio court as the hero; table positioned in the upper-middle of the screen.
 - Top bar: new Pocket mark and wordmark on the left; sound, theme, and fullscreen icon controls on the right. All 44 px.
 - Bottom sheet: soft-rounded top corners, solid/translucent studio surface, with a clear hierarchy:
-  1. **Record strip** — current win streak, best streak, and total wins, with a small flame mark on the streak. Read-only, one line.
-  2. **Paddle locker** — the active paddle name, the next unlock threshold, and five 44 px skin swatches in one row. Swatches show both rubber faces and a wood handle; locked skins carry a small lock badge and explain their threshold when tapped.
-  3. **Play Solo** — dominant primary action, with a Relaxed / Casual / Pro segmented control.
-  4. **Play Online** — secondary row with room code / join action.
+  1. **Header** — title, tagline, and a one-line win record (current streak, best streak, total wins) with a small flame mark on the streak.
+  2. **Play Solo** — dominant primary action, with a Relaxed / Casual / Pro segmented control.
+  3. **Play Online** — secondary row with room code / join action.
+  4. **Paddle locker** — the active paddle name, the next unlock threshold, and five 44 px skin swatches in one row. Swatches show both rubber faces and a wood handle; locked skins carry a small lock badge and explain their threshold when tapped. It sits below the play actions so the primary choices stay high in the sheet.
   5. **Practice**, **How to Play**, **Settings** — three tertiary icon-plus-label controls.
   6. Small legal line: `Unofficial fan project. Not affiliated with World Table Tennis.`
-- Record and locker stay compact at 320 px: the hint may ellipsize, but all five swatches keep 44 px targets and the sheet never scrolls sideways.
+- On 320 px, Play Solo and Play Online remain above the fold; the record stays compact in the header and the locker follows the play actions. All five swatches keep 44 px targets and the sheet never scrolls sideways.
 - The court must remain visible above the sheet on 390×844 and still show a recognizable table on 320×568. The sheet may scroll internally on short screens; the primary action must remain reachable without horizontal scrolling.
 - Dark mode: arena lighting, cyan/rose rim light, deep navy floor.
 - Light mode: same set with bright neutral studio light, soft shadows, and a white sheet. Table stays blue.

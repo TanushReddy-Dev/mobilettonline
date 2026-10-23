@@ -2603,12 +2603,6 @@
       margin: 0 auto 12px;
     }
     .sheet-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
-    .sheet-kicker {
-      margin: 0 0 4px;
-      font-size: 9px; line-height: 1.2;
-      font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--muted);
-    }
     #start-modal-title {
       margin: 0;
       font-family: var(--font-display);
@@ -2637,7 +2631,7 @@
       white-space: nowrap;
     }
     .match-pill .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--online); }
-    .start-meta { display: flex; flex-direction: column; gap: 8px; margin: -3px 0 11px; }
+    .sheet-record { margin: 0 0 4px; }
     .record-strip {
       display: flex; align-items: center; gap: 8px;
       padding: 0 2px;
@@ -2665,6 +2659,7 @@
       background: var(--surface-soft);
       border: 1px solid var(--hairline);
     }
+    .start-locker { margin-top: 8px; }
     .paddle-locker-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
     .paddle-locker-label {
       font-size: 7px; font-weight: 800; letter-spacing: 0.14em;
@@ -3423,6 +3418,9 @@
     @media (max-height: 640px) and (orientation: portrait) {
       .start-sheet { max-height: 64dvh; }
       .sheet-tagline, .start-legal { display: none; }
+      .sheet-head { margin-bottom: 8px; }
+      .sheet-record { margin-bottom: 2px; }
+      .start-locker { margin-top: 6px; }
       .start-sheet { padding-top: 8px; }
       .solo-card { padding: 10px; }
       .start-primary { min-height: 50px; }
@@ -3564,34 +3562,21 @@
         <div class="sheet-grabber" aria-hidden="true"></div>
         <div class="sheet-head">
           <div>
-            <p class="sheet-kicker">Pocket Table Tennis &middot; Studio 01</p>
+            <div class="record-strip sheet-record" id="record-strip" role="group" aria-label="Your win record">
+              <span class="record-stat record-streak">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C16.9706 21 21 17.5 21 13C21 8.5 17.5 5 15 2C14.5 5.5 12.5 7 10.5 8C8.5 9 7 10.5 7 13C7 15 8 16.5 9 17.5C9.5 18 10 18.5 10 19.5C10 20.5 9 21 9 21"/></svg>
+                <strong id="record-streak">0</strong>
+                <span>win streak</span>
+              </span>
+              <span class="record-divider" aria-hidden="true"></span>
+              <span class="record-stat"><strong id="record-best">0</strong><span>best</span></span>
+              <span class="record-divider" aria-hidden="true"></span>
+              <span class="record-stat"><strong id="record-wins">0</strong><span>wins</span></span>
+            </div>
             <h1 id="start-modal-title">Ready to play?</h1>
             <p class="sheet-tagline">Fast hands. Small table. Pick up a paddle and step onto the court.</p>
           </div>
           <span class="match-pill"><span class="pill-dot"></span>11 points</span>
-        </div>
-
-        <div class="start-meta">
-          <div class="record-strip" id="record-strip" role="group" aria-label="Your win record">
-            <span class="record-stat record-streak">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21C16.9706 21 21 17.5 21 13C21 8.5 17.5 5 15 2C14.5 5.5 12.5 7 10.5 8C8.5 9 7 10.5 7 13C7 15 8 16.5 9 17.5C9.5 18 10 18.5 10 19.5C10 20.5 9 21 9 21"/></svg>
-              <strong id="record-streak">0</strong>
-              <span>win streak</span>
-            </span>
-            <span class="record-divider" aria-hidden="true"></span>
-            <span class="record-stat"><strong id="record-best">0</strong><span>best</span></span>
-            <span class="record-divider" aria-hidden="true"></span>
-            <span class="record-stat"><strong id="record-wins">0</strong><span>wins</span></span>
-          </div>
-
-          <div class="paddle-locker">
-            <div class="paddle-locker-copy">
-              <span class="paddle-locker-label">Paddle</span>
-              <strong id="paddle-skin-name">Classic</strong>
-              <span id="paddle-skin-hint" class="paddle-skin-hint" aria-live="polite">Next: 2 wins</span>
-            </div>
-            <div id="paddle-skin-list" class="paddle-skin-list" role="group" aria-label="Paddle skins"></div>
-          </div>
         </div>
 
         <div class="solo-card">
@@ -3632,6 +3617,19 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12H19M19 12L13 6M19 12L13 18"/></svg>
           </span>
         </button>
+
+        <!-- Cosmetic locker stays below the play actions so the primary
+             choices remain above the fold on short phones. -->
+        <div class="start-locker">
+          <div class="paddle-locker">
+            <div class="paddle-locker-copy">
+              <span class="paddle-locker-label">Paddle</span>
+              <strong id="paddle-skin-name">Classic</strong>
+              <span id="paddle-skin-hint" class="paddle-skin-hint" aria-live="polite">Next: 2 wins</span>
+            </div>
+            <div id="paddle-skin-list" class="paddle-skin-list" role="group" aria-label="Paddle skins"></div>
+          </div>
+        </div>
 
         <div class="start-tertiary">
           <button type="button" id="menu-btn-practice" class="hud-interactive">

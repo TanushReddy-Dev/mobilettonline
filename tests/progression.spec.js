@@ -218,6 +218,22 @@ test('keeps the record and paddle rail inside a 320px start screen', async ({ pa
   await page.goto('/');
 
   await expect(page.locator('#record-strip')).toBeVisible();
+  // Primary actions must stay above the fold on a short phone; the secondary
+  // locker follows them and remains reachable in the scrollable sheet.
+  const actionsInSheet = await page.evaluate(() => {
+    const sheet = document.querySelector('.start-sheet').getBoundingClientRect();
+    const measure = id => {
+      const r = document.getElementById(id).getBoundingClientRect();
+      return { top: r.top, bottom: r.bottom, sheetTop: sheet.top, sheetBottom: sheet.bottom };
+    };
+    return { primary: measure('btn-start-match'), online: measure('btn-open-online') };
+  });
+  expect(actionsInSheet.primary.top).toBeGreaterThanOrEqual(actionsInSheet.primary.sheetTop);
+  expect(actionsInSheet.primary.bottom).toBeLessThanOrEqual(actionsInSheet.primary.sheetBottom + 1);
+  expect(actionsInSheet.online.top).toBeGreaterThanOrEqual(actionsInSheet.online.sheetTop);
+  expect(actionsInSheet.online.bottom).toBeLessThanOrEqual(actionsInSheet.online.sheetBottom + 1);
+
+  await page.locator('#paddle-skin-list').scrollIntoViewIfNeeded();
   for (const id of ['classic', 'ink', 'sage', 'rust', 'gold']) {
     const box = await page.locator(`#paddle-skin-list [data-skin="${id}"]`).boundingBox();
     expect(box, id).not.toBeNull();
