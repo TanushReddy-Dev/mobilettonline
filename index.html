@@ -4590,7 +4590,6 @@
       const elOnboardLabel = elOnboardOverlay ? elOnboardOverlay.querySelector('.onboard-label') : null;
 
       const elTopHud = document.getElementById('top-hud');
-      const elBtnHudHome = document.getElementById('btn-hud-home');
       const elBtnHudPause = document.getElementById('btn-hud-pause');
       const elStartModal = document.getElementById('start-modal');
       const elMatchModal = document.getElementById('match-modal');
@@ -4671,10 +4670,8 @@
       const elOnlineModal = document.getElementById('online-modal');
       const elBtnOpenOnline = document.getElementById('btn-open-online');
       const elBtnCloseOnline = document.getElementById('btn-close-online');
-      const elBtnOnlineHud = document.getElementById('btn-online');
       const elOnlineBadge = document.getElementById('online-badge');
       const elOnlinePingText = document.getElementById('online-ping-text');
-      const elOnlinePingDot = document.getElementById('online-ping-dot');
       const elTabHost = document.getElementById('tab-host');
       const elTabJoin = document.getElementById('tab-join');
       const elPanelHost = document.getElementById('panel-host');
@@ -7723,26 +7720,6 @@
         toggleAudioMute();
       });
 
-      const motionButton = document.getElementById('btn-motion');
-      if (motionButton) {
-        motionButton.addEventListener('click', (e) => {
-          e.stopPropagation();
-          setReducedMotion(!reducedMotion);
-        });
-        renderMotionState();
-      }
-
-      // The HUD restart button moved into the pause dialog so a match cannot
-      // be reset (or an online opponent interrupted) by an accidental tap.
-      const hudRestartButton = document.getElementById('btn-restart');
-      if (hudRestartButton) {
-        hudRestartButton.addEventListener('click', (e) => {
-          e.stopPropagation();
-          sound.init();
-          restartMatch();
-        });
-      }
-
       document.getElementById('btn-start-match').addEventListener('click', (e) => {
         e.stopPropagation();
         sound.init();
@@ -7922,7 +7899,6 @@
           lastGuestPaddleAt = 0;
           setOnlineStatus('Connected to Opponent!', '#10b981', false);
           if (elOnlineBadge) elOnlineBadge.classList.remove('hidden');
-          if (elOnlinePingDot) elOnlinePingDot.classList.remove('hidden');
           if (elOnlineActiveControls) elOnlineActiveControls.classList.remove('hidden');
           hideOnlineModal(false);
           elStartModal.classList.remove('is-open');
@@ -8017,7 +7993,6 @@
         if (elPauseRemoteRequest) elPauseRemoteRequest.classList.add('hidden');
         if (elMatchRemoteRequest) elMatchRemoteRequest.classList.add('hidden');
         if (elOnlineBadge) elOnlineBadge.classList.add('hidden');
-        if (elOnlinePingDot) elOnlinePingDot.classList.add('hidden');
         if (elOnlineActiveControls) elOnlineActiveControls.classList.add('hidden');
         setOnlineStatus('Opponent disconnected', '#f43f5e', false);
 
@@ -8416,20 +8391,6 @@
       if (elTabJoin) elTabJoin.addEventListener('click', e => { e.stopPropagation(); switchToJoinTab(); });
 
       if (elBtnOpenOnline) elBtnOpenOnline.addEventListener('click', e => { e.stopPropagation(); openOnlineModal('host'); });
-      if (elBtnOnlineHud) {
-        elBtnOnlineHud.addEventListener('click', e => {
-          e.stopPropagation();
-          if (isOnline && !isHost) {
-            // The guest is connected to the host's room, not hosting it. Show
-            // the join panel with the host code instead of a misleading "Your
-            // Match Code" card.
-            openOnlineModal('join', currentRoomCode);
-            setOnlineStatus('Connected to host ' + currentRoomCode, '#10b981', false);
-          } else {
-            openOnlineModal('host');
-          }
-        });
-      }
       if (elBtnCloseOnline) elBtnCloseOnline.addEventListener('click', e => { e.stopPropagation(); hideOnlineModal(); });
 
       if (elBtnCreateRoom) elBtnCreateRoom.addEventListener('click', e => { e.stopPropagation(); hostOnlineMatch(); });
@@ -8522,7 +8483,6 @@
         if (elHostCodeDisplay) elHostCodeDisplay.textContent = '. . . . . .';
         hostSnapshotSeq = 0;
         if (elOnlineBadge) elOnlineBadge.classList.add('hidden');
-        if (elOnlinePingDot) elOnlinePingDot.classList.add('hidden');
         if (elOnlineActiveControls) elOnlineActiveControls.classList.add('hidden');
         setOnlineStatus('Select Host or Join to start', '#94a3b8', false);
 
@@ -8770,38 +8730,15 @@
         syncSettingsUI();
       }
 
-      function renderHapticsState() {
-        const hapticsBtn = document.getElementById('btn-haptics');
-        if (hapticsBtn) {
-          hapticsBtn.setAttribute('aria-pressed', String(hapticsEnabled));
-          hapticsBtn.setAttribute('aria-label', hapticsEnabled ? 'Disable vibration' : 'Enable vibration');
-        }
-        const iconOn = document.getElementById('icon-haptics-on');
-        const iconOff = document.getElementById('icon-haptics-off');
-        if (iconOn) iconOn.classList.toggle('hidden', !hapticsEnabled);
-        if (iconOff) iconOff.classList.toggle('hidden', hapticsEnabled);
-      }
-
       function setHapticsEnabled(enabled) {
         hapticsEnabled = Boolean(enabled);
         persistBool('wtt-arena-haptics', hapticsEnabled);
-        renderHapticsState();
         syncSettingsUI();
-      }
-
-      function renderMotionState() {
-        const motionBtn = document.getElementById('btn-motion');
-        if (motionBtn) {
-          motionBtn.setAttribute('aria-pressed', String(reducedMotion));
-          motionBtn.setAttribute('aria-label', reducedMotion ? 'Disable reduced motion' : 'Enable reduced motion');
-          motionBtn.classList.toggle('active', reducedMotion);
-        }
       }
 
       function setReducedMotion(enabled) {
         reducedMotion = Boolean(enabled);
         persistBool('wtt-arena-reduced-motion', reducedMotion);
-        renderMotionState();
         if (reducedMotion) screenShake = 0;
         syncSettingsUI();
       }
@@ -8882,15 +8819,7 @@
       // flash a dead fullscreen button before window.onload.
       updateFullscreenUI();
 
-      // HUD Navigation Listeners
-      if (elBtnHudHome) {
-        elBtnHudHome.addEventListener('click', e => {
-          e.stopPropagation();
-          sound.init();
-          returnToMainMenu();
-        });
-      }
-
+      // HUD Pause Listener
       if (elBtnHudPause) {
         elBtnHudPause.addEventListener('click', e => {
           e.stopPropagation();
@@ -9036,8 +8965,6 @@
           syncDifficultySelection('rookie', false);
           setThemePreference('system');
           renderAudioState();
-          renderHapticsState();
-          renderMotionState();
           syncSettingsUI();
           showBanner('PREFERENCES RESET', 'rgba(57, 214, 233, 0.45)', '#39d6e9');
         });
@@ -9168,8 +9095,6 @@
         applyResolvedTheme(resolvedTheme);
         resizeCanvas();
         renderAudioState();
-        renderHapticsState();
-        renderMotionState();
         renderStartProgress();
         updateFullscreenUI();
         syncSettingsUI();

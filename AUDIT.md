@@ -61,7 +61,7 @@
 
 ### P3 — Low
 
-- **Dead/legacy controls:** `#online-active-controls`, `elBtnOnlineHud`, and `elBtnHudHome` are unreachable or null; they add maintenance noise.
+- **Dead/legacy hooks:** removed unreachable HUD hooks (`btn-online`, `btn-hud-home`, `btn-restart`, `btn-motion`, the old haptics icons, and `online-ping-dot`); active controls remain reachable through `#btn-open-online`, the pause dialog, and Settings.
 - **Clipboard feedback:** copy failures are silent, and the host code display itself is not click-to-copy.
 - **Rate limiting:** `PAUSE_REQ` and `REMATCH_REQ` are unthrottled; add a short cooldown/debounce and ignore them in invalid states.
 - **Target validation:** mirrored `HIT` target coordinates are not clamped to the table; clamp them as defense in depth.
